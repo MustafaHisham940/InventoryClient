@@ -1,0 +1,129 @@
+
+
+
+
+
+
+<div class="container ">
+    
+    <div class="card-ribbon w-100 text-center">
+        <div class="pageLabel" >
+          <h2 class="mb-0 fw-bolder" >  بيانات المستخدم   </h2>
+          <span  class="text-light small "> {{hereEditeEntity.data.displayName}} </span>
+      </div>
+      </div>
+   
+    <form [formGroup]="addForm"  (ngSubmit)="editeUserData()">
+        <div class="row mt-5" dir="rtl">
+            
+            <mat-tab-group>
+                <mat-tab label="بيانات اساسية" class="fw-bolder"> 
+                    <!-- Account Details -->
+                    <div class="AccountDetails " dir="rtl">
+
+                        <div class="mb-3">
+                            <label for="codeNumber" class="form-label">كود العميل </label>
+                            <input type="text"  class="form-control " id="codeNumber" disabled  placeholder="{{hereEditeEntity.data.userSimpleId}}">
+                        </div>
+                        
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">اسم المستخدم</label>        
+                            <input type="text" min="0" class="form-control" id="itmNm" formControlName="userName" >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">Email</label>        
+                            <input type="text" min="0" class="form-control" id="barCod" formControlName="email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">اسم العرض</label>        
+                            <input type="text" min="0" class="form-control" id="mUnt" formControlName="dsiplayName">
+                        </div>
+                      
+                    </div>
+                
+                    
+                    
+                     </mat-tab>
+               
+               
+                     <mat-tab label="بيانات اخري"> 
+                    <!-- Client Details -->
+                 <div class="itemdetails" dir="rtl">
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">رقم الهاتف</label>
+                        <input type="phone"  class="form-control " id="pric" formControlName="phoneNumber">
+                        @if(addForm.get('phoneNumber')?.getError('pattern') ){
+                            <div class="alert alert-secondary"> no data</div>
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="accountNum" class="form-label">الاسم الاول</label>        
+                        <input type="text" min="0" class="form-control" id="gPrc" formControlName="fName">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">اسم العائلة</label>
+                        <input type="text"  class="form-control " id="bCst" formControlName="lName">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">اسم المدينة</label>
+                        <input type="text"  class="form-control " id="lPrc" formControlName="city">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">العنوان</label>
+                        <input type="text"  class="form-control " id="tax" formControlName="street">
+                    </div>
+                   
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">الدولة</label>
+                        <input type="text"  class="form-control " id="tax" formControlName="country">
+                    </div>
+                   
+                    
+
+                
+                 </div>
+
+                      
+                 
+                
+               
+               
+
+
+          
+                
+                
+                </mat-tab>
+
+
+            <!--<mat-tab label="Third"> Content 3 </mat-tab>-->
+              </mat-tab-group>
+              
+
+
+
+            
+            
+            
+
+
+
+
+
+            <div class="form-actions mt-4 d-flex justify-content-end" dir="rtl" >
+                <button type="button" class="btn btn-secondary m-1"  routerLink="/UserDetails">
+                    <i class="fa fa-backward">العودة</i> </button>
+                    <button type="submit" class="btn btn-success m-1"  >
+                        <i class="fa fa-save">حفظ</i> </button>
+                
+            </div>
+        </div>
+    </form>
+</div>
+

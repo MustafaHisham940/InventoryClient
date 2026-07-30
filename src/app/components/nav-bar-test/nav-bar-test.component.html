@@ -1,0 +1,466 @@
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+   
+     
+     
+      <!-- Sidebar -->
+      <div class="sidebar d-flex flex-column align-items-center align-items-md-start  text-white   shadow"
+    [@slideInOut]="navState" >
+  
+   
+  <!---------------toggle------------------------------>
+
+  <!--<div
+  id="sidebar-toggle-btn"
+  (click)="toggleNav()"
+  [style.left]="0 + 'px'">
+  <i class="fa-solid fa-bars" ></i>
+  </div>-->
+  <!-------------------------------------------------------------->
+ 
+
+    <div class="logo my-3 w-100 d-flex flex-column align-items-center justify-content-center  ">
+      <i class="fa-brands fa-uikit fs-3 pb-3" (click)="toggleNav()"></i>
+     <!-- <a class="ms-2 fw-bold fs-5" *ngIf="navState === 'expanded'">ادارة حســـــابـــــــات المخـــــــــزون</a>-->
+      <span class="seperateAfterLogo" *ngIf="navState === 'collapsed'"></span>
+    </div>
+  
+  <div class="contentNavbar pt-5 ">
+    @if(navState === 'expanded'){
+      <div class="slideoutContent     " >
+         
+     <div class="slideoutContentUL" >
+              <li class="nav-section-first "
+              [ngClass]="{'collapsed-class-shadow': !collapseState.first,}"
+
+              (click)="collapseState.first = !collapseState.first"
+              (click)="collapseState.fourth = true"
+              (click)="collapseState.second = true"
+              (click)="collapseState.third = true"
+              (click)="collapseState.fifth = true">
+                <a class="fs-3"> الحــركـــــــــة المخزنية <i class="fa-solid fa-chart-simple"></i> </a>
+               
+              </li>
+
+              
+              <div [appCollapse]="collapseState.first" class="jjjj">
+                <ul class="kkkk">
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:1 }" >المشتــــــــــــــــــــــــروات</a></li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:2}">مرتـــــــــتـجع البيــــــــــع</a> </li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:3}">وارد تصنيـــــــــــــــــــــــع</a> </li>
+                  <li class="llll"><a class="nav-links"routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:5}">إضافـــــــــــة أخــــــــــــرى</a> </li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:11}">مبيـــعـــــــــــــــــــــــات</a> </li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:12}">مرتــــــــدات مشتــــــــــروات</a> </li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:13}">منصــــــــــــرف للتصنيـــــــتع</a> </li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:15}">خصــــــــــــــم أخــــــــــرى</a>  </li>
+                </ul>
+              </div>
+
+
+
+            
+              <li class="nav-section"
+              [ngClass]="{'collapsed-class-shadow': !collapseState.second,}"    
+              [ngClass]="{'collapsed-class-shadow-Top': !collapseState.first,}" 
+              (click)="collapseState.second = !collapseState.second"
+              (click)="collapseState.fourth = true"
+              (click)="collapseState.first = true"
+              (click)="collapseState.third = true"
+              (click)="collapseState.fifth = true">
+                <a >
+                  التعــامــــلات النقديـــــــة <i class="fa-solid fa-coins"></i> 
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.second"class="jjjj">
+                <ul class="kkkk">
+                  <li class="llll"> <a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:22}">المصروفــــــــــــــــــــــــــــــات</a></li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/ClientPaymentsMain">مدفوعـــــــــــــــات العمـــــــــلاء</a></li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/ClientCashMain">تسديـــــــــــــدات مورديـــــــــــن</a></li>
+                  <li class="llll"><a class="nav-links" routerLinkActive="" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:24}">مسحوبـــــــــــــــات شخصيـــــــــــة</a></li>
+                </ul>
+              </div>
+
+
+
+              <li class="nav-section"
+              [ngClass]="{'collapsed-class-shadow': !collapseState.third,}"
+              [ngClass]="{'collapsed-class-shadow-Top': !collapseState.second,}"
+
+              (click)="collapseState.third = !collapseState.third"              
+              (click)="collapseState.fourth = true"
+              (click)="collapseState.first = true"
+              (click)="collapseState.second = true"
+              (click)="collapseState.fifth = true">
+                <a  >
+                  أصناف وأرصدة وعملاء <i class="fa-solid fa-briefcase"></i> 
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.third"class="jjjj">
+                <ul class="kkkk">
+                  <li class="llll"><a class="nav-links" routerLink="/items">بيانــــات الاصنــاف</a></li>
+                  <li class="llll"><a class="nav-links" routerLink="/customers">بيانات العملاء والموردين</a></li>
+                  <li class="llll"><a class="nav-links" routerLink="/StoreSelection">الأرصدة المخزنية</a></li>
+                  <li class="llll"><a class="nav-links">تعريف المنتجات التامة</a> </li>
+                </ul>
+              </div>
+
+
+
+
+              <li class="nav-section "
+              [ngClass]="{'collapsed-class-shadow': !collapseState.fourth,}"
+              [ngClass]="{'collapsed-class-shadow-Top': !collapseState.third,}"
+               (click)="collapseState.fourth = !collapseState.fourth"
+              (click)="collapseState.first = true"
+              (click)="collapseState.second = true"
+              (click)="collapseState.third = true"
+              (click)="collapseState.fifth = true">
+              
+                <a  >
+                  تـــعــــــــــريـــــــــفـــــات <i class="fa-solid fa-hand-holding-dollar"></i>
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.fourth"class="jjjj">
+                <ul class="kkkk">
+                  <li class="llll"><a class="nav-links">تعريف المحافظات</a></li>
+                  <li class="llll"><a class="nav-links" routerLink="/Stores">تعريف الــمخازن</a></li>
+                  <li class="llll"><a class="nav-links"> العبــــــــوات</a></li>
+                </ul>
+              </div>
+
+
+
+              <li class="nav-section "
+              [ngClass]="{'collapsed-class-shadow': !collapseState.sixth,}"
+              [ngClass]="{'collapsed-class-shadow-Top': !collapseState.fourth,}"
+               (click)="collapseState.sixth = !collapseState.sixth"
+              (click)="collapseState.first = true"
+              (click)="collapseState.second = true"
+              (click)="collapseState.third = true"
+              (click)="collapseState.fourth = true"
+              (click)="collapseState.fifth = true"
+              >
+              
+                <a  >
+                  التقــــــــــاريـــــــــــــــــــر <i class="fa-solid fa-bars-staggered"></i> 
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.sixth" class="jjjj reports-submenu">
+                <ul class="kkkk">
+                  @for (group of reportMenuGroups; track group.key) {
+                    <li class="llll report-menu-item"
+                        [class.report-menu-item-active]="activeReportMenu === group.key"
+                        (click)="toggleReportSideMenu(group.key, $event)">
+                      <a class="nav-links">{{ group.title }}</a>
+                    </li>
+                  }
+                </ul>
+              </div>
+
+
+
+              <li class="nav-section "
+              [ngClass]="{'collapsed-class-shadow': !collapseState.fifth,}"
+              (click)="collapseState.fifth = !collapseState.fifth"
+             (click)="collapseState.first = true"
+             (click)="collapseState.second = true"
+             (click)="collapseState.third = true"
+             (click)="collapseState.fourth = true">
+                <a >
+                  الضبــــــط والصيـــانــــــة<i class="fa-solid fa-screwdriver-wrench"></i>
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.fifth"class="jjjj">
+                <ul class="kkkk">
+                  <li class="llll"><a class="nav-links" routerLink="/CostControl">ضبـــــط التكلفة</a></li>
+                  <li class="llll"><a class="nav-links" routerLink="/UserDetails">تعريف المستخدمين</a></li>
+                </ul>
+              </div>
+            
+              <li  class="nav-section " routerLink="/home" routerLinkActive=""
+              [ngClass]="{'collapsed-class-shadow-Top': !collapseState.fifth,}"
+              ><a class="fw-100" >خـــــــــــــــــــــــــــــــروج<i class=" fa-solid fa-right-from-bracket " ></i></a></li>
+
+            
+            
+            </div>
+
+          
+      </div>
+    }
+  
+  
+  
+    @if(navState === 'collapsed'){
+      <div class="slideInIcons ">
+        
+        
+         
+          
+          <!--   dashboard-->
+            <div class="rtl-menu-container  ">         
+              <a class="" routerLink="/home"><i class="fa-solid fa-home"></i></a>                
+              </div>
+              
+              <!-- Menu الحركات اليومية -->
+
+        <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-chart-simple"></i></a>                               
+          <div class="rtl-custom-menu">
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🏷️</span>
+              <span routerLink="/customers">المشتـــروات</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🔖</span>
+              <span>مرتجع البيع</span>
+            </button>
+
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🏭</span>
+              <span>وارد تصنيع</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">➕</span>
+              <span>إضافة أخرى</span>
+            </button>
+            <!--مبيعات-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">📈</span>
+              <span>مبيعات</span>
+            </button>
+            <!--مرتدات مشتروات-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🔄</span>
+              <span>مرتدات مشتروات</span>
+            </button>
+            <!--منصرف للتصنيع-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🛠️</span>
+              <span>منصرف للتصنيع</span>
+            </button>
+            <!--خصم أخرى-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">📉</span>
+              <span>خصم اخري</span>
+            </button>
+
+
+          </div>
+        </div>
+
+          <!--التعاملات النقدية-->
+        <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-coins"></i></a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:22}">
+              <span class="rtl-menu-icon">💸</span>
+              <span>المصروفات</span>
+            </button>
+
+            <button class="rtl-menu-item" routerLink="/ClientPaymentsMain">
+              <span class="rtl-menu-icon">💳</span>
+              <span>مدفوعات العملاء</span>
+            </button>
+
+
+            <button class="rtl-menu-item" routerLink="/ClientCashMain">
+              <span class="rtl-menu-icon">🤝</span>
+              <span>تسديدات موردين</span>
+            </button>
+
+            <button class="rtl-menu-item" routerLink="/SelectStore" [state]="{dataType:1,_TrsTy:24}">
+              <span class="rtl-menu-icon">🏠</span>
+              <span>مسحوبات شخصية</span>
+            </button>
+           
+
+
+          </div>
+        </div>
+
+
+         <!--أصناف وأرصدة وعملاء-->
+         <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-briefcase"></i></a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item" routerLink="/items">
+              <span class="rtl-menu-icon">📦</span>
+              <span >بيانات الاصناف</span>
+            </button>
+
+            <button class="rtl-menu-item" routerLink="/customers">
+              <span class="rtl-menu-icon">👥</span>
+              <span style="font-size: 16px ;   font-weight: bolder;">بيانات العملاء والموردين</span>
+            </button>
+
+
+            <button class="rtl-menu-item" routerLink="/StoreSelection">
+              <span class="rtl-menu-icon">💰</span>
+              <span>الأرصدة المخزنية</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🛒</span>
+              <span>تعريف المنتجات التامة</span>
+            </button>
+           
+
+
+          </div>
+        </div>
+
+
+
+         <!--أصناف وأرصدة وعملاء-->
+         <div class="rtl-menu-container  ">         
+          <a class="">  <i class="fa-solid fa-hand-holding-dollar"></i>  </a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🌐</span>
+              <span>تعريف المحافظات</span>
+            </button>
+
+            <button class="rtl-menu-item" routerLink="/Stores">
+              <span class="rtl-menu-icon">🚛</span>
+              <span>تعريف المخازن</span>
+            </button>
+
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🧴</span>
+              <span>العبوات</span>
+            </button>
+
+          
+           
+
+
+          </div>
+        </div>
+
+
+         <!--   reports-->
+         <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-bars-staggered"></i></a>                
+          </div>
+
+
+          <!--<i class="fa-solid fa-screwdriver-wrench"></i>-->
+           <!--الضبط والصيانة-->
+         <div class="rtl-menu-container  ">         
+          <a class="">  <i class="fa-solid fa-screwdriver-wrench"></i>  </a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">💲</span>
+              <span>ضبط التكلفة</span>
+            </button>
+
+            <button class="rtl-menu-item" routerLink="/UserDetails">
+              <span class="rtl-menu-icon">🧑‍💻</span>
+              <span >تعريف المستخدمين</span>
+            </button>
+
+
+          
+          </div>
+        </div>
+
+        <!--   reports-->
+        <div class="rtl-menu-container">         
+          <a > 
+          <i class="fa-solid fa-right-from-bracket"></i>
+
+          </a>
+        </div>
+
+        
+
+
+
+         
+      </div>
+  
+    }
+    
+  </div>
+    
+  
+  
+   
+  
+  
+  
+    
+    </div>
+
+    @if (activeReportMenu && activeReportGroup) {
+      <div class="report-side-menu report-side-menu-floating"
+           [style.top.px]="reportMenuPosition.top"
+           [style.left.px]="reportMenuPosition.left"
+           (click)="$event.stopPropagation()">
+        <div class="report-side-menu-title">{{ activeReportGroup.title }}</div>
+        <ul class="report-side-menu-list">
+          @for (item of activeReportGroup.items; track item.label) {
+            <li>
+              @if (item.route) {
+                <a class="report-side-menu-link" [routerLink]="item.route">{{ item.label }}</a>
+              } @else {
+                <span class="report-side-menu-link">{{ item.label }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+   
+ <!-- Toggle Button -->
+
+   
+
+
+
+
+
+   
+ 
+   
+    
+
+
+
+
+  
+  
+
+   
+    
+  
+
+  
+
+
+

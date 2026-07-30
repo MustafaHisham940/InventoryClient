@@ -1,0 +1,66 @@
+<p>adjus-cost-for-all-items works!</p>
+<div class="card shadow-sm position-relative" dir="rtl">
+
+    <div class="card-ribbon w-100 text-center align-items-center justify-content-between  ">
+      <div class="pageLabel " >
+        
+        <h2 class="mb-0 fw-bolder fs-3" style="color: white;">تقرير بطاقة حركة صنف </h2>
+       <div class="iccc " >              
+       </div>                   
+    </div>     
+    
+     
+    </div>
+    <div class="card-body">
+     
+        <div class="card shadow-sm">
+          <div class="card-body" >
+              @if(this.emptyFlag==true){
+                <div class="alert alert-dark fs-4" role="alert"  >
+                  لا يوجد منتجات تحتاج الي الضبط
+                 </div>
+              }
+              @else {
+                <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
+                  
+                  <div class="d-flex justify-content-center align-items-center mb-3">
+                      <div class="customer-filters">
+                          <!-- Search Row with Label -->
+                          <div class="progress" style="width: 1000px; height: 60px;">
+                            <div
+                              class="progress-bar"
+                              role="progressbar"
+                              [style.width.%]="progress">
+                              {{ progress }}%
+                            </div>
+                          </div>
+                              
+                          <button class="btn btn-primary" (click)="startAdjustment()">
+                            ابدا ضبط التكلفة
+                          </button>                                                                                
+                          </div>
+                          
+                  
+                       
+                        
+                        </div>
+                      
+                  </div>
+              }
+           
+                   
+                 
+                
+
+              </div>                   
+          </div>
+                    
+        </div>
+      
+
+
+
+    </div>
+                                             
+  
+ 

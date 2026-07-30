@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="card shadow-sm position-relative mt-5 " dir="rtl">
+  
+    <div class="card-ribbon  text-center align-items-center justify-content-between  ">
+      <div class="pageLabel " >
+        
+        <h2 class="mb-0 fw-bolder" style="color: white;">صلاحيات المستخدم : </h2>
+        <h3 class="mb-0 fw-bolder" style="color: white;">{{userName}}</h3>
+       <div class="iccc " >
+        
+       </div>
+     
+      <!--<a  class="text-success small">الأعضاء النشطين</a>-->  
+    </div>
+    <!--<a     data-toggle="tooltip" title="اضاقة مستخدم جديد!"><i class="fas fa-plus fs-5" appNavbarHover></i> </a>-->
+    
+     
+    </div>
+    <div class="card-body ">
+      <!-- ... your existing card content ... -->
+
+       
+      
+      
+
+        <div class="card shadow-sm">
+          <div class="card-body" >
+        
+           
+  
+            @for (item of _roles.data; track $index) {
+            <section class="example-section">
+              <mat-slide-toggle 
+              [(ngModel)]="item.isActive"
+                  class="example-margin"
+                  name="item.normalizedName"
+                
+
+                >
+                
+              {{item.name}}
+              </mat-slide-toggle>
+            </section>
+             }
+            </div>
+        </div>
+        
+
+        <button class="btn btn-primary m-4" (click)="updateUserRole(userName)">تحديث الصلاحيات</button>
+        <button class="btn btn-secondary " (click)="gotoRolesPage()">الرجوع</button>
+
+    </div>
+  </div>
+   
+</div>

@@ -1,0 +1,516 @@
+body {
+    background: #f7fafd;
+  }
+  
+  
+  /* ============================= */
+  /* Cards */
+  /* ============================= */
+  
+  .card {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(34, 41, 47, 0.06);
+  }
+  
+  
+  .card-body {
+    padding-top: 50px;
+  }
+  
+  
+  /* ============================= */
+  /* Stats Cards */
+  /* ============================= */
+  
+  .stats-card {
+  
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,.05);
+    transition: .3s ease;
+    height:100%;
+  
+  }
+  
+  
+  .stats-card:hover {
+  
+    transform: translateY(-5px);
+  
+  }
+  
+  
+  
+  .stats-card .card-body {
+  
+    padding:1.5rem;
+  
+  }
+  
+  
+  
+  .stats-card .card-title {
+  
+    color:#6c757d;
+    font-size:1rem;
+    font-weight:600;
+  
+  }
+  
+  
+  
+  .card-number {
+  
+    font-size:1.75rem;
+    font-weight:700;
+    color:#343a40;
+  
+  }
+  
+  
+  
+  .total-customers {
+  
+    background:#f0f7ff;
+    border-left:4px solid #0d6efd;
+  
+  }
+  
+  
+  
+  .members {
+  
+    background:#f0fff4;
+    border-left:4px solid #28a745;
+  
+  }
+  
+  
+  
+  .active-now {
+  
+    background:#fff8f0;
+    border-left:4px solid #fd7e14;
+  
+  }
+  
+  
+  
+  /* ============================= */
+  /* Users Avatars */
+  /* ============================= */
+  
+  .user-avatars {
+  
+    display:flex;
+    align-items:center;
+  
+  }
+  
+  
+  
+  .user-avatars img {
+  
+    width:30px;
+    height:30px;
+    border:2px solid white;
+    margin-right:-10px;
+  
+  }
+  
+  
+  
+  .more-users {
+  
+    background:#e9ecef;
+    color:#6c757d;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+  
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  
+    font-size:.75rem;
+    font-weight:600;
+  
+  }
+  
+  
+  
+  
+  /* ============================= */
+  /* Table */
+  /* ============================= */
+  
+  
+  .table {
+  
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+  
+  }
+  
+  
+  
+  .table thead th {
+  
+    color:#6c757d;
+    font-weight:600;
+    background:#f8fafc;
+    border-bottom:2px solid #f1f1f1;
+  
+  }
+  
+  
+  
+  .table tbody tr {
+  
+    border-bottom:1px solid #f1f1f1;
+  
+  }
+  
+  
+  
+  .table tbody tr:last-child {
+  
+    border-bottom:none;
+  
+  }
+  
+  
+  
+  /* ============================= */
+  /* Badges */
+  /* ============================= */
+  
+  .badge {
+  
+    padding:.35em .65em;
+    font-size:.75rem;
+    font-weight:500;
+  
+  }
+  
+  
+  
+  .badge.bg-success {
+  
+    background:#34d399!important;
+    color:white;
+  
+    font-size:.95em;
+    padding:.5em 1em;
+    border-radius:8px;
+  
+  }
+  
+  
+  
+  
+  /* ============================= */
+  /* Inputs */
+  /* ============================= */
+  
+  input.form-control,
+  select.form-select {
+  
+  
+    border-radius:8px;
+    border:1px solid #e5e7eb;
+    background:#f8fafc;
+  
+  }
+  
+  
+  
+  input.form-control:focus,
+  select.form-select:focus {
+  
+    border-color:#34d399;
+  
+    box-shadow:
+    0 0 0 .2rem rgba(52,211,153,.15);
+  
+  }
+  
+  
+  
+  /* ============================= */
+  /* Search */
+  /* ============================= */
+  
+  
+  .section-label {
+  
+   color:#495057;
+   font-weight:600;
+  
+   padding-right:.5rem;
+   border-right:3px solid #0d6efd;
+  
+  }
+  
+  
+  
+  .search-box {
+  
+   position:relative;
+   min-width:150px;
+  
+  }
+  
+  
+  
+  .search-box i {
+  
+  
+   position:absolute;
+  
+   top:50%;
+  
+   right:12px;
+  
+   transform:translateY(-50%);
+  
+   color:#6c757d;
+  
+  
+  }
+  
+  
+  
+  .search-box input {
+  
+  
+   width:100%;
+  
+   padding:
+   8px 35px 8px 15px;
+  
+  
+   border:1px solid #ddd;
+  
+   border-radius:12px;
+  
+   background:white;
+  
+  
+  }
+  
+  
+  
+  
+  /* ============================= */
+  /* Select */
+  /* ============================= */
+  
+  
+  .select-wrapper i {
+  
+   position:absolute;
+  
+   top:50%;
+  
+   right:12px;
+  
+   transform:translateY(-50%);
+  
+   color:#6c757d;
+  
+  }
+  
+  
+  
+  .custom-select {
+  
+  
+   width:100%;
+  
+   padding:
+   8px 35px 8px 15px;
+  
+  
+   border:1px solid #ddd;
+  
+   border-radius:12px;
+  
+   background:white;
+  
+  
+   appearance:none;
+  
+  
+  }
+  
+  
+  
+  /* ============================= */
+  /* Filter Layout */
+  /* ============================= */
+  
+  
+  .customer-filters {
+  
+  
+   display:flex;
+  
+   flex-direction:column;
+  
+   gap:1.5rem;
+  
+  
+  }
+  
+  
+  
+  .d-flex.gap-3 {
+  
+   gap:1rem!important;
+  
+  }
+  
+  
+  
+  
+  
+  /* ============================= */
+  /* Ribbon Header */
+  /* ============================= */
+  
+  
+  .card-ribbon {
+  
+  
+   width:100%;
+  
+   background:#1e7fc1;
+  
+   color:white;
+  
+   font-weight:bold;
+  
+   font-size:1.1rem;
+  
+  
+   padding:10px 0;
+  
+  
+   border-radius:18px 18px 0 0;
+  
+  
+   position:absolute;
+  
+   top:0;
+  
+   left:0;
+  
+  
+   z-index:2;
+  
+  
+   box-shadow:
+   0 2px 8px rgba(30,127,193,.1);
+  
+  
+  }
+  
+  
+  
+  .pageLabel {
+  
+  
+   display:inline-flex;
+  
+   align-items:center;
+  
+   padding:0 20px;
+  
+   margin-right:500px;
+  
+  
+  }
+  
+  
+  
+  .iccc {
+  
+   margin-right:500px;
+  
+  }
+  
+  
+  
+  .card-ribbon a {
+  
+  
+   cursor:pointer;
+  
+  }
+  
+  
+  
+  .card-ribbon a:hover {
+  
+  
+   color:#216731;
+  
+  }
+  
+  
+  
+  /* ============================= */
+  /* RTL */
+  /* ============================= */
+  
+  
+  [dir="rtl"] .user-avatars img {
+  
+   margin-right:0;
+  
+   margin-left:-10px;
+  
+  }
+  
+  
+  
+  [dir="rtl"] .section-label {
+  
+  
+   padding-right:0;
+  
+   padding-left:.5rem;
+  
+  
+   border-right:none;
+  
+   border-left:3px solid #0d6efd;
+  
+  
+  }
+  
+  
+  [dir="rtl"] .search-box i,
+  [dir="rtl"] .select-wrapper i {
+  
+  
+   right:auto;
+  
+   left:12px;
+  
+  }
+  
+  
+  
+  [dir="rtl"] .search-box input,
+  [dir="rtl"] .custom-select {
+  
+  
+   padding:
+  
+   8px 15px 8px 35px;
+  
+  }

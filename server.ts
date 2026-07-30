@@ -1,3 +1,5 @@
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
 import express from 'express';

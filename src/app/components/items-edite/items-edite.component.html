@@ -1,0 +1,335 @@
+
+
+
+
+ 
+    <div class="container-fluid ">
+    
+        <div class="card-ribbon  text-center">
+            <div class="pageLabel" >
+              <h2 class="mb-0 fw-bolder" > تعديل بيانات الصنف  </h2>
+              <a  class="text-success small"> </a>
+          </div>
+          </div>
+   
+        
+        <form [formGroup]="addForm"  (ngSubmit)="editeItem()"  class="pt-5">
+            <div class="row mt-5" dir="rtl">
+                
+                <mat-tab-group>
+                    <mat-tab label="بيانات الصنف"> 
+                        <!-- Account Details -->
+                        <div class="AccountDetails " dir="rtl">
+    
+                            <div class="mb-3">
+                                <label for="codeNumber" class="form-label">كود الصنف</label>
+                                <input type="text"  class="form-control " id="codeNumber" disabled  placeholder="{{hereEditeCustomer.id}}">
+    
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="accountNum" class="form-label">الوصف</label>        
+                                <input type="text" min="0" class="form-control" id="itmNm" formControlName="itmNm" [appInputLimiter]="10">
+                                @if(addForm.get('itmNm')?.getError('required') && addForm.get('itmNm')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        الحقل لا يمكن ان يكون فارغا
+                                    </small>
+                                }
+                                @if(addForm.get('itmNm')?.getError('maxlength') && addForm.get('itmNm')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        العنصر يجب ان يكون بخد اقصي 60 حرف
+                                    </small>
+                                }
+                                
+                                                                        
+                                @else if ( !addForm.get('itmNm')?.getError('required' ) && addForm.get('itmNm')?.touched){
+                                    <small >
+                                        <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                      الييانات مقبولة
+                                    </small>
+                                }
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="accountNum" class="form-label">BarCode Id</label>        
+                                <input type="text" min="0" class="form-control" id="barCod" formControlName="barCod">
+                                @if(addForm.get('barCod')?.getError('required') && addForm.get('barCod')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        كود المستخدم لا يمكن ان يكون فارغا
+                                    </small>
+                                }
+                                @else if(addForm.get('barCod')?.getError('maxlength') && addForm.get('barCod')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        العنصر يجب ان يتكون من 15 رقم صحيح  و 3 ارقام عشرية
+                                    </small>
+                                }
+                                
+                                                                        
+                                @else if ( !addForm.get('barCod')?.getError('required') &&!addForm.get('barCod')?.getError('maxlength')&& addForm.get('barCod')?.touched){
+                                    <small >
+                                        <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                      الييانات مقبولة
+                                    </small>
+                                }
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="accountNum" class="form-label">وحدة القياس</label>        
+                                <input type="text" min="0" class="form-control" id="mUnt" formControlName="mUnt">
+                                @if(addForm.get('mUnt')?.getError('required') && addForm.get('mUnt')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        العنصر المستخدم لا يمكن ان يكون فارغا
+                                    </small>
+                                }
+                                @if(addForm.get('mUnt')?.getError('maxlength') && addForm.get('mUnt')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        العنصر يجب ان يتكون 50 حرف بحد اقصي
+                                    </small>
+                                }
+                                
+                                                                        
+                                @else if ( !addForm.get('mUnt')?.getError('required') && addForm.get('mUnt')?.touched){
+                                    <small >
+                                        <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                      الييانات مقبولة
+                                    </small>
+                                }
+                            </div>
+                            <div class="mb-3">
+                                <label for="accountNum" class="form-label">العبوة الافتراضية</label>        
+                                <input type="number" min="0" class="form-control" id="back" formControlName="back">
+                                @if(addForm.get('back')?.getError('required') && addForm.get('back')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        العنصر المستخدم لا يمكن ان يكون فارغا
+                                    </small>
+                                }
+                                @if(addForm.get('back')?.getError('maxlength') && addForm.get('back')?.touched){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        العنصر يجب ان يتكون 100 حرف بحد اقصي
+                                    </small>
+                                }
+                                
+                                                                        
+                                @else if ( !addForm.get('back')?.getError('required') && addForm.get('back')?.touched){
+                                    <small >
+                                        <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                      الييانات مقبولة
+                                    </small>
+                                }
+                            </div>
+                            
+                       
+                            
+                        </div>
+                    
+                        
+                        
+                         </mat-tab>
+                   
+                   
+                         <mat-tab label="بيانات اخري"> 
+                        <!-- Client Details -->
+                     <div class="itemdetails" dir="rtl">
+                        <div class="mb-3">
+                            <label for="codeNumber" class="form-label">سعر البيع</label>
+                            <input type="number"  class="form-control " id="pric" formControlName="pric">
+                            @if(addForm.get('pric')?.getError('required')&& addForm.get('pric')?.touched) {
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @if(addForm.get('pric')?.getError('pattern') && addForm.get('pric')?.touched){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المنتج يجب ان يتكون من 15 رقم صحيح  و 3 ارقام عشرية
+                                </small>
+                            }
+                            
+                                                                    
+                            @else if ( !addForm.get('pric')?.getError('required') && addForm.get('pric')?.touched){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">سعر الجملة</label>        
+                            <input type="number" min="0" class="form-control" id="gPrc" formControlName="gPrc">
+                            @if(addForm.get('gPrc')?.getError('required') && addForm.get('gPrc')?.touched){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @if(addForm.get('gPrc')?.getError('pattern') && addForm.get('gPrc')?.touched){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المنتج يجب ان يتكون من 15 رقم صحيح  و 3 ارقام عشرية
+                                </small>
+                            }
+                            
+                                                                    
+                            @else if ( !addForm.get('gPrc')?.getError('required') && addForm.get('gPrc')?.touched){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="codeNumber" class="form-label">تكلفة رصيد أول المدة</label>
+                            <input type="number"  class="form-control " id="bCst" formControlName="bCst">
+                            @if(addForm.get('bCst')?.getError('required') && addForm.get('bCst')?.touched
+                            ){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @if(addForm.get('bCst')?.getError('pattern') && addForm.get('bCst')?.touched
+                            ){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المنتج يجب ان يتكون من 15 رقم صحيح  و 3 ارقام عشرية
+                                </small>
+                            }
+                            
+                                                                    
+                            @else if ( !addForm.get('bCst')?.getError('required') && addForm.get('bCst')?.touched
+                            ){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="codeNumber" class="form-label">أقل سعر بيع</label>
+                            <input type="number"  class="form-control " id="lPrc" formControlName="lPrc">
+                            @if(addForm.get('lPrc')?.getError('required')&& addForm.get('lPrc')?.touched ){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @if(addForm.get('lPrc')?.getError('pattern') && addForm.get('lPrc')?.touched){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المنتج يجب ان يتكون من 15 رقم صحيح  و 3 ارقام عشرية
+                                </small>
+                            }
+                            
+                                                                    
+                            @else if ( !addForm.get('lPrc')?.getError('required') && addForm.get('lPrc')?.touched){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="codeNumber" class="form-label">قيمة الضريبة</label>
+                            <input type="number"  class="form-control " id="tax" formControlName="tax">
+                            @if(addForm.get('tax')?.getError('required') && addForm.get('tax')?.touched){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @if(addForm.get('tax')?.getError('pattern') && addForm.get('tax')?.touched){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المنتج يجب ان يتكون من 15 رقم صحيح  و 3 ارقام عشرية
+                                </small>
+                            }
+                            
+                                                                    
+                            @else if ( !addForm.get('tax')?.getError('required') && addForm.get('tax')?.touched){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="ctgId" class="form-label">كود الفئة</label>
+                            <select class="form-select " id="ctgId" formControlName="ctgId">
+                              <option value="" disabled selected>اختر كود الفئة</option>
+                              <option [ngValue]="1">فئة 1</option>
+                              <option [ngValue]="2">فئة 2</option>
+                              <option [ngValue]="3">فئة 3</option>
+                            </select>
+                            @if(addForm.get('ctgId')?.getError('required') && addForm.get('ctgId')?.touched){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }                        
+                                                                    
+                            @else if ( !addForm.get('ctgId')?.getError('required') && addForm.get('ctgId')?.touched){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                          </div>
+    
+                    
+                     </div>
+    
+                          
+                     
+                    
+                   
+                   
+    
+    
+              
+                    
+                    
+                    </mat-tab>
+    
+    
+                <!--<mat-tab label="Third"> Content 3 </mat-tab>-->
+                  </mat-tab-group>
+                  
+    
+    
+    
+                
+                
+                
+    
+    
+    
+    
+    
+                <div class="form-actions mt-4 d-flex justify-content-end" dir="rtl" >
+                    <button type="button" class="btn btn-secondary m-1"  routerLink="/items">
+                        <i class="fa fa-backward">العودة</i> </button>
+                        <button type="submit" class="btn btn-success m-1"  >
+                            <i class="fa fa-backward">حفظ</i> </button>
+                    
+                </div>
+            </div>
+        </form>
+       
+    </div>
+    
+    
+ 
+
+

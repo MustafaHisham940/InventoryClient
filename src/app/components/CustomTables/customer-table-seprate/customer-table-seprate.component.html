@@ -1,0 +1,113 @@
+
+
+<div class="prompt-body" dir="rtl">
+
+    <div class="picker-banner">
+        <i class="fas fa-address-card banner-icon"></i>
+        <div class="banner-text">
+            <h2>اختيار عميل / مورد</h2>
+            <span>ابحث ثم اختر عنصرًا واحدًا من القائمة</span>
+        </div>
+        @if(selectedItem){
+        <div class="banner-selected">
+            <span class="banner-selected-label">تم اختيار</span>
+            <span class="banner-selected-name">{{selectedItem.cstNm}}</span>
+        </div>
+        }
+    </div>
+
+    <form [formGroup]="secondFormGroup">
+        <div class="container py-4">
+            <div class="component-container">
+                <div class="search-header">
+                    <h3 class="section-label">ابحــــــــث عــــن العميل / المورد </h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="search-box">
+                                <i class="fas fa-id-card search-icon"></i>
+                                <input type="text" class="form-control search-input" placeholder="البحث بالرقم..." formControlName="_IdSearch">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="search-box">
+                                <i class="fas fa-user search-icon"></i>
+                                <input type="text" class="form-control search-input" placeholder="البحث بالاسم..." formControlName="_customerNameSearch">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="search-box">
+                                <i class="fas fa-map-marker-alt search-icon"></i>
+                                <input type="text" class="form-control search-input" placeholder="نوع العميل" formControlName ="_CustomerType">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <button class="btn btn-search me-2" (click)="searchItem(1)">
+                            <i class="fas fa-search me-2"></i>بحث
+                        </button>
+                        <button class="btn btn-clear" (click)="clearFilters()">
+                            <i class="fas fa-times me-2"></i>مسح الفلتر
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-select"></th>
+                                    <th>مسلسل</th>
+                                    <th>كود</th>
+                                    <th>اسم العميل</th>
+                                    <th>نوع العميل</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(item of _iItems.data ; track $index){
+                                    <tr [class.row-selected]="selectedItem?.id === item.id" (click)="onItemSelected(item)">
+                                        <td class="col-select">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"  id="{{item.id}}"
+                                                formControlName="ItemId" value="{{item.id}}" name="ItemId"  (change)="onItemSelected(item)"
+                                                >
+                                            </div>
+                                        </td>
+                                        <td>{{($index+1)+(_iItems.pageSize*(_iItems.pageIndex-1))}} </td>
+                                        <td class="fw-semibold">{{item.id}}</td>
+                                        <td>{{item.cstNm}}</td>
+                                        @if(item.typ == 1){
+                                            <td><span class="badge type-badge type-supplier">مورد</span></td>
+                                          }@else if(item.typ == 2) {
+                                            <td><span class="badge type-badge type-customer">عميل</span></td>
+                                          }@else if(item.typ == 3){
+                                            <td><span class="badge type-badge type-both">كلاهما</span></td>
+                                          }
+                                          @else {
+                                            <td><span class="badge type-badge type-unknown">غير محدد</span></td>
+                                          }
+                                    </tr>
+                                } @empty {
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">لا يوجد نتائج مطابقة</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+            <div class="pagination-container">
+                <div class="pagination-controls">
+                <button class="btn btn-light" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"><</button>
+                <span>صفحة {{ currentPage }} من {{ mathCiel}}</span>
+                <button  class="btn btn-light" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage * pageSize >= totalItems">></button>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

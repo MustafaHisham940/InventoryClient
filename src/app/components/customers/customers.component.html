@@ -1,0 +1,346 @@
+<body class="bg-light" dir="rtl">
+  <div class="container-fluid py-4">
+      <div class="container py-5  TotalSection">
+          <div class="row">
+              <!-- Total Customers Card -->
+              <div class="col-md-3 mb-4">
+                  <div class="stats-card total-customers">
+                      <div class="card-body">
+                          <h5 class="card-title">إجمالي العملاء</h5>
+                          <div class="d-flex justify-content-between align-items-end">
+                              <h2 class="card-number">{{_totalCustomerCount}}</h2>
+                               <!--<span class="badge bg-success">
+                                 <i class="fas fa-arrow-up me-1"></i> 16% هذا الشهر
+                              </span>-->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+      
+              <!-- Members Card -->
+              <div class="col-md-3 mb-4">
+                  <div class="stats-card members">
+                      <div class="card-body">
+                          <h5 class="card-title">اجمالي عدد الموردين</h5>
+                          <div class="d-flex justify-content-between align-items-end">
+                              <h2 class="card-number">{{_totalBidderCount}}</h2>
+                             <!-- <span class="badge bg-primary">
+                                  <i class="fas fa-arrow-up me-1"></i> 1% هذا الشهر
+                              </span>-->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+      
+              <!-- Active Now Card -->
+              <div class="col-md-3 mb-4">
+                  <div class="stats-card active-now">
+                      <div class="card-body">
+                          <h5 class="card-title">اجمالي عدد العمــــلاء</h5>
+                          <div class="d-flex justify-content-between align-items-end">
+                              <h2 class="card-number">{{_totalBuyerCount}}</h2>
+                              <!--<div class="active-users">
+                                  <div class="user-avatars">
+                                      <img  alt="User" class="rounded-circle">
+                                      <img  alt="User" class="rounded-circle">
+                                      <img  alt="User" class="rounded-circle">
+                                      <span class="more-users">+12</span>
+                                  </div>
+                              </div>-->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Start-now Now Card -->
+              <div class="col-md-3 mb-4">
+                <div class="stats-card Start-now">
+                    <div class="card-body">
+                        <h5 class="card-title">اجمالي عدد مورد/عميل</h5>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <h2 class="card-number">{{_totalBothCount}}</h2>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      
+
+
+
+      
+      <div class="card shadow-sm position-relative">
+
+        <div class="card-ribbon w-100 text-center align-items-center justify-content-between  ">
+          <div class="pageLabel " >
+            
+            <h2 class="mb-0 fw-bolder"  style="color: white;">جميـــــع العمــــلاء</h2>
+           <div class="iccc " >
+            
+           </div>
+         
+          <!--<a  class="text-success small">الأعضاء النشطين</a>-->  
+        </div>
+        <!--<a (click)="gotoAddClient()"   data-toggle="tooltip" title="اضاقة عميل جديد!"><i class="fas fa-plus fs-5" appNavbarHover></i> </a>-->
+        
+         
+        </div>
+        <div class="card-body">
+          <!-- ... your existing card content ... -->
+
+           
+          
+          
+
+            <div class="card shadow-sm">
+              <div class="card-body" >
+                  <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
+                      
+                      <div class="d-flex justify-content-center align-items-center mb-3">
+                          <div class="customer-filters">
+                              <!-- Search Row with Label -->
+                              <div class="row g-3 mb-4 align-items-center">  <!-- Added align-items-center -->
+                                <div class="col-auto">  <!-- Changed to col-auto for label -->
+                                  <h3 class="section-label m-0">بحث متقدم</h3>  <!-- Removed mb-3 -->
+                                </div>
+                               
+                               
+                                <div class="col">  <!-- Main content column -->
+                                  <div class="d-flex gap-3 w-100">
+                                    <div class="search-box flex-fill">
+                                      <i class="fas fa-id-card"></i>
+                                      <input type="number" placeholder="البحث بالرقم..." [(ngModel)]="_Icustomerfilter.Id">
+                                    </div>
+                                    <div class="search-box flex-fill">
+                                      <i class="fas fa-user"></i>
+                                      <input type="text" placeholder="البحث بالاسم..." [(ngModel)] = "_Icustomerfilter.Name">
+                                    </div>
+                                    <div class="search-box flex-fill">
+                                      <i class="fas fa-map-marker-alt"></i>
+                                      <input type="text" placeholder="البحث بالعنوان..." [(ngModel)]="_Icustomerfilter.Address">
+                                    </div>
+                                    <button class="btn btn-success px-4" style="white-space: nowrap;" (click)="searchCustomers()">
+                                      <i class="fas fa-search me-2"></i>بحث
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                      
+                              <!-- Filters Row with Label -->
+                              <div class="row g-3 align-items-center">  <!-- Added align-items-center -->
+                                <div class="col-auto">  <!-- Changed to col-auto for label -->
+                                  <h3 class="section-label m-0">تصفية النتائج</h3>  <!-- Removed mb-3 -->
+                                </div>
+                                <div class="col">  <!-- Main content column -->
+                                  <div class="d-flex justify-content-start gap-3 flex-wrap">  <!-- Changed to justify-content-start -->
+                                    <div class="select-filter" style="width: 220px">
+                                      <div class="select-wrapper">
+                                        <i class="fas fa-circle"></i>
+                                        <select class="custom-select" id="statusSelect" [(ngModel)]="_Icustomerfilter.Pst">
+                                          <option value="" selected disabled>الحالة</option>
+                                          <option value="1">نشط</option>
+                                          <option value="2"> موقوف</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="select-filter" style="width: 220px">
+                                      <div class="select-wrapper">
+                                        <i class="fas fa-users"></i>
+                                        <select class="custom-select" id="typeSelect" [(ngModel)]="_Icustomerfilter.Type" >
+                                          <option value="" selected disabled>نوع العميل</option>
+                                          <option value="1">مورد</option>
+                                          <option value="2">عميل</option>
+                                          <option value="3">كلاهما</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="select-filter" style="width: 220px">
+                                      <div class="select-wrapper">
+                                        <i class="fas fa-sort"></i>
+                                        <select class="custom-select" id="sortSelect" [(ngModel)]="_Icustomerfilter.Sort">
+                                          <option value="" selected disabled>الترتيب</option>
+                                          <option value="name_desc">تصاعديًا</option>
+                                          <option value="name_asc">تنازليًا</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <button class="btn btn-outline-secondary px-4" style="white-space: nowrap;" (click)="clearFilter()">
+                                      <i class="fas fa-times me-2"></i>مسح الفلتر
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          
+                      </div>
+                  </div>
+                   
+      
+      
+      
+                    <div class="table-responsive pt-5">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                  <th> كود</th>
+                                  <th>اسم العميل</th>
+                                  <th>رقم الهاتف</th>
+                                  <th>العنوان</th>
+                                  <th></th>
+                                  <th>نوع العميل</th>
+                                  <th>الحالة</th>
+                                  <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+      
+      
+                              @for (item of _customers.data ; track $index) {
+                                <tr>
+
+                                  <td>{{item.id |truncate:8}}</td>
+                                  <td>{{item.cstNm|truncate:8}}</td>
+                                  <td>{{item.phon|truncate:8}}</td>
+                                  <td>{{item.addr|truncate:8}}</td>
+                                  <td></td>
+                                          @if(item.typ == 1){
+                                            <td><span class="badge bg-dark" style="font-size: large;">مورد</span></td>
+                                          }@else if(item.typ == 2) {
+                                            <td><span class="badge bg-dark-subtle"  style="color: black; font-size: large;" >عميل</span></td>
+                                          }@else if(item.typ == 3){
+                                            <td><span class="badge bg-info-subtle"  style="color: black; font-size: large;" >كلاهما</span></td>
+                                          }
+                                          @else {
+                                            <td><span class="badge bg-info-subtle"  style="color: black; font-size: large;" >غير محدد</span></td>
+                                          }
+      
+                                          @if(item.pst == 1){
+                                            <td><span class="badge bg-success">نشط</span></td>
+                                          }@else {
+                                            <td><span class="badge bg-danger">موقوف</span></td>
+                                          }
+                                  
+      
+                                  <td>
+
+                                    <button type="button" class="btn btn-sm btn-outline-primary " (click)="getCustomerById_ShowDetails(item.id)">
+                                      <i class="fas fa-user-circle"></i>
+                                    </button>
+      
+                                      <button class="btn btn-sm btn-outline-primary me-2" (click)="getCustomerById(item.id)">
+                                          <i class="fas fa-edit"></i>
+                                        </button>
+                                       
+                                       
+                                       <button type="button" class="btn btn-sm btn-outline-danger me-2" (click)="gotoDeleteComponent(item.id)">
+                                          <i class="fas fa-trash"></i>
+                                        </button>
+
+                                        
+
+
+                                        <!-- Button trigger modal -->
+                                              
+      
+                                  </td>
+                              </tr>
+                              
+                            }
+                               
+                           
+      
+      
+                                
+      
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="text-muted small">عرض البيانات من 1 إلى 10 من أصل {{_totalCustomerCount}}  مدخل</span>
+                        <nav>
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item"><a class="page-link" (click)="decrementPDg()">&lt;</a></li>
+                                @for (item of pagesList; track $index) {
+                                  <li class="page-item "><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
+                                }                             
+                                <li class="page-item disabled " (click)="incrementPDg()"><a class="page-link">&gt;</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+          
+
+
+
+        </div>
+      </div>
+       
+       
+        
+
+
+     
+
+
+      
+  </div>
+
+  @if(isDeleted !=-1){
+
+
+    <div class="position-fixed top-0 start-0 w-100 h-100 backdrop-blur"></div>
+
+<!-- White box centered on screen -->
+<!--<div class="whiteBox position-fixed top-50 start-50 translate-middle  bg-danger rounded-3 shadow-lg" style="z-index: 1050; color: white;">
+  <div class="text-center">
+    <h2 class="mb-3">تاكيد حذف المشترك ؟</h2>
+    <p class="text-muted mb-4">سوف يتم حذف جميع البيانات المتعلقة يهذا المشترك تماما</p>
+    <button type="button" class="btn btn-dark px-4 m-1" (click)="softDelete()">حذف</button>
+    <button type="button" class="btn btn-secondary px-4 m-1" (click)="dontDelete()">الغاء</button>
+
+  </div>
+</div>-->
+<div class="modal-backdrop fade show" style="z-index: 1040;"></div>
+<div class="modal position-fixed d-block" tabindex="-1" style="z-index: 1050;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <!-- Modal Header -->
+      <div class="modal-header bg-primary text-white border-0 rounded-top-3">
+        <div class="modal-title w-100 text-center">
+          <i class="bi bi-exclamation-triangle-fill fs-1 d-block mb-2"></i>
+          <h2 class="mb-0 fw-bold">تأكيد حذف المشترك</h2>
+        </div>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body text-center py-4">
+        <p class="lead text-muted mb-4">
+          سوف يتم حذف جميع البيانات المتعلقة بهذا المشترك تماماً ولا يمكن استرجاعها
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+          <button type="button" class="btn btn-lg btn-outline-secondary px-4 flex-grow-1" (click)="dontDelete()">
+            <i class="bi bi-x-circle me-2"></i> إلغاء
+          </button>
+          <button type="button" class="btn btn-lg btn-dark px-4 flex-grow-1" (click)="softDelete()">
+            <i class="bi bi-trash3 me-2"></i> حذف
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  }
+
+
+</body>
+
+<!-- Add this at the bottom of your template -->
+<app-fixed-button 
+  [buttonTitle]="'ACTIONS.EDIT' | translate" 
+  (clickEvent)="onEditButtonClicked()">
+</app-fixed-button>

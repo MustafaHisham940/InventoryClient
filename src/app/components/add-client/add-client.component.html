@@ -1,0 +1,313 @@
+<div class="container-fluid ">
+    <div class="card-ribbon  text-center">
+        <div class="pageLabel" >
+          <h1 class="mb-0" > اضافة عميل جديد </h1>
+          <a  class="text-success small"> </a>
+      </div>
+      </div>
+   
+    <form [formGroup]="addForm" (ngSubmit)="addClient()" class="pt-5">
+        <div class="row mt-5">
+            
+            <!-- Account Details -->
+            <div class="col-md-5 ms-5" dir="rtl">
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="form-section-title">تفاصيل الحساب</h1>
+                    </div>
+                    <div class="card-body">
+                      
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">رصيد البداية رقم موجب أو سالب</label>
+                            <input type="number" min="0" class="form-control" id="accountNum" formControlName="bBal" [appInputLimiter]="20">                           
+                            @if(addForm.get('bBal')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @else if ( !addForm.get('bBal')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="balance" class="form-label">الرصيد الختامي  </label>
+                            <input type="number" min="0" class="form-control" id="balance" formControlName="bal" [appInputLimiter]="50">
+                            @if(addForm.get('bal')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @else if ( !addForm.get('bal')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="taxNum" class="form-label">البطاقة/ الرقم الضريبية</label>
+                            <input type="text" class="form-control" id="taxNum" formControlName="taxId"  >
+                            @if(addForm.get('taxId')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @else if ( !addForm.get('taxId')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="resp" class="form-label">اسم مسئول التواصل</label>
+                            <input type="text" class="form-control" id="resp" formControlName="resp" [appInputLimiter]="50">
+                            @if(addForm.get('resp')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @else if ( !addForm.get('resp')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="trst" class="form-label">حد الثقة </label>
+                            <input type="number" class="form-control" id="trst" formControlName="trst" [appInputLimiter]="50">
+                            @if(addForm.get('trst')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @else if ( !addForm.get('trst')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="comNum" class="form-label">السجل التجاري </label>
+                            <input type="tel" class="form-control" id="comNum" formControlName="comId" [appInputLimiter]="50">
+                            @if(addForm.get('comId')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @else if ( !addForm.get('comId')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        
+                    </div>
+                  </div>
+
+               
+                
+                
+                
+                
+            </div>
+        
+            <!-- Client Details -->
+            <div class="col-md-5 offset-md-1 " dir="rtl">
+                
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="form-section-title">تفاصيل العميل</h2>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <label for="codeNumber" class="form-label">كود العميل/ المورد</label>
+                            <input type="number" class="form-control" id="codeNumber" formControlName="id" [appInputLimiter]="8">
+                            @if(addForm.get('id')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @if(addForm.get('id')?.getError('pattern')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود العميل يجب ان يتكون من 6 ارقام فقط
+                                </small>
+                            }
+                            @else if (!addForm.get('id')?.getError('pattern') && !addForm.get('id')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                      
+                        <div class="mb-3">
+                            <label class="form-label">طبيعة الجهة </label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"  id="individual" value="1" formControlName="typ">
+                                    <label class="form-check-label" for="individual">مورد </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"  id="business" value="2" formControlName="typ"  >
+                                    <label class="form-check-label" for="business">عميل </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"  id="both" value="3" formControlName="typ">
+                                    <label class="form-check-label" for="both">كلاهما </label>
+                                </div>
+                            </div>
+                            @if(addForm.get('typ')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    يجب اختيار طبيعة الجهة
+                                </small>
+                            }
+                        </div>
+                         <div class="mb-3">
+                            <label class="form-label">الحالة</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"  id="active" value="1" formControlName="pst" >
+                                    <label class="form-check-label" for="active">نشط</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"  id="notActive" value="2" formControlName="pst">
+                                    <label class="form-check-label" for="notActive"> موقوف </label>
+                                </div>
+                            </div>
+                            @if(addForm.get('pst')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    يجب اختيار حالة المستخدم
+                                </small>
+                            }
+                        </div>
+                       
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">الاسم بالكامل</label>
+                            <input type="text" class="form-control" id="fullName" formControlName="cstNm" [appInputLimiter]="50">
+                            @if(addForm.get('cstNm')?.getError('pattern')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    اسم المستخدم لا يجب ان يتخطي 50 حرف
+                                </small>
+                            }
+                            @else if(addForm.get('cstNm')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    اسم المستخدم مطلوب  
+                                </small>
+                            }
+                           @else if(!addForm.get('cstNm')?.getError('pattern')&&!addForm.get('cstNm')?.getError('required')    ){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="telephone" class="form-label"> رقم الهاتف</label>
+                                <input type="tel" class="form-control" id="telephone" formControlName="phon"[appInputLimiter]="11">
+                                @if(addForm.get('phon')?.getError('required')){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        رقم  الهاتف لا يمكن ان يكون فارغا
+                                    </small>
+                                }
+                                @else if(addForm.get('phon')?.getError('pattern')){
+                                    <small style="color: #940529;">
+                                        <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                        رقم هاتف خاطئ
+                                    </small>
+                                }
+                                @else if (!addForm.get('phon')?.getError('pattern') && !addForm.get('phon')?.getError('required')){
+                                    <small >
+                                        <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                      الييانات مقبولة
+                                    </small>
+                                }
+
+                            </div>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label"> العنوان </label>
+                            <input type="text" class="form-control" id="address" formControlName="addr" [appInputLimiter]="50">
+                            @if(addForm.get('addr')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    عنوان المستخدم لا يمكن ان يكون فارغا
+                                </small>
+                            }
+                            @if(addForm.get('addr')?.getError('maxlength')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    كود العميل يجب ان يتكون من 50 ارقام فقط
+                                </small>
+                            }
+                            @else if (!addForm.get('addr')?.getError('pattern') && !addForm.get('addr')?.getError('required')){
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="government" class="form-label">المحافظة</label>
+                                <input type="number" class="form-control" id="government" formControlName="gov" [appInputLimiter]="10">
+                            </div>
+                            <div class="col">
+                                <label for="mrkz" class="form-label">مركز</label>
+                                <input type="number" class="form-control" id="mrkz" formControlName="mrkz" [appInputLimiter]="10">
+                            </div>
+                            <div class="col">
+                                <label for="sec" class="form-label ">قطاع</label>
+                                <input type="number" class="form-control" id="sec" formControlName="sec" [appInputLimiter]="10">
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                
+               
+               
+
+
+            </div>
+
+
+
+
+
+            <div class="form-actions mt-4 d-flex justify-content-end" dir="rtl" >
+
+                @if(addForm.status == "VALID"){
+                <button type="submit" class="btn btn-success"> حفظ</button>
+
+                }
+
+                <button type="button" class="btn btn-danger me-2" (click)="cancel()">إلغاء</button>
+            </div>
+        </div>
+    </form>
+</div>

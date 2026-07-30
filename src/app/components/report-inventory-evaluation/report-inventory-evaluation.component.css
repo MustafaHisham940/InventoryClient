@@ -1,0 +1,10 @@
+.invalid-field {
+  border-color: #dc3545 !important;
+}
+
+.field-warning {
+  display: block;
+  margin-top: 4px;
+  color: #dc3545;
+  font-size: 0.8rem;
+}

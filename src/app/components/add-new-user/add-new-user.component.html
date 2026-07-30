@@ -1,0 +1,357 @@
+
+
+
+
+
+
+<div class="container-fluid ">
+    
+    <div class="card-ribbon   text-center">
+        <div class="pageLabel" >
+          <h2 class="mb-0 fw-bolder" > اضافة مستخدم جديد  </h2>
+          <span  class="text-light small ">  </span>
+      </div>
+      </div>
+   
+    <form [formGroup]="addForm"  (ngSubmit)="createNewUser()" class="pt-5">
+        <div class="row mt-5" dir="rtl">
+            
+            <mat-tab-group>
+                <mat-tab label="بيانات اساسية" class="fw-bolder"> 
+                    <!-- Account Details -->
+                    <div class="AccountDetails " dir="rtl">
+
+                      <div class="mb-3">
+                            <label for="codeNumber" class="form-label">كود العميل </label>
+                            <input type="number"  class="form-control " id="codeNumber" formControlName="_SimpleUserID" [appInputLimiter]="20">
+                            @if(addForm.get('_SimpleUserID')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر مطلوب
+                                </small>
+                            }
+                            @else if (addForm.get('_SimpleUserID')?.getError('maxlength')) {
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر مكون من 10 ارقام فقط
+                                </small>
+
+                            }
+                            @else   {
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+
+                        </div>
+                        
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">اسم المستخدم</label>        
+                            <input type="text" min="0" class="form-control" id="itmNm" formControlName="userName" [appInputLimiter]="50">
+                            @if(addForm.get('userName')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر مطلوب
+                                </small>
+                            }
+                            @else if(addForm.get('userName')?.getError('maxlength')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                      العنصر يجب ان يتكون من 50 حرف فقط
+                                </small>
+                            }
+							
+																	
+                            @else   {
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">Email</label>        
+                            <input type="text" min="0" class="form-control" id="barCod" formControlName="email" [appInputLimiter]="50">
+                            @if(addForm.get('email')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر مطلوب
+                                </small>
+                            }
+                            @else if(addForm.get('email')?.getError('email')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                      بيانات email خاطئة
+                                </small>
+                            }
+							
+																	
+                            @else   {
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">اسم العرض</label>        
+                            <input type="text" min="0" class="form-control" id="mUnt" formControlName="dsiplayName" [appInputLimiter]="50">
+                            @if(addForm.get('dsiplayName')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر مطلوب
+                                </small>
+                            }
+                            @else if(addForm.get('dsiplayName')?.getError('maxlength')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                      العنصر يجب ان يتكون من 50 حرف فقط
+                                </small>
+                            }
+							
+																	
+                            @else   {
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">كلمة المرور</label>        
+                            <input type="text" min="0" class="form-control" id="mUnt" formControlName="password" [appInputLimiter]="50">
+                            @if(addForm.get('password')?.getError('required')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    هذا العنصر مطلوب
+                                </small>
+                            }
+                            @else if(addForm.get('password')?.getError('pattern')){
+                                <small style="color: #940529;">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                    استخدم حروفًا كبيرة وصغيرة، وأرقامًا، ورموزًا، واجعلها لا تقل عن 12 حرفًا، ويفضّل أن تكون 14 أو أكثر.  
+                                </small>
+                            }
+							
+																	
+                            @else   {
+                                <small >
+                                    <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                  الييانات مقبولة
+                                </small>
+                            }
+                        </div>
+                    </div>
+                
+                    
+                    
+                     </mat-tab>
+               
+               
+                     <mat-tab label="بيانات اخري"> 
+                    <!-- Client Details -->
+                 <div class="itemdetails" dir="rtl">
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">رقم الهاتف</label>
+                        <input type="phone"  class="form-control " id="pric" formControlName="phoneNumber" [appInputLimiter]="11">
+                        
+                        @if(addForm.get('phoneNumber')?.getError('required')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                هذا العنصر مطلوب
+                            </small>
+                        }
+                        @else if(addForm.get('phoneNumber')?.getError('pattern')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                  رقم هاتف خاطئ
+                            </small>
+                        }
+                        
+                                                                
+                        @else   {
+                            <small >
+                                <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                              الييانات مقبولة
+                            </small>
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="accountNum" class="form-label">الاسم الاول</label>        
+                        <input type="text" min="0" class="form-control" id="gPrc" formControlName="fName" [appInputLimiter]="50">
+                        @if(addForm.get('fName')?.getError('required')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                هذا العنصر مطلوب
+                            </small>
+                        }
+                        @else if(addForm.get('fName')?.getError('maxlength')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                  العنصر يجب ان يتكون من 50 حرف فقط
+                            </small>
+                        }
+                        
+                                                                
+                        @else   {
+                            <small >
+                                <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                              الييانات مقبولة
+                            </small>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">اسم العائلة</label>
+                        <input type="text"  class="form-control " id="bCst" formControlName="lName" [appInputLimiter]="50">
+                        @if(addForm.get('lName')?.getError('required')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                هذا العنصر مطلوب
+                            </small>
+                        }
+                        @else if(addForm.get('lName')?.getError('maxlength')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                  العنصر يجب ان يتكون من 50 حرف فقط
+                            </small>
+                        }
+                        
+                                                                
+                        @else   {
+                            <small >
+                                <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                              الييانات مقبولة
+                            </small>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">اسم المدينة</label>
+                        <input type="text"  class="form-control " id="lPrc" formControlName="city" [appInputLimiter]="50">
+                        @if(addForm.get('city')?.getError('required')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                هذا العنصر مطلوب
+                            </small>
+                        }
+                        @else if(addForm.get('city')?.getError('maxlength')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                  العنصر يجب ان يتكون من 50 حرف فقط
+                            </small>
+                        }
+                        
+                                                                
+                        @else   {
+                            <small >
+                                <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                              الييانات مقبولة
+                            </small>
+                        }
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">العنوان</label>
+                        <input type="text"  class="form-control " id="tax" formControlName="street" [appInputLimiter]="50">
+                        @if(addForm.get('street')?.getError('required')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                هذا العنصر مطلوب
+                            </small>
+                        }
+                        @else if(addForm.get('street')?.getError('maxlength')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                  العنصر يجب ان يتكون من 50 حرف فقط
+                            </small>
+                        }
+                        
+                                                                
+                        @else   {
+                            <small >
+                                <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                              الييانات مقبولة
+                            </small>
+                        }
+                    </div>
+                   
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">الدولة</label>
+                        <input type="text"  class="form-control " id="tax" formControlName="country" [appInputLimiter]="50">
+                        @if(addForm.get('country')?.getError('required')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                هذا العنصر مطلوب
+                            </small>
+                        }
+                        @else if(addForm.get('country')?.getError('maxlength')){
+                            <small style="color: #940529;">
+                                <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                  العنصر يجب ان يتكون من 50 حرف فقط
+                            </small>
+                        }
+                        
+                                                                
+                        @else   {
+                            <small >
+                                <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                              الييانات مقبولة
+                            </small>
+                        }
+                    </div>
+                   
+                    
+
+                
+                 </div>
+
+                      
+                 
+                
+               
+               
+
+
+          
+                
+                
+                </mat-tab>
+
+
+            <!--<mat-tab label="Third"> Content 3 </mat-tab>-->
+              </mat-tab-group>
+              
+
+
+
+            
+            
+            
+
+
+
+
+
+            <div class="form-actions mt-4 d-flex justify-content-end" dir="rtl" >
+                <button type="button" class="btn btn-secondary m-1"  routerLink="/UserDetails">
+                    <i class="fa fa-backward">العودة</i> </button>
+                    @if(addForm.valid){
+                        }
+                        <button type="submit" class="btn btn-success m-1"  >
+                            <i class="fa fa-save">حفظ</i> </button>
+                
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+

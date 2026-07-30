@@ -1,0 +1,38 @@
+<body dir="rtl">
+   
+
+    <!-- Transparent Prompt -->
+    <div class="prompt-container">
+        <div class="prompt-header">
+            <span>اختيـــــــــــار المخــــــــــــــــــــــــزن</span>
+            <i class="fas fa-store"></i>
+        </div>
+
+
+
+ <div class="prompt-body">
+ <form [formGroup]="firstFormGroup" ngSubmit="onSubmit()">
+        <div class="mb-4">
+            <label for="storeSelect" class="form-label">المخزن</label>
+            <select class="form-select fs-5" id="storeSelect" formControlName="firstCtrl" >
+                <option value="" selected > &nbsp;&nbsp;&nbsp;اختــــــــــــر المخــــــــــــــــــــــــزن </option>
+
+                @for( item of _iStores.data  ;track $index){
+                <option [ngValue]="item" class="fs-5" >&nbsp;&nbsp;&nbsp;{{item.strNm}}</option>
+                }                             
+            </select>
+            @if(!firstFormGroup.valid){
+                <small style="color: red;"> يجب اختيار المخزن*  </small>
+            }
+        <div class="mb-4 mt-5">
+            <button class="btn btn-secondary" routerLink="/home">العودة</button>
+
+        @if(firstFormGroup.valid){
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">اختيار</button>
+        }
+        </div>
+        </div>
+ </form>
+</div>
+</div>
+</body>

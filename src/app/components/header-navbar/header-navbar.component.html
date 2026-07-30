@@ -1,0 +1,73 @@
+
+ 
+
+ 
+    
+ 
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top" dir="ltr">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center ml-auto">
+                <div class="dropdown mr-3">
+                    <button class="btn btn-profile dropdown-toggle d-flex align-items-center" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="profile-initial mr-2">{{currdisplayname[0]}}</span>
+                        <div class="profile-info text-right">
+                          <!--  <span class="profile-name">Magdy Tayl</span><br>-->
+                         <!--   <span class="profile-branch">Main Branch</span>-->
+
+
+                            <a matButton [matMenuTriggerFor]="menu" divider-color="white" class="transbutton">{{currdisplayname}}</a>
+                           
+
+
+                              
+                              <mat-menu #menu="matMenu" class="">
+                                <div class="box">
+                                    <div class="card">
+                                        <div class="profile-header">
+                                            <span class="profile-initial mr-2">{{currdisplayname[0]}}</span>
+                                            <div class="discription ms-2">
+                                                <div class="profile-title"></div>
+                                                <!-- pop up menu-->
+                                                <a class="profile-email" (click)="showUserData(currdisplayname)">{{currdisplayname}}</a>
+                                                <div class="profile-status"></div>
+                                            </div>
+                                            <a class="settings-icon" (click)="UpdateUserData(currdisplayname)">&#9881;</a>
+                                        </div>
+                                        <div class="profile-message">
+                                            We can't sync to your account since we need to confirm that it's you. Please sign in again to verify your account.
+                                        </div>
+                                        <button class="sign-in-btn" (click)="logout()">Log out</button>
+                                        <button class="sign-in-btn" (click)="gotoResetPAssword()">Reset password</button>
+                                         
+                                         
+                                    </div>
+                                </div>
+                              </mat-menu>
+                              
+
+                        </div>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" >Profile</a>
+                        <a class="dropdown-item"  >Logout</a>
+                    </div>
+                </div>
+                <div class="notification mr-3 ps-5">
+                    <i class="fa fa-bell"></i>
+                    <!--<span class="badge badge-danger">1</span>-->
+                </div>
+                <div class="help mr-3 ps-5">
+                    <i class="fa fa-life-ring"></i>
+                    <span class="ps-2">Help</span>
+            
+            
+                </div>
+            </div>
+           
+            
+        </div>
+    </nav>
+   
+ 
+ 
+ 

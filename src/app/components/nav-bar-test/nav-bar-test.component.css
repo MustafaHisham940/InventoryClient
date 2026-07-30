@@ -1,0 +1,750 @@
+.sidebar {
+    height: 100vh;
+    min-width: 70px;
+    max-width: 400PX;
+    transition: width 0.3s cubic-bezier(.4,0,.2,1);
+    overflow-x: visible;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+   /* border-z-indextop-left-radius: 15px;
+    border-bottom-left-radius: 15px;*/
+    background: linear-gradient(135deg, #1e7fc1 0%, #1565c0 50%, #0d47a1 100%);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+  a{
+    white-space: nowrap;
+  }
+  .collapsed-class-shadow {
+    
+      box-shadow: 
+        0  20px 6px -2px rgba(0, 0, 0, 0.2);   /* Bottom shadow */
+    
+  }
+
+
+  .collapsed-class-shadow-Top {
+    box-shadow: 
+      0 -20px 6px -2px rgba(0, 0, 0, 0.2);  /* Top shadow ONLY */
+  }
+  .logo {
+    height: 80px;
+    padding-top: 110px;
+    padding-left: 30px;
+    padding-right: 20px;
+    margin-right: 4px;
+    position: relative;
+  }
+  .logo .Slideout i{
+
+  }
+  .seperateAfterLogo{
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  }
+  .logo::after {
+   /* content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);*/
+  }
+  
+  .nav-link {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .nav-link.active, .nav-link:hover {
+    color: #ffffff !important;
+    transform: translateX(-2px);
+  }
+  
+  .btn-link {
+    font-size: 1.5rem;
+  }
+  
+  ul {
+    list-style-type: none;
+    list-style-image: none;
+    list-style-position: outside;
+    font-size: large;
+  }
+  
+  a {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: x-large;
+    font-weight: 500;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  
+  
+  .slideInIcons a {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: x-large;
+    font-weight: 500;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .slideInIcons a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .slideInIcons li {
+    margin-top: 10px;
+    border-radius: 10px;
+    list-style: none;
+  }
+  
+
+
+
+
+
+  .slideoutContent .slideoutContentUL .nav-section {
+    display: flex; /* Make li a flex container */
+    align-items: flex-start; /* Vertically center items */
+    justify-content: center; /* Horizontally center items */
+    gap: 8px; /* Optional: adds space between <a> and <i> */
+    /*border-radius: 10px;*/
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    /*margin-top: 4px;*/
+   /* margin-bottom: 4px;*/
+    padding: 12px 16px;
+   /* width: 85%;*/
+  
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    translate: 30px !important;
+    width: 333px !important;
+    
+    
+  }
+  .slideoutContent .slideoutContentUL .nav-section-first {
+    display: flex; /* Make li a flex container */
+    align-items: flex-start; /* Vertically center items */
+    justify-content: center; /* Horizontally center items */
+    gap: 8px; /* Optional: adds space between <a> and <i> */
+    /*border-radius: 10px;*/
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    /*margin-top: 4px;*/
+   /* margin-bottom: 4px;*/
+    padding: 12px 16px;
+   /* width: 85%;*/
+  
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* White 10% opacity */
+    border-top: none; /* Explicitly disable other borders */
+    border-left: none;
+    border-right: none;
+
+    translate: 30px !important;
+    width: 333px !important;
+    
+    
+  }
+  .slideoutContent  .nav-section:hover{
+    background-color: #2c3e50;
+    transform: translateX(-3px);
+    
+  }
+
+
+  .slideoutContent .slideoutContentUL .jjjj ul  li {
+    display: flex; /* Make li a flex container */
+    align-items: center; /* Vertically center items */
+    justify-content: center; /* Horizontally center items */
+    gap: 8px; /* Optional: adds space between <a> and <i> */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;    
+    padding: 12px 16px;   
+    border: 1px solid rgba(255, 255, 255, 0.008); 
+    translate: 0 !important;
+    width: 333px !important;
+    padding-right: 11px !important;
+    
+  }
+  .llll a.nav-links {
+    display: block; /* Makes padding/margin work properly */
+    margin-right: 40px;
+    text-decoration: none; /* Remove underline */
+    color: white; /* Text color */
+    transition: all 0.3s ease; /* Smooth hover effects */
+    padding:0  !important ;
+  }
+
+  .slideoutContent .slideoutContentUL .jjjj ul  li:hover {
+   
+    background-color: #2c3e50;
+    width: 270px;
+    transform: translateX(-3px);
+
+  }
+  .ruterActiveHover{
+    background-color: #2c3e50;
+    width: 270px;
+    transform: translateX(-3px);
+
+  }
+
+  .slideoutContent .slideoutContentUL .jjjj ul  li i{
+    translate: 20px;
+  }
+
+ 
+
+
+  .slideoutContent  .slideoutContentUL{
+   width: 100%;
+  translate: -50px;
+ 
+
+  }
+  .slideoutContent{
+    overflow: visible;
+    margin-right: 0;
+    translate: 0;
+  }
+  
+  
+  .slideoutContent .slideoutContentUL li:hover {
+    /*background: rgba(255, 255, 255, 0.15);
+    transform: translateX(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.2)*/
+  }
+  
+  .slideoutContent li a {
+    padding-right:30px ;
+    white-space: nowrap;
+    text-align: center; /* Optional: centers text inside <a> */
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /**********SLIDE INNNNNNNN*********/
+  
+  .slideInIcons i {
+    font-size: x-large;
+    padding-left: 0px;
+    margin-left: -1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  i {
+    font-size: x-large;
+    padding-left: 0px;
+    margin-left: -1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .slideInIcons {
+    padding-left: 30px;
+  }
+  
+  i.small {
+    padding-left: 15px;
+    margin-left: 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
+  .sidebar-separator {
+    border: none;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    margin: 15px 0;
+    width: 85%;
+    align-self: flex-start;
+    position: relative;
+  }
+  
+  .sidebar-separator::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+  .slideoutContent{
+    margin-left:20px; 
+  }
+  .slideoutContent li {
+    padding-left: 80px;
+  }
+  
+  .slideoutContent button {
+    padding-left: 80px;
+  }
+  
+  /* Sidebar links and icons */
+  .sidebar a, .sidebar li, .sidebar i {
+    font-size: 1.1rem !important;
+    letter-spacing: 0.02em;
+  }
+  
+  .sidebar i {
+    font-size: 1.3rem !important;
+    vertical-align: middle;
+    margin-right: 8px;
+    margin-left: 0;
+    padding: 0;
+  }
+  
+  /* Accordion button font size */
+  .sidebar .accordion-button {
+    font-size: 1.1rem !important;
+    font-weight: 600;
+  }
+  
+  /* Accordion body links */
+  .sidebar .accordion-body li a {
+    font-size: 1rem !important;
+    font-weight: 500;
+  }
+  
+  /* Remove .small class if not needed, or set it to a reasonable size */
+  .sidebar i.small {
+    font-size: 1.1rem !important;
+    margin-left: 0;
+    padding: 0;
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 1000000000;
+  }
+  
+  #sidebar-toggle-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -16px;
+    width: 15px;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    z-index: 1001;
+    transition: background 0.2s;
+    background-color: #1e6ea4;
+  }
+  
+  ::ng-deep .shift-left-menu .mat-menu-panel {
+    margin-left: -100px !important;
+    transform: translateX(-20px) !important;
+  }
+  
+  .collapse {
+    transition: height 0.3s ease;
+    overflow: hidden;
+    display: block !important;
+  }
+  
+  .collapse:not(.show) {
+    height: 0 !important;
+    display: block;
+  }
+  
+  /* RTL Navbar - Vertical Sidebar */
+  .rtl-navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #2c3e50;
+    padding: 15px 10px;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+  
+  /* Menu container - positions the menu correctly */
+  .rtl-menu-container {
+    position: relative;
+    margin-bottom: 8px;
+  }
+  
+  /* RTL Menu positioning */
+  .rtl-custom-menu {
+    position: absolute;
+    top: 80%;
+    right: 101%;
+    margin-right: 5px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1002;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Show menu when container is hovered */
+  .rtl-menu-container:hover .rtl-custom-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+  
+  /* RTL Menu items */
+  .rtl-menu-item {
+    z-index: 10000000000000000000000000000000;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    text-align: right;
+    cursor: pointer;
+    color: #2c3e50;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+  }
+  
+  .rtl-menu-item:last-child {
+    border-bottom: none;
+  }
+  
+  .rtl-menu-item:hover:not(:disabled) {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1565c0;
+    transform: translateX(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rtl-menu-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #1e7fc1, #1565c0);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .rtl-menu-item:hover::before {
+    transform: scaleY(1);
+  }
+  
+  /* RTL Icon positioning */
+  .rtl-menu-icon {
+    margin-left: 10px;
+    color: #1E7FC1;
+    font-size: 16px;
+  }
+  
+  /* Text element for better RTL control */
+  .rtl-menu-text {
+    flex-grow: 1;
+    text-align: right;
+  }
+  
+  /* Active state for parent menu item */
+  .rtl-menu-container:hover .rtl-menu-trigger {
+    background-color: #3d566e;
+  }
+  
+  /* Active/highlighted item */
+  .rtl-menu-item.active {
+    background: linear-gradient(135deg, #1E7FC1 0%, #1565c0 100%);
+    color: white;
+  }
+  
+  .rtl-menu-container-list {
+    padding-right: 80px;
+    display: inline-block;
+  }
+  
+  .rtl-menu-container a {
+    padding-right: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    translate: -8px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  
+
+  
+  .rtl-custom-menu .rtl-menu-item span {
+    font-size: large;
+  }
+  
+  .collapse-section {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .collapse-section button {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .collapse-section button:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  [appCollapse] {
+    padding: 0 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0 0 8px 8px;
+  }
+  
+  .nav-section  li {
+    text-align: center;
+    padding: 8px 9px;
+    margin: 2px 0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .nav-section  li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-2px);
+  }
+  
+  [appCollapse] ul {
+    display: grid;
+    place-items: center;
+    padding-right: 30px;
+    list-style: none;
+    margin-right: 10px;
+    translate: 30px;
+  }
+  
+  [appCollapse] ul li {
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    text-align: center;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+  }
+  
+  [appCollapse] ul li:last-child {
+    border-bottom: none;
+  }
+  
+  [appCollapse] ul li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-2px);
+  }
+  
+  /* Enhanced visual effects */
+  .sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+    pointer-events: none;
+    border-radius: 15px 0 0 15px;
+  }
+  
+  /* Improved content area */
+  .contentNavbar {
+    position: relative;
+    z-index: 1;
+    
+  }
+  
+  /* Enhanced logo area */
+  .logo i {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transition: all 0.3s ease;
+  }
+  
+  .logo:hover i {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+  }
+  
+  /* Separator enhancement */
+  .seperate {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    margin: 10px 0;
+    width: 85%;
+  }
+
+  .reports-submenu .report-menu-item {
+    position: relative;
+    overflow: visible !important;
+  }
+
+  .reports-submenu,
+  .reports-submenu ul,
+  .contentNavbar,
+  .slideoutContent,
+  .slideoutContentUL {
+    overflow: visible !important;
+  }
+
+  .report-menu-item-active {
+    background-color: #2c3e50 !important;
+    transform: translateX(-3px);
+  }
+
+  .report-side-menu {
+    min-width: 260px;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: -6px 6px 24px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .report-side-menu-floating {
+    position: fixed;
+    transform: translateX(calc(-100% - 12px));
+    z-index: 2147483646;
+    pointer-events: auto;
+  }
+
+  .report-side-menu-title {
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #1565c0;
+    text-align: right;
+    border-bottom: 1px solid #e9ecef;
+    background: rgba(21, 101, 192, 0.06);
+  }
+
+  .report-side-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .report-side-menu-list li {
+    width: 100% !important;
+    translate: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .report-side-menu-list li:last-child {
+    border-bottom: none !important;
+  }
+
+  .report-side-menu-link {
+    display: block;
+    padding: 10px 16px !important;
+    color: #2c3e50 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-align: right;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .report-side-menu-link:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1565c0 !important;
+    transform: translateX(-2px);
+  }

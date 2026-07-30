@@ -1,0 +1,162 @@
+ 
+<body dir="rtl" class=" ">
+   
+
+    <!-- Transparent Prompt -->
+ 
+ 
+
+    <div class="  container-fluid d-flex flex-column ">
+        
+  
+  
+        <div class="prompt-container mt-5 mb-5">
+            <div class="prompt-header">
+            <span>تعديل بيانات الهيدر</span>
+            <i class="fas fa-store"></i>
+            </div>   
+
+            <div class="prompt-body ">
+                
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="clientId">نوع الحركة </label>
+                    <input type="text" id="clientId" name="clientId" class="form-control" value="{{HeadersDetails.cur_Trstys}}">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="clientId">اسم المخزن</label>
+                        <input type="text" id="clientId" name="clientId" class="form-control" value="{{HeadersDetails.cur_StoreName}}">
+                        </div>
+                    <div class="col-md-3">
+                        <label for="clientId">رقم السند  </label>
+                        <input type="text" id="clientId" name="clientId" class="form-control" value="{{HeadersDetails.hdr.trsNo}}">
+                        </div>
+            </div>
+
+
+            </div>
+        </div>
+
+  
+         <!--customer-->
+        <!--<div class="prompt-container">
+                
+                            <div class="prompt-header">
+                            <span>اختر المورد او العميل</span>
+                            <i class="fas fa-store"></i>
+                            </div>         
+
+                            <div class="prompt-body">
+                        
+                                
+                            </div>
+                                                
+        </div>-->
+
+
+                
+                
+                
+        <!--Items-->        
+       <!-- <div class="prompt-container mt-5">
+                    <div class="prompt-header">
+                        <span>اختر كود الصنف </span>
+                        <i class="fas fa-store"></i>
+                        </div>  
+                        <div class="prompt-body ">
+                            
+                        
+                            <app-items-table-seprate
+                            (SelectedItemID)="onItemIdReceived($event)">                               
+                            </app-items-table-seprate>
+
+                        </div>
+        </div>-->
+
+          <!--Cstmr-->        
+          <div class="prompt-container mt-5">
+            <div class="prompt-header">
+                <span> كود المورد/العميل :{{HeadersDetails.hdr.cstId}}        اسم المورد/العميل : {{HeadersDetails.hdr.customerName}} </span>
+                <i class="fas fa-store"></i>
+                </div>  
+                <div class="prompt-body ">
+                    
+                <app-customer-table-seprate
+                    (CustomerOutputID)="onItemIdReceived($event)">
+                </app-customer-table-seprate>
+                
+
+                </div>
+            </div>
+
+                
+                
+                
+        <div class="prompt-container mt-5 mb-5">
+                        <div class="prompt-body ">
+                          
+
+                          <div class="row">
+                                  <!--<div class="col-md-3">
+                                    <label for="Qty">خصم الفاتورة </label>
+                                    <input type="number" id="Qty" name="Qty" class="form-control">
+                                </div>
+                            
+
+                             
+                                <div class="col-md-3">
+                                    <label for="GQty">إضافة على الفاتورة </label>
+                                    <input type="number" id="GQty" name="GQty" class="form-control">
+                                </div>-->
+                            
+
+                             
+                                <div class="col-md-3">
+                                    <h2 class="fs-5">طريقة السداد</h2>
+                                    <label class="p-3 fs-5">
+                                        <input type="radio" name="option" class="fs-4" [value]="1" [(ngModel)]="selectedOption">
+                                        اجــــــــــل
+                                      </label>
+                                      <label class="fs-5">
+                                        <input type="radio" name="option" class="fs-4" [value]="2" [(ngModel)]="selectedOption">
+                                        نقــــــــدي
+                                      </label>
+                                      
+                                      <h3>{{selectedOption}}</h3>
+                                    <button class="btn btn-primary m-3" (click)="editeHeaderData()"> تعديل بيانات الهيدر</button>
+                                      
+                                      
+                                </div>
+                               
+
+                            
+                           <!--     <div class="col-md-3">
+                                    <label for="BCd">كود المخزن المحول منه/ إليه</label>
+                                    <input type="number" id="BCd" name="BCd" class="form-control">
+                                </div>-->
+                          
+
+                             
+                                
+                        </div>
+                        
+
+
+                        </div>
+        </div>
+
+
+
+
+    </div>
+         
+       
+ 
+    
+
+
+
+
+
+</body>

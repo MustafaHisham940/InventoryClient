@@ -1,0 +1,267 @@
+{
+  "GENERAL": {
+    "GO_CARE": "Go Care"
+  },
+  "HEADER": {
+    "ORGANIZATION": "المؤسسة",
+    "MY_PROFILE": "الملف الشخصي",
+    "BASIC_INFORMATION": "البيانات الاساسية"
+  },
+
+  "ACTIONS": {
+    "CLOSE": "غلق",
+    "GOT_IT": "تم , حصلت عليه",
+    "SUBMIT": "إرسال",
+    "BACK": " العودة الي الصفحه السابقه",
+    "CANCEL": "إلغاء",
+    "SAVE": "حفظ",
+    "VERIFY": " تفعيل الحساب",
+    "TO_VERIFY": "لتفعيل الحساب",
+    "RESET": "إعادة",
+    "RESEND": "إعادة إرسال",
+    "SEND_CODE": "إرسال الرمز",
+    "RESEND_OTP": "إعادة إرسال رمز التحقق",
+    "YES": "نعم",
+    "NO": "لا",
+    "EDIT": "تعديل",
+    "ACTIVATE": "تفعيل",
+    "DEACTIVATE": "ايقاف",
+    "SIGNOUT": "تسجيل الخروج",
+    "CHANGE_IMAGES": "تغيير الصورة",
+    "VERIFY1": "تحقق"
+  },
+  "GENERAL_LABELS": {
+    "PASSWORD": "كلمة المرور",
+    "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
+    "EMAIL": "البريد الإلكتروني",
+    "COUNTRY": "البلد",
+    "PHONE": "رقم الجوال",
+    "SUCCESS": "تمت بنجاح",
+    "ERROR": "خطأ",
+    "PHONE_CODE": "كود البلد",
+    "SELECT_CODE": "اختر الكود",
+    "SEARCH": "ابحث"
+  },
+  "SUCCESS_MESSAGES": {
+    "SIGNUP_SUCCESSFULLY": "التسجيل بنجاح"
+  },
+  "STATUS": {},
+  "BRANCHES": {
+    "TARGET_AUDIENCE": "الفئة المستهدفة",
+    "BRANCH_TYPES": {
+      "WOMEN": "نساء",
+      "MEN": "رجال",
+      "FEMALE": "انثى",
+      "MALE": "ذكر",
+      "KIDS": "أطفال",
+      "PETS": "حيوانات أليفة"
+    }
+  },
+  "BUSINESS_TYPES": {
+    "BEAUTY_SALON": "صالون تجميل",
+    "BEAUTY_CLINIC": "عيادة تجميل",
+    "MAKEUP_ARTIST": "خبير تجميل"
+  },
+  "COUNTRIES": {
+    "EGYPT": "مصر",
+    "SAUDI_ARABIA": "المملكة العربية السعودية"
+  },
+  "CONFIRMATION_MESSAGE": {
+    "SUCCESS_OPERATION": "عملية ناجحة",
+    "RESET_PASS_SUCCESSFULLY": "يجب عليك إعادة تعيين كلمة مرور جديدة  ، لتتمكن من الانضمام لمنصة Go Care",
+    "LOGOUT": "هل أنت متأكد من رغبتك في تسجيل خروج ؟",
+    "ACTIVATION_CONFIRMATION": "هل تريد التفعيل؟",
+    "DEACTIVATION_CONFIRMATION": "هل تريد الايقاف؟"
+  },
+  "AUTH": {
+    "HAVE_ACCOUNT": "هل لديك حساب ؟",
+    "SIGNUP": {
+      "WELCOME_TO_GO_CARE": "مرحبا بك في Go Care",
+      "COMMERCIAL_REGISTRATION": " السجل التجاري",
+      "SIGNUP": "إنشاء حساب",
+      "VERIFY": "تحقق",
+      "FULL_NAME": "الاسم الكامل",
+      "FIRST_NAME": "الاسم الأول",
+      "LAST_NAME": "اسم العائلة",
+      "BUSINESS_NAME": "اسم المؤسسة",
+      "BUSINESS_type": "نوع المؤسسة",
+      "PASSWORD_HINT": "كلمة المرور يجب أن تتكون من 8 حروف وأرقام",
+      "ADMIN_INFO": "معلومات المسؤول",
+      "COMPLETE_PROFILE": "اكمال الحساب",
+      "SOCIAL_COMPANIES": "بواسطة وسائل التواصل الإجتماعي",
+      "SOCIAL_COMPANY": "بواسطة وسائل التواصل الإجتماعي",
+      "OR_WITH": "أو إنشاء حساب يدوياً",
+      "MAROUF_NUMBER": "رقم معروف",
+      "CHOOSE": "اختر حسابك",
+      "MATHCES": "هذه الحسابات طابقت بحثك.",
+      "SECONDS": "ثانية"
+    },
+    "SIGNIN": {
+      "WELCOME_BACK_TO_GO_CARE": "مرحبا بعودتك إلى Go Care",
+      "SIGNIN": "تسجيل دخول",
+      "EMAIL_OR_PHONE": "البريد الإلكتروني أو رقم الجوال",
+      "NOT_MEMBER": "لست عضوا ؟",
+      "YOUR_STYLE": "الوصول الي اسلوبك في مكان واحد",
+      "YOUR_SOCIAL": "بواسطة وسائل التواصل الإجتماعي",
+      "OR_WITH": "أو تسجيل يدوياً",
+      "YOUR_EMAIL": "بواسطة رقم الجوال أو البريد الالكتروني",
+      "JOIN": " انضم الآن",
+      "FORGOT_PASSWORD": "نسيت كلمة المرور ؟"
+    },
+    "FORGET_PASSWORD": {
+      "FORGET_PASSWORD": "نسيت كلمة المرور ؟",
+      "HINT": "حدد تفاصيل الاتصال التي يجب أن نستخدمها لإعادة تعيين كلمة المرور الخاصة بك:",
+      "VIA_MAIL": "البريد الإلكترونى:",
+      "VIA_SMS": "رسالة نصية :",
+      "OTP_SMS": "سوف نرسل االكود الخاص بك عن طريق رسالة نصية ",
+      "OTP_MAIL": "سوف نرسل الكود الخاص بك عن طريق البريد الإلكترونى",
+      "ENTER_PHONE": "أدخل رقم الجوال الخاص بك",
+      "ENTER_EMAIL": "أدخل البريد الألكترونى الخاص بك",
+      "ENTER_PHONE_Email": "يُرجى إدخال عنوان البريد الإلكتروني أو رقم الجوال المرتبط بحسابك في جوكير",
+      "SMS_CODE": "كود الرسالة النصية"
+    },
+    "RESET_PASSWORD": {
+      "SETUP_NEW_PASSWORD": "إعادة تعيين كلمة المرور",
+      "ALREADY_RESET_PASSWORD": " هل تتذكر كلمة المرور ؟",
+      "RESET": "إعادة تعيين",
+      "REPEAT_PASSWORD": "كرر كلمة المرور",
+      "AGREE": "أوافق على",
+      "TERMS": "الشروط و سياسة الخصوصية"
+    },
+    "VERIFICATION": {
+      "VERIFICATION": "التحقق",
+      "VERIFICATION_CODE": "رمز التحقق",
+      "ENTER_OTP": "أدخل رمز التحقق الخاص بك",
+      "DIDNT_RECIEVE_CODE": "لم أتلقى رمزا",
+      "VERIFICATION_MESSAGE": "نرسل لك رمزا للتحقق من البريد الالكتروني / رقم الجوال الخاص بك.",
+      "VERIFICATION_MESSAGE_1": "لقد تم إرسال كود التفعيل إليك",
+      "NOT_RECEIVE_CODE": "لم يصلك كود التفعيل ؟ اطلب كود جديد",
+      "ENTER_CODE": "ادخل كود التفعيل المرسل من خلال رقم الجوال أو البريد الإلكتروني",
+      "NOT_RECEIVE_CODE_1": "لم تتلقى الرمز؟"
+    }
+  },
+  "VALIDATION": {
+    "REQUIRED": "{{name}} حقل إلزامى يجب تعبئته",
+    "MAX_LENGTH": "يجب أن يتكون {{name}} من {{number}} أحرف على الأكثر",
+    "MIN_LENGTH": "يجب أن يتكون {{name}} من {{number}} أحرف على الأقل",
+    "MIN_LENGTH_NUMBERS": "يجب أن يتكون {{name}} من {{number}} ارقام على الأقل",
+    "INVALID": "{{name}} غير صالح",
+    "EMAIL": "يرجى اضافة بريد إلكتروني صحيح",
+    "PASSWORD": "صيغة كلمة المرور غير صحيحة، الحد الأدنى 8 خانات",
+    "PASSWORD_INCORRECT": "كلمة المرور غير صحيحة",
+    "CONFIRM_PASSWORD": "كلمة المرور غير مطابقة",
+    "PHONE": "رقم الجوال غير صحيح",
+    "PHONE_FORMAT": "رقم الهاتف بدون مسافات",
+    "COMMERCIAL_NOTVALID": "رقم السجل التجاري  غير صحيح",
+    "MAROUF_NOTVALID": "رقم معروف غير صحيح",
+    "EMAIL_OR_PHONE": "البريد الإلكتروني / رقم الهاتف غير صحيح",
+    "EMAIL_OR_MOBILE": "البريد الإلكتروني / رقم الجوال غير صحيح",
+    "NAME": "غير مسموح بإستخدام الأحرف أو الأرقام الخاصة",
+    "PASSWORD_HINT": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل ، وتتضمن حرفًا كبيرًا ورقمًا ورمزًا مميزًا",
+    "WRONG_PASSWORD": "كلمة المرور يجب أن تتكون من 8 حروف وأرقام",
+    "PASSWORD_DONT_MATCH": "كلمة المرور غير مطابقة",
+    "OTP": "رمز التحقق الذي أدخلته غير صحيح",
+    "BUSINESS_NAME_EXIST": "اسم المؤسسة مستخدم بالفعل",
+    "EMAIL_PHONE_REQUIRED": "برجاء ادخال بريد الكتروني او موبايل"
+  },
+  "ORGANIZATION": {
+    "ADMIN_PROFILE": {
+      "ADMIN_PROFILE": "صفحه المشرف",
+      "BASIC_INFORMATION": " البيانات الاساسية",
+      "SECURITY": "الأمان",
+      "PASSWORD": "كلمة المرور",
+      "EMAIL": "البريد الإلكتروني",
+      "COUNTRY": "البلد",
+      "FIRST_NAME": "الاسم الأول",
+      "LAST_NAME": "اسم العائلة",
+      "MOBILE": "رقم الموبايل"
+    },
+    "SP_PROFILE": {
+      "BRANCHES": "الفروع",
+      "BASIC_INFO": "البيانات الاساسية",
+      "CHOOSE_CONTENT": "اختر المحتوي الذي تود عرضه",
+      "VIEW_SERICVE": "عرض الخدمة"
+    },
+    "BRANCH_DETAILS": {
+      "BRANCH_ACTIVATION": "تفعيل الفرع",
+      "BASIC_INFORMATION": "البيانات الاساسية",
+      "SET_MAIN_BRANCH": "تعيين الفرع كفرع رئيسي",
+      "SOCIAL_ACCOUNTS": "حسابات التواصل الاجتماعي",
+      "TARGET_AUDIENCE": "الفئة المستهدفة ",
+      "WORKING_HOURS": "ساعات العمل",
+      "ACTIVATION_MESSAGE": "القدرة على تنشيط أو تعطيل الفرع",
+      "TARGET_AUDIENCE_WOMEN_MESSASGE": "خدمات تقدم للنساء",
+      "TARGET_AUDIENCE_MEN_MESSASGE": "خدمات تقدم للرجال",
+      "TARGET_AUDIENCE_KIDS_MESSASGE": "خدمات تقدم للاطفال"
+    }
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "المنصة",
+    "ORGANIZATION": "المؤسسة",
+    "APPOINTMENTS": "المواعيد",
+    "EMPLOYEES": "الموظفيين",
+    "CLIENTS": "العملاء",
+    "SERVICES": "الخدمات",
+    "CHAT": "الرسائل",
+    "SIGNOUT": "تسجيل الخروج",
+    "OFFERS": "عروض",
+    "PACKAGES": "باقات"
+  },
+  "ERROR_MESSAGES": {
+    "CODE_BLOCKED": "برجاء إعادة المحاولة مرة أخري خلال نصف ساعة",
+    "USER_NOTFOUND": "البريد الالكتروني او رقم الموبايل غير مسجل بالنظام",
+    "FIELD_SIGNUP": "فشل في التسجيل",
+    "FIELD_LOGIN": "فشل في الدخول"
+  },
+
+  "SIGNIN": {
+    "WELCOME_BACK_TO_GO_CARE": "مرحبا بعودتك إلى Go Care",
+    "SIGNIN": "تسجيل دخول",
+    "EMAIL_OR_PHONE": "البريد الإلكتروني أو رقم الجوال",
+    "NOT_MEMBER": "ليس عضوا ؟",
+    "YOUR_STYLE": " الوصول إلى أسلوبك ، أسلوبك بنقرة واحدة",
+    "YOUR_SOCIAL": "حملاتك الإجتماعية",
+    "YOUR_EMAIL": "بواسطة رقم الجوال أو البريد الالكتروني",
+    "FORGOT_PASSWORD": "هل نسيت كلمة المرور ؟"
+  },
+  "FORGET_PASSWORD": {
+    "FORGET_PASSWORD": "هل نسيت كلمة المرور ؟",
+    "HINT": "حدد تفاصيل الاتصال التي يجب أن نستخدمها لإعادة تعيين كلمة المرور الخاصة بك:",
+    "VIA_MAIL": "البريد الإلكترونى:",
+    "VIA_SMS": "رسالة نصية :",
+    "OTP_SMS": "سوف نرسل االكود الخاص بك عن طريق رسالة نصية ",
+    "OTP_MAIL": "سوف نرسل الكود الخاص بك عن طريق البريد الإلكترونى",
+    "ENTER_PHONE": "أدخل رقم الجوال الخاص بك",
+    "ENTER_EMAIL": "أدخل البريد الألكترونى الخاص بك",
+    "ENTER_PHONE_Email": " أدخل رقم الجوال الخاص بك او البريد الالكتروني",
+    "SMS_CODE": "كود الرسالة النصية"
+  },
+  "RESET_PASSWORD": {
+    "SETUP_NEW_PASSWORD": "إعادة تعيين كلمة المرور",
+    "ALREADY_RESET_PASSWORD": " هل تتذكر كلمة المرور ؟",
+    "RESET": "إعادة تعيين",
+    "REPEAT_PASSWORD": "كرر كلمة المرور",
+    "AGREE": "أوافق على",
+    "TERMS": "الشروط والأحكام"
+  },
+  "VERIFICATION": {
+    "VERIFICATION": "التحقق",
+    "VERIFICATION_CODE": "رمز التحقق",
+    "ENTER_OTP": "أدخل رمز التحقق الخاص بك",
+    "DIDNT_RECIEVE_CODE": "لم أتلقى رمزا",
+    "VERIFICATION_MESSAGE": "نرسل لك رمزا للتحقق من البريد الالكتروني / رقم الجوال الخاص بك.",
+    "VERIFICATION_MESSAGE_1": "لقد تم إرسال كود التفعيل إليك",
+    "NOT_RECEIVE_CODE": "لم يصلك كود التفعيل ؟ اطلب كود جديد",
+    "ENTER_CODE": "ادخل كود التفعيل المرسل من خلال رقم الجوال أو البريد الإلكتروني",
+    "NOT_RECEIVE_CODE_1": "لم تتلقى الرمز؟"
+  },
+  "DAYS": {
+    "SATURDAY": "السبت",
+    "SUNDAY": "الأحد",
+    "MONDAY": "الاثنين",
+    "TUESDAY": "الثلاثاء",
+    "WEDNESDAY": "الأربعاء",
+    "THURSDAY": "الخميس",
+    "FRIDAY": "الجمعة"
+  }
+}

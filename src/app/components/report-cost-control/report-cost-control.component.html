@@ -1,0 +1,143 @@
+
+<h1>app-report-cost-control</h1>
+
+
+<div class="report-page bg-light" dir="rtl">
+   
+  
+  
+  
+        
+    <div class="card shadow-sm position-relative">
+
+      <div class="card-ribbon w-100 text-center align-items-center justify-content-between  ">
+        <div class="pageLabel " >
+          
+          <h2 class="mb-0 fw-bolder" style="color: white;">تقرير ضبط التكلفة  </h2>
+         <div class="iccc " >              
+         </div>                   
+      </div>     
+      
+       
+      </div>
+      <div class="card-body">
+       
+          <div class="card shadow-sm">
+            <div class="card-body" >
+                <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
+                    
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <div class="customer-filters">
+                            <!-- Search Row with Label -->
+                            <div class="row g-3 mb-4 align-items-center">  <!-- Added align-items-center -->
+                              <div class="col-auto">  <!-- Changed to col-auto for label -->
+                                <h4 class="section-label m-0">بحث متقدم</h4>  <!-- Removed mb-3 -->
+                              </div>
+                             
+                             
+                              <div class="col">  <!-- Main content column -->
+                                <div class="d-flex gap-3 w-100">
+
+
+                                  <div class="search-box flex-fill">
+                                    <label for="customer_code">كود المنتج</label>
+                                    <i class="fas fa-boxes"></i>
+                                    <input
+                                      id="item_code"
+                                      type="text"
+                                      placeholder="البحث ..."
+                                      [(ngModel)]="_Icustomfilter.itemCd"
+                                      #itemCodeModel="ngModel"
+                                      [class.invalid-field]="hasItemCodeError() && (itemCodeModel.touched || itemCodeModel.dirty)">
+                                    <small class="field-warning" *ngIf="hasItemCodeError() && (itemCodeModel.touched || itemCodeModel.dirty)">كود المنتج حقل إجباري</small>
+                                  </div>
+
+                                  
+
+                                  @if (multiStoreFlag=='True') {
+                                    <div class="search-box flex-fill">
+                                      <label for="customer_code">كود المخزن</label>
+                                      <i class="fas fa-boxes"></i>
+                                      <input
+                                        id="store_code"
+                                        type="text"
+                                        placeholder="البحث ..."
+                                        [(ngModel)]="_Icustomfilter.strCd"
+                                        #storeCodeModel="ngModel"
+                                        [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+                                      <small class="field-warning" *ngIf="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">كود المخزن حقل إجباري</small>
+                                    </div>
+                                
+                                    
+                                  }
+                                      @else{
+                                        <div class="search-box flex-fill">
+                                          <label for="customer_code">كود المخزن</label>
+                                          <i class="fas fa-boxes"></i>
+                                          <input disabled id="store_code_single" type="text" placeholder="البحث ..." [value]="singleStoreCode" [class.invalid-field]="hasSingleStoreCodeError()">
+                                          <small class="field-warning" *ngIf="hasSingleStoreCodeError()">كود المخزن حقل إجباري</small>
+                                        </div>
+                                    
+                                      }
+                               <!--   <div class="search-box flex-fill">
+                                    <label for="StartDate">تاريخ البداية</label>
+                                    <div class="date-input-wrapper">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <input
+                                            type="date"
+                                            placeholder="mm/dd/yyyy"
+                                            id="StartDate"
+                                            [(ngModel)]="_Icustomfilter.specs.startDate">
+                                    </div>
+                                </div>
+                                
+                                <div class="search-box flex-fill">
+                                    <label for="EndDate">تاريخ النهاية</label>
+                                    <div class="date-input-wrapper">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <input
+                                            id="EndDate"
+                                            type="date"
+                                            placeholder="mm/dd/yyyy"
+                                            [(ngModel)]="_Icustomfilter.specs.endDate">
+                                    </div>
+                                </div>
+                                  -->
+
+                                  <button class="btn btn-success px-4" style="white-space: nowrap;" (click)="searchCustomers()">
+                                    <i class="fas fa-search me-2"></i>بحث
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                    
+                            
+                          
+                          </div>
+                        
+                    </div>
+                     
+                     
+                  
+
+                </div>                   
+            </div>
+            @if(ExcelReportFlag == 1){
+              <button class="btn btn-info" style="color: white;  background-color: #1e7fc1;"  (click)="downloadExcel()"><i class="fa fa-download" style="color: white; "  aria-hidden="true"></i> تحميل ملف اكسيل </button>                    
+            }           
+             
+   
+          </div>
+        
+
+
+
+      </div>
+                                               
+    
+</div>
+
+<section class="pdf-section" *ngIf="pdfUrl">
+  <iframe class="pdf-frame" [src]="pdfUrl" title="Cost control report PDF"></iframe>
+</section>
+</div>

@@ -1,0 +1,86 @@
+ 
+body {
+    background: #f7fafd;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.06);
+}
+
+.card-ribbon {
+    width: 100%;
+    background-color: #1e7fc1;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 10px 0;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(30,127,193,0.10);
+}
+
+.pageLabel {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.card .card-body {
+    padding-top: 70px;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group-text {
+    background-color: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-left: none;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f8fafc;
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+  
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+      
+   
+}
+
+.btn-primary {
+    background-color: #1e7fc1;
+    border-color: #1e7fc1;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #1872b0;
+    border-color: #1872b0;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+}
+
+h2, h3 {
+    color: #343a40;
+}
+ 

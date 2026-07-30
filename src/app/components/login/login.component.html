@@ -1,0 +1,95 @@
+
+
+
+<!--<body>
+    <div class="bodyxx">
+
+    
+
+        <div class="login-container">
+            <form class="login-form">
+                <h2>Login</h2>
+                <label for="userid">User Name</label>
+                <input type="text" id="userid" name="userid" required [(ngModel)]="_userName">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required [(ngModel)]="_Id">
+                
+                
+       
+    @if(_IsActive){
+        <div class="alert alert-danger"> هذا المستخدم غير مفعل </div>
+    
+    }
+    @if(loginErr){
+        <div class="alert alert-danger"> {{loginErrMessage}}</div>
+    
+    }
+                <button type="submit" (click)="login()">Login</button>
+            </form>
+        </div>
+     
+</div>
+</body>-->
+
+
+
+
+
+ 
+<body><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Left Column - Login Form -->
+            <div class="col-md-5 d-flex align-items-center justify-content-center login-section">
+                <div class="login-form-container">
+                    <h2 class="text-center mb-4 login-title">Log in</h2>
+                    
+                    <form>
+                        <div class="mb-3">
+                            <label for="userid">User Name</label>
+                            <input type="text" class="form-control custom-input" placeholder="user name"id="userid" name="userid" required [(ngModel)]="_userName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control custom-input" placeholder="password"id="password" name="password" required [(ngModel)]="_Id">
+                        </div>
+                        
+                      <!--  <div class="text-end mb-3">
+                            <a href="#" class="forgot-password">Forgot your <span class="password-link">password?</span></a>
+                        </div>-->
+
+                        @if(_IsActive){
+                            <div class="alert alert-danger p-2 mb-2"> هذا المستخدم غير مفعل </div>
+                        
+                        }
+                        @if(loginErr){
+                            <div class="alert alert-danger p-2 mb-2"> {{loginErrMessage}}</div>
+                        
+                        }
+                        
+                        <div class="d-grid mb-4">
+                            <button type="submit" class="btn btn-primary login-btn"   (click)="login()">Log in</button>
+                        </div>
+                        
+                       <!--<div class="text-center">
+                            <span class="signup-text">Don't have any account? </span>
+                            <a href="#" class="signup-link">Sign Up</a>
+                        </div>--> 
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Right Column - Welcome Section -->
+            <div class="col-md-7 d-flex align-items-center justify-content-center welcome-section">
+                <div class="welcome-content text-center">
+                    <i class="fa-brands fa-uikit   iconn"></i>
+
+                    <h1 class="welcome-title" >ادارة حسابات المخزون والعملاء </h1>
+                    <p class="welcome-subtitle mt-5">برجاء تسجيل الدخول</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+ 

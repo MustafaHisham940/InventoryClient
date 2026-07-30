@@ -1,0 +1,41 @@
+<div class="containerOverFlow overflow-x-scroll" dir="rtl">
+ <!-- <h2 mat-dialog-title>اضافة عميل / مورد   {{S_SelectedCustomer()}}</h2>
+  <h2 mat-dialog-title>اضافة عميل / مورد   {{S_SelectedCustomerName()}}</h2>-->
+ 
+   
+<div class="prompt-body " dir="rtl">       
+          <!--  <app-customer-table-seprate  
+            [(M_SelectedCustomer)]="S_SelectedCustomer"
+            [(M_SelectedCustomerNaem)]="S_SelectedCustomerName"
+            >
+
+            </app-customer-table-seprate>-->
+
+            <app-customer-table-seprate
+                    (CustomerOutputID)="onItemIdReceived($event)">
+                </app-customer-table-seprate>
+                
+             
+    </div>
+   
+ 
+
+
+    
+<mat-dialog-actions class="align-items">
+ <div class="container">
+  <div class="row">
+   <div class="col-md-2">
+    <button class="btn btn-secondary m-1"  (click)="onNoClick()">العودة</button>
+   </div>
+   <div class="col-md-6">
+    <button class="btn btn-primary m-1"   [mat-dialog-close]="{ 
+      S_CstID: S_SelectedCustomer(), 
+      S_CstName: S_SelectedCustomerName() 
+    }"  
+    cdkFocusInitial (click)="onCustomerSelected()">اختيار</button>
+   </div>
+  </div>
+ </div>
+</mat-dialog-actions>
+</div>

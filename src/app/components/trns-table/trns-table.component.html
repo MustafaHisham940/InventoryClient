@@ -1,0 +1,233 @@
+<div class="trns-table-panel">
+<div class="dev-tag" title="اسم الكومبوننت">app-trns-table</div>
+                <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
+                    
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <div class="customer-filters">
+                            <!-- Search Row with Label -->
+                            <div class="row g-3 mb-4 align-items-center">  <!-- Added align-items-center -->
+                            <div class="col-auto">  <!-- Changed to col-auto for label -->
+                                <h3 class="section-label m-0">بحث متقدم</h3>  <!-- Removed mb-3 -->
+                            </div>
+                            
+                            
+                            <div class="col">  <!-- Main content column -->
+                                <div class="d-flex gap-3 w-100">
+                                <div class="search-box flex-fill">
+                                    <i class="fas fa-id-card"></i>
+                                    <input type="number" placeholder="البحث برقم السطر ..." [(ngModel)]="_Icustomerfilter._LnNo">
+                                </div>
+                                <div class="search-box flex-fill">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" placeholder="كود الصنف..." [(ngModel)] = "_Icustomerfilter._ItmCd">
+                                </div>
+                               <!-- <div class="search-box flex-fill">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    
+                                    <input type="number" placeholder="البحث بكود العميل/مورد..." [value]="isActiveCurr_CstID()">
+                                </div>-->
+                                <button class="btn btn-success px-4" style="white-space: nowrap;" (click)="searchCustomers()">
+                                    <i class="fas fa-search me-2"></i>بحث
+                                </button>
+                                </div>
+                            </div>
+                            </div>
+                    
+                            <!-- Filters Row with Label -->
+                            <div class="row g-3 align-items-center">  <!-- Added align-items-center -->
+                            <div class="col-auto">  <!-- Changed to col-auto for label -->
+                                <h3 class="section-label m-0">تصفية النتائج</h3>  <!-- Removed mb-3 -->
+                            </div>
+                            <div class="col">  <!-- Main content column -->
+                                <div class="d-flex justify-content-start gap-3 flex-wrap">  <!-- Changed to justify-content-start -->
+                                <!--<div class="select-filter" style="width: 220px">
+                                    <div class="search-box flex-fill">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <input type="number" placeholder="البحث  بكود السند..." value="{{isActiveCurr_TrstNo()}}">
+                                    </div>
+                                </div>-->
+                              <!--  <div class="select-filter" style="width: 220px">
+                                    <div class="select-wrapper">
+                                    <i class="fas fa-users"></i>
+                                    <select class="custom-select" id="typeSelect" [(ngModel)]="_Icustomerfilter.Type" >
+                                        <option value="" selected disabled>نوع العميل</option>
+                                        <option value="1">مورد</option>
+                                        <option value="2">عميل</option>
+                                        <option value="3">كلاهما</option>
+                                    </select>
+                                    </div>
+                                </div>-->
+                                <div class="select-filter" style="width: 220px">
+                                    <div class="select-wrapper">
+                                    <i class="fas fa-sort"></i>
+                                    <select class="custom-select" id="sortSelect" [(ngModel)]="_Icustomerfilter._Sort">
+                                        <option value="" selected disabled>الترتيب</option>
+                                        <option value="name_desc">تصاعديًا</option>
+                                        <option value="name_asc">تنازليًا</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-secondary px-4" style="white-space: nowrap;" (click)="clearFilter()">
+                                    <i class="fas fa-times me-2"></i>مسح الفلتر
+                                </button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+            </div>                      
+           
+
+ <!-- Add New Item Form -->
+ <form [formGroup]="AddNewDetails"   class="mb-3">
+    <div class="StaticAddBar row add-form-row p-2 border rounded mb-3">
+      <div class="col-md-1 mb-2">
+        <label for=""> اضف رقم السطر</label>
+        <input type="number" class="form-control" placeholder="اضف رقم السطر الجديد" formControlName="lnNo">
+      </div>
+   <!-- <div class="col-md-2 mb-2">
+        <input type="input" class="form-control" placeholder="المخزن"   value="{{curr_Store_Name}}">
+      </div>-->  
+      <div class="col-md-1 mb-2">
+        <div class="input-group" dir="ltr">
+          <label for=""> ابحث عن الصنف</label>
+          <input  #var_searchItemCodeDom   type="text" class="form-control" formControlName="var_searchItemCode" (input)="FindItemNameExactMAtch(var_searchItemCodeDom.value)">       
+          <button class="btn btn-outline-secondary" (click)="FindItemNameExactMAtch(var_searchItemCodeDom.value)" >            
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-2 mb-2">
+        @if(var_ItemInputSwitch==1){
+          <label for=""> اختر الصنف</label>
+        <input [value]="animal()?.itmNm" type="text" class="form-control" placeholder="اختر الصنف"  disabled>
+        }
+        @if(var_ItemInputSwitch==2){
+          <label for=""> اختر الصنف</label>
+          <input   type="text" class="form-control" placeholder="اختر الصنف" [value]="dynamicItemSearch.itmNm" disabled>
+        }
+      </div>
+      <div class="col-md-1 mb-2 mt-3">
+       
+        <div class="btn btn-primary " type="button" (click)="openDialog()"> اختر الصنف</div>
+      </div>
+
+
+      <div class="col-md-2 mb-2">
+        <label for=""> ادخل الكمية</label>
+        <input type="number" class="form-control" placeholder="ادخل الكمية" formControlName="qty">
+      </div>
+      <div class="col-md-2 mb-2">
+        <label for=""> ادخل السعر</label>
+        <input type="number" class="form-control" placeholder="ادخل السعر" formControlName="pric" [value]="AddNewDetails.get('pric')?.value">
+      </div>
+       
+      <div class="col-md-2 mt-3 p-2 ">
+        <button type="submit" class="btn btn-sm btn-outline-primary w-100" (click)="AddnewGetails()">
+          <i class="fas fa-plus"></i> إضافة
+        </button>
+      </div>
+    </div>
+  </form>
+
+            <!-- Header Row -->
+<div class="row table-header bg-light   mb-2 d-none d-md-flex">
+    <div class="col-md-1 fw-bold">رقم السطر</div>
+    <!--<div class="col-md-2 fw-bold">المخزن</div>-->
+    <div class="col-md-2 fw-bold">الصنف</div>
+    <div class="col-md-1 fw-bold">الكمية</div>
+    <div class="col-md-2 fw-bold">السعر</div>
+    <div class="col-md-2 fw-bold">القيمة</div>
+    <div class="col-md-2 fw-bold">الإجراءات</div>
+  </div>
+  
+ 
+  
+  <!-- Data Rows -->
+  @for (item of _customers.data ; track $index) {
+  <div class="row data-row p-2 border-bottom">
+    <div class="col-md-1 mb-2">
+      <input [value]="item.lnNo" type="text" class="form-control" disabled>
+    </div>
+    <!--<div class="col-md-2 mb-2">
+      <input [value]="item.storeName" type="text" class="form-control" disabled>
+    </div>-->
+    <div class="col-md-2 mb-2">
+      <input [value]="item.itemName" type="text" class="form-control" disabled>
+    </div>
+    <div class="col-md-1 mb-2">
+      <input [value]="item.qty" type="text" class="form-control" disabled>
+    </div>
+    <div class="col-md-2 mb-2">
+      <input [value]="item.pric" type="text" class="form-control" disabled>
+    </div>
+    <div class="col-md-2 mb-2">
+      <input [value]="item.pric * item.qty" type="text" class="form-control" disabled>
+    </div>
+    <div class="col-md-2 mb-2">
+      <div class="d-flex gap-1">
+        <button class="btn btn-sm btn-outline-primary" (click)="editeDetailsData(item)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="clickDelete(item)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+  
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <!--<span class="text-muted small">عرض البيانات من 1 إلى 10 من أصل {{_totalCustomerCount}} مدخل</span>-->
+    <nav>
+      <ul class="pagination pagination-sm mb-0">
+        <li class="page-item"><a class="page-link" (click)="decrementPDg()">&lt;</a></li>
+        @for (item of pagesList; track $index) {
+          <li class="page-item"><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
+        }                             
+        <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+      </ul>
+    </nav>
+
+
+    @if(isDetailsDeleted !=-1){
+
+
+      <div class="position-fixed top-0 start-0 w-100 h-100 backdrop-blur"></div>
+         
+          <div class="modal-backdrop fade show" style="z-index: 1040;"></div>
+          <div class="modal position-fixed d-block" tabindex="-1" style="z-index: 1050;">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content border-0 shadow-lg">
+                <!-- Modal Header -->
+                <div class="modal-header bg-primary text-white border-0 rounded-top-3">
+                  <div class="modal-title w-100 text-center">
+                    <i class="bi bi-exclamation-triangle-fill fs-1 d-block mb-2"></i>
+                    <h2 class="mb-0 fw-bold">تأكيد حذف السطر</h2>
+                  </div>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="modal-body text-center py-4">
+                  <p class="lead text-muted mb-4">
+                    سوف يتم حذف هذا السطر من الفاتورة
+                  </p>
+                  <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-lg btn-outline-secondary px-4 flex-grow-1" (click)="cancelDelete()">
+                      <i class="bi bi-x-circle me-2"></i> إلغاء
+                    </button>
+                    <button type="button" class="btn btn-lg btn-dark px-4 flex-grow-1" (click)="deleteDetail()">
+                      <i class="bi bi-trash3 me-2"></i> حذف
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+            }
+  </div>
+</div>

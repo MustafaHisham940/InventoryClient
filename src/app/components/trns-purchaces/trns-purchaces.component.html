@@ -1,0 +1,124 @@
+<body dir="rtl">
+ <div class="conatinerPrompt container-fluid d-flex flex-column ">  
+    
+        <div class="prompt-container">
+            <div class="prompt-header">
+                <span>  {{this.TrnsData.data[curr_TrsTy].Trns_name}} ({{curr_StoreName}})</span>
+                <!--<i class="fas fa-store"></i>-->
+                <a style="color: aliceblue;" matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </a>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="gotoAddnewHeader()">
+                        <mat-icon>bookmark_border</mat-icon>
+                      <span>اضافة هيدر</span>
+                    </button>
+                    <button mat-menu-item >
+                        <mat-icon>cached</mat-icon>
+                      <span>تعديل بيانات الهيدر</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>delete_forever</mat-icon>
+                      <span>حذف الهيدر</span>
+                    </button>
+
+                    <button mat-menu-item (click)="gotoAddNewDetais()">
+                        <mat-icon>library_add</mat-icon>
+                        <span >اضافة سطر جديد</span>
+                      </button>
+                  </mat-menu>
+            </div>                        
+            <div class="prompt-body">
+          
+                <div class="row">
+                   <div class="col-md-6">
+                    <div class="select-filter" style="width: 220px">
+                        <div class="select-wrapper">
+                          <small class="fs-5"> رقم المستند</small>
+                          <select class="custom-select" id="typeSelect"  [(ngModel)]="curr_TrstNo" (change)="setisActiveCurr_TrstNo()"  >
+                            @for(item of StaicTrstNoArr; track $index) {
+                                <option [value]="item" >{{item}}</option>
+                              }
+                          </select>
+                        </div>
+                    </div>
+                   </div>
+                   <div class="col-md-6">
+                    <button class="btn btn-primary mt-4" (click)="FindHeader()"> بحث</button>
+                   </div>
+                </div>
+
+                <div class="custom-divider"></div>
+          
+            <div class="row">
+            
+                    @if(curr_TrsTy==11  ||curr_TrsTy==2 ){
+                        <div class="col-md-3">
+                        <label for="clientId">كود العميل </label>
+                        <input type="text" value="{{SecHeaders.data[0].cstId}}" id="clientId" name="clientId" class="form-control" disabled>
+                        </div>
+                    }   
+                    @if(curr_TrsTy==1  ||curr_TrsTy==12 ){
+                        <div class="col-md-3">
+                        <label for="clientIdd">كود المورد </label>
+                        <input type="text" value="{{SecHeaders.data[0].cstId}}"  id="clientIdd" name="clientIdd" class="form-control" disabled>
+                        </div>
+                    }   
+                    @if(curr_TrsTy==1  ||curr_TrsTy==2 ||curr_TrsTy==11||curr_TrsTy==12 ){
+                        <div class="col-md-3">
+                        <label for="dTy">طريقةالسداد </label>
+                        <input type="text" value="{{SecHeaders.data[0].dTy}}" id="dTy" name="dTy" class="form-control" disabled>
+                        </div>
+                    }   
+                    @if(curr_TrsTy==4 ){
+                        <div class="col-md-3">
+                        <label for="StrCd">كود المخزن المحول منه  </label>
+                        <input type="text" value="{{SecHeaders.data[0].strCd}}" id="StrCd" name="StrCd" class="form-control" disabled>
+                        </div>
+                    }  
+                    @if(curr_TrsTy==14 ){
+                        <div class="col-md-3">
+                        <label for="clientId">كود المخزن المحول اليه  </label>
+                        <input type="text" value="{{SecHeaders.data[0].strCd}}" id="clientId" name="clientId" class="form-control" disabled>
+                        </div>
+                    }  
+                    @if(curr_TrsTy==11 ){
+                        <div class="col-md-3">
+                        <label for="SPrc">السعرالمطلوب  </label>
+                        <input type="text" value="{{SecHeaders.data[0].sPrc}}" id="SPrc" name="SPrc" class="form-control" disabled>
+                        </div>
+                    } 
+                
+                    <div class="col-md-3">
+                        <label for="TrsDt">تاريخ السند </label>
+                        <input type="text" value="{{SecHeaders.data[0].trsDt }}" id="TrsDt" name="TrsDt" class="form-control" disabled>
+                        </div>
+
+                
+            </div>
+
+          
+            
+                                    
+             </div>
+         </div>
+
+
+        <div class="prompt-container mt-5">
+
+            <div class="prompt-body ">
+               
+                    <app-trns-table
+                    [curr_TrsTy]="curr_TrsTy"
+                    [curr_Store_id]="curr_Store"
+                    [isActiveCurr_TrstNo]="curr_TrstNo"
+                    [isActiveCurr_CstID]="SecHeaders.data[0].cstId"
+                    [curr_dty]="SecHeaders.data[0].dTy"
+                    ></app-trns-table>
+            </div>
+
+        </div>  
+    
+    </div>
+    
+</body>

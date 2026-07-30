@@ -1,0 +1,22 @@
+button {
+	box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.1),
+		0px 35px 35px rgba(78, 75, 102, 0.15);
+	transition: 0.2s;
+}
+
+.custom {
+	border-radius: 50% !important;
+	width: 70px !important;
+	height: 70px !important;
+}
+
+.hideSpan {
+	display: none;
+	transition: 0.5s;
+}
+
+.centerImage {
+	position: absolute !important;
+	top: 22px !important;
+	left: 25px !important;
+}

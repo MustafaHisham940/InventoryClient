@@ -1,0 +1,131 @@
+
+
+
+
+
+
+<div class="container ">
+    
+    <div class="card-ribbon w-100 text-center">
+        <div class="pageLabel" >
+          <h1 class="mb-0" > عرض بيانات الصنف  </h1>
+          <a  class="text-success small"> </a>
+      </div>
+      </div>
+   
+    <form [formGroup]="addForm"  >
+        <div class="row mt-5" dir="rtl">
+            
+            <mat-tab-group>
+                <mat-tab label="بيانات الصنف" class="fw-bolder"> 
+                    <!-- Account Details -->
+                    <div class="AccountDetails " dir="rtl">
+
+                        <div class="mb-3">
+                            <label for="codeNumber" class="form-label">كود الصنف</label>
+                            <input type="text"  class="form-control " id="codeNumber" disabled  placeholder="{{hereEditeCustomer.id}}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">الوصف</label>        
+                            <input type="text" min="0" class="form-control" id="itmNm" formControlName="itmNm">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">BarCode Id</label>        
+                            <input type="number" min="0" class="form-control" id="barCod" formControlName="barCod">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">وحدة القياس</label>        
+                            <input type="text" min="0" class="form-control" id="mUnt" formControlName="mUnt">
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountNum" class="form-label">العبوة الافتراضية</label>        
+                            <input type="number" min="0" class="form-control" id="back" formControlName="back">
+                        </div>
+                        
+                   
+                        
+                    </div>
+                
+                    
+                    
+                     </mat-tab>
+               
+               
+                     <mat-tab label="بيانات اخري" class="fw-bolder"> 
+                    <!-- Client Details -->
+                 <div class="itemdetails" dir="rtl">
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">سعر البيع</label>
+                        <input type="number"  class="form-control " id="pric" formControlName="pric">
+                    </div>
+                    <div class="mb-3">
+                        <label for="accountNum" class="form-label">سعر الجملة</label>        
+                        <input type="number" min="0" class="form-control" id="gPrc" formControlName="gPrc">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">تكلفة رصيد أول المدة</label>
+                        <input type="number"  class="form-control " id="bCst" formControlName="bCst">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">أقل سعر بيع</label>
+                        <input type="number"  class="form-control " id="lPrc" formControlName="lPrc">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="codeNumber" class="form-label">قيمة الضريبة</label>
+                        <input type="number"  class="form-control " id="tax" formControlName="tax">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ctgId" class="form-label">كود الفئة</label>
+                        <select class="form-select " id="ctgId" formControlName="ctgId">
+                          <option value="" disabled selected>اختر كود الفئة</option>
+                          <option [value]="1">فئة 1</option>
+                          <option [value]="2">فئة 2</option>
+                          <option [value]="3">فئة 3</option>
+                        </select>
+                      </div>
+
+                
+                 </div>
+
+                      
+                 
+                
+               
+               
+
+
+          
+                
+                
+                </mat-tab>
+
+
+            <!--<mat-tab label="Third"> Content 3 </mat-tab>-->
+              </mat-tab-group>
+              
+
+
+
+            
+            
+            
+
+
+
+
+
+            <div class="form-actions mt-4 d-flex justify-content-end" dir="rtl" >
+                <button type="submit" class="btn btn-success"  routerLink="/items">
+                    <i class="fa fa-backward">العودة</i> </button>
+                
+            </div>
+        </div>
+    </form>
+</div>
+

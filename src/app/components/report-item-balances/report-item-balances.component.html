@@ -1,0 +1,87 @@
+<div class="card shadow-sm position-relative" dir="rtl">
+
+  <div class="card-ribbon w-100 text-center align-items-center justify-content-between">
+    <div class="pageLabel">
+      <h2 class="mb-0 fw-bolder" style="color: white;">تقرير أرصدة الأصناف</h2>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="customer-filters">
+      <div class="row g-3 mb-4 align-items-center">
+        <div class="col-auto">
+          <h4 class="section-label m-0">بحث متقدم</h4>
+        </div>
+
+        <div class="col">
+          <div class="d-flex gap-3 w-100 flex-wrap align-items-start">
+
+            <div class="search-box flex-fill">
+              <label for="firstItem">من</label>
+              <input
+                id="firstItem"
+                type="text"
+                placeholder="من"
+                name="firstItem"
+                [(ngModel)]="firstItem"
+                #firstItemModel="ngModel"
+                [class.invalid-field]="hasFirstItemError() && (firstItemModel.touched || firstItemModel.dirty)">
+              <small class="field-warning" *ngIf="hasFirstItemError() && (firstItemModel.touched || firstItemModel.dirty)">يجب ادخال هذا العنصر</small>
+            </div>
+
+            <div class="search-box flex-fill">
+              <label for="endItem">إلى</label>
+              <input
+                id="endItem"
+                type="text"
+                placeholder="إلى"
+                name="endItem"
+                [(ngModel)]="endItem"
+                #endItemModel="ngModel"
+                [class.invalid-field]="hasEndItemError() && (endItemModel.touched || endItemModel.dirty)">
+              <small class="field-warning" *ngIf="hasEndItemError() && (endItemModel.touched || endItemModel.dirty)">يجب ادخال هذا العنصر</small>
+            </div>
+
+            <div class="search-box flex-fill">
+              <label for="storeCode">كود المخزن</label>
+              <input
+                id="storeCode"
+                type="text"
+                placeholder="كود المخزن"
+                name="storeCode"
+                [(ngModel)]="storeCode"
+                #storeCodeModel="ngModel"
+                [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+              <small class="field-warning" *ngIf="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">يجب ادخال هذا العنصر</small>
+            </div>
+
+            <button
+              class="btn btn-success px-4"
+              style="white-space: nowrap;"
+              (click)="search()"
+              [disabled]="isFormInvalid()">
+              <i class="fas fa-search me-2"></i>بحث
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body pt-0" *ngIf="excelReportFlag === 1">
+    <button
+      class="btn btn-info"
+      style="color: white; background-color: #1e7fc1;"
+      (click)="downloadExcel()">
+      <i class="fa fa-download" style="color: white;" aria-hidden="true"></i> تحميل ملف اكسيل
+    </button>
+  </div>
+</div>
+
+<iframe
+  *ngIf="pdfUrl"
+  [src]="pdfUrl"
+  width="100%"
+  height="800px">
+</iframe>

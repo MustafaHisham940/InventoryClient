@@ -1,0 +1,81 @@
+.example-container {
+    width: 100%;
+    height: 100vh; /* full screen height */
+  
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    flex-direction: column;   /* stack العناصر فوق بعض */
+    align-items: flex-start;  /* خليهم يبدأوا من الشمال */
+    justify-content: flex-start; /* خليهم من فوق */
+    height: 100%;
+    padding: 10px;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
+  }
+  .ReportSection{
+    width: 100%;
+    height: 100vh; /* full screen height */
+    
+  }
+
+  .example-sidenav-content button {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+   /* background: linear-gradient(135deg, #1e7fc1 0%, #1565c0 50%, #0d47a1 100%);*/
+   background: #1976d2; /* Angular Material blue */
+   color: white;
+  }
+
+
+  /************************************************************************/
+  /* Sidebar container */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Each menu item */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  padding: 12px 15px;
+
+  background: #1e1e1e;
+  color: #e0e0e0;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  text-align: left;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Icon size */
+.menu-item mat-icon {
+  font-size: 20px;
+}
+
+/* Hover effect */
+.menu-item:hover {
+  background: #2c2c2c;
+  transform: translateX(5px);
+}
+
+/* Active (selected report) */
+.menu-item.active {
+  background: #1976d2; /* Angular Material blue */
+  color: white;
+}

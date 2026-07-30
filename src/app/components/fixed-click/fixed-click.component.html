@@ -1,0 +1,18 @@
+<button
+	class="bg-gradient fixed z-90 bottom-10 ltr:right-8 rtl:left-8 text-[#FCFCFC] rounded-[16px] w-[98px] h-[56px] m-[8px]"
+	(click)="clickEvent.emit()"
+	[ngClass]="{ custom: isScrolling && !isScrollingTop }"
+	mat-button
+>
+	<img
+		[ngClass]="{ centerImage: isScrolling && !isScrollingTop }"
+		class="absolute top-4 left-4 w-7"
+		src="assets/images/edit-white.svg"
+		alt=""
+	/>
+	<span
+		[ngClass]="{ hideSpan: isScrolling && !isScrollingTop }"
+		class="absolute top-3 right-5 text-[16px]"
+		>{{ buttonTitle }}</span
+	>
+</button>

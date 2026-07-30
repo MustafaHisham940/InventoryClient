@@ -1,0 +1,120 @@
+<body dir="rtl">
+    <div class="conatinerPrompt container-fluid d-flex flex-column">
+
+        <div class="prompt-container">
+            <div class="prompt-header">
+                <span>مدفوعات العملاء</span>
+                <div class="actionButtons">
+                    <button class="btn add-btn fs-4" title="اضافة سند جديد" (click)="goToAdd()">+</button>
+                </div>
+            </div>
+
+            <div class="prompt-body">
+                <div class="customer-filters">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <h3 class="section-label m-0">بحث</h3>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex gap-3 flex-wrap">
+                                <div class="search-box">
+                                    <input type="number" class="form-control" placeholder="البحث بكود العميل..."
+                                        [(ngModel)]="filters.cstId" name="cstIdFilter">
+                                </div>
+                                <div class="search-box">
+                                    <input type="date" class="form-control" [(ngModel)]="filters.trsDt"
+                                        name="trsDtFilter">
+                                </div>
+                                <button class="btn btn-search" (click)="search()">
+                                    <i class="fas fa-search me-2"></i>بحث
+                                </button>
+                                <button class="btn btn-clear" (click)="clearFilters()">
+                                    <i class="fas fa-times me-2"></i>مسح الفلتر
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container mt-4">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>رقم السند</th>
+                                    <th>تاريخ السند</th>
+                                    <th>كود العميل</th>
+                                    <th>اسم العميل</th>
+                                    <th>المبلغ</th>
+                                    <th>الاجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(hdr of pagedData; track hdr.trsNo){
+                                <tr>
+                                    <td>{{hdr.trsNo}}</td>
+                                    <td>{{hdr.trsDt | date:'yyyy/MM/dd'}}</td>
+                                    <td>{{hdr.cstId}}</td>
+                                    <td>{{hdr.customerName}}</td>
+                                    <td>{{hdr.val}}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="تعديل"
+                                            (click)="goToEdit(hdr)">✎</button>
+                                        <button class="btn btn-sm btn-outline-danger" title="حذف"
+                                            (click)="clickDelete(hdr)">×</button>
+                                    </td>
+                                </tr>
+                                } @empty {
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">لا يوجد سندات لعرضها</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pagination-container">
+                        <div class="pagination-controls">
+                            <button class="btn btn-light" (click)="onPageChange(currentPage - 1)"
+                                [disabled]="currentPage === 1">&lt;</button>
+                            <span>صفحة {{ currentPage }} من {{ mathCiel }}</span>
+                            <button class="btn btn-light" (click)="onPageChange(currentPage + 1)"
+                                [disabled]="currentPage === mathCiel">&gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(headerPendingDelete){
+    <div class="position-fixed top-0 start-0 w-100 h-100 backdrop-blur"></div>
+    <div class="modal-backdrop fade show" style="z-index: 1040;"></div>
+    <div class="modal position-fixed d-block" tabindex="-1" style="z-index: 1050;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white border-0 rounded-top-3">
+                    <div class="modal-title w-100 text-center">
+                        <i class="bi bi-exclamation-triangle-fill fs-1 d-block mb-2"></i>
+                        <h2 class="mb-0 fw-bold">تأكيد الحذف</h2>
+                    </div>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="lead text-muted mb-4">
+                        سوف يتم حذف سند مدفوعات العميل رقم {{headerPendingDelete.trsNo}}
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-lg btn-outline-secondary px-4 flex-grow-1"
+                            (click)="dontDelete()">
+                            <i class="bi bi-x-circle me-2"></i> إلغاء
+                        </button>
+                        <button type="button" class="btn btn-lg btn-dark px-4 flex-grow-1" (click)="confirmDelete()">
+                            <i class="bi bi-trash3 me-2"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</body>

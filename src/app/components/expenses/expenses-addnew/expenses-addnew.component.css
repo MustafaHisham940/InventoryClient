@@ -1,0 +1,79 @@
+body {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.conatinerPrompt {
+    margin-right: 120px;
+    width: 100%;
+}
+
+.prompt-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+    width: 100%;
+    max-width: 900px;
+}
+
+.prompt-header {
+    background-color: rgba(30, 127, 193, 0.9);
+    color: white;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.prompt-body {
+    padding: 25px;
+}
+
+label {
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    min-height: 42px;
+}
+
+.form-control:focus {
+    border-color: #1e7fc1;
+    box-shadow: 0 0 0 0.2rem rgba(30, 127, 193, 0.15);
+}
+
+.form-control:disabled {
+    background-color: #f3f4f6;
+}
+
+.custom-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0;
+}
+
+.btn-primary {
+    background-color: #1e7fc1;
+    border-color: #1e7fc1;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #1869a2;
+}
+
+.btn-secondary {
+    border-radius: 8px;
+    font-weight: 600;
+}

@@ -1,0 +1,88 @@
+<!--<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened>Drawer content</mat-drawer>
+    <mat-drawer-content>Main content
+
+        <router-outlet></router-outlet>
+
+
+    </mat-drawer-content>
+  </mat-drawer-container>-->
+  
+
+  <mat-drawer-container class="example-container" autosize>
+   <!-- <mat-drawer #drawer class="example-sidenav" mode="side">
+      <p>Auto-resizing sidenav</p>
+      @if (showFiller) {
+        <p>Lorem, ipsum dolor sit amet consectetur.</p>
+      }
+       
+      <button    (click)="chooseReport(-1)"  >  تقرير الاصناف</button>
+      <button    (click)="chooseReport(1)"  >  بطاقة حركة صنف</button>
+      <button    (click)="chooseReport(2)"  >  تقرير كشف حساب عميل</button>
+      <button    (click)="chooseReport(3)"  >  تقرير ضبط التكلفة</button>
+      
+    
+      
+    </mat-drawer>-->
+  
+
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+    <div class="menu">
+    
+      <button      
+      class="menu-item" 
+      [class.active]="currentRepCode === -1"
+      (click)="chooseReport(-1)">     
+      <mat-icon>description</mat-icon>
+      <span>تقرير الاصناف</span>
+      </button>
+    
+    
+      <button      
+      class="menu-item" 
+      [class.active]="currentRepCode === 1"
+      (click)="chooseReport(1)">     
+      <mat-icon>description</mat-icon>
+      <span>بطاقة حركة صنف</span>
+      </button>
+    
+      <button  class="menu-item"   [class.active]="currentRepCode === 2" (click)="chooseReport(2)">
+        <mat-icon>assessment</mat-icon>
+        <span> كشف حساب عميل</span>
+      </button>
+    
+      <button  class="menu-item"   [class.active]="currentRepCode === 3" (click)="chooseReport(3)">
+        <mat-icon>analytics</mat-icon>
+        <span>تقرير ضبط التكلفة</span>
+      </button>
+    </div>
+  </mat-drawer>
+
+    <div class="example-sidenav-content">
+
+      <!-- 🔥 Button at top-left -->
+     <button type="button" class="btn btn-lg m-3" (click)="drawer.toggle()" >
+      <i class="fa-solid fa-bars"></i>التقارير 
+      </button>
+    
+      
+      <!-- 🔥 Content تحت الزر -->
+      <div class="ReportSection">
+        @if(currentRepCode == -1){
+           <app-reports></app-reports>
+        }
+        @if(currentRepCode == 1){
+          <app-report-items-card></app-report-items-card>
+        }
+        @if(currentRepCode == 2){
+          <app-checkup-bal></app-checkup-bal>
+       }
+
+        @if(currentRepCode == 3){
+           <app-report-cost-control></app-report-cost-control>
+        }
+      </div>
+    
+    </div>
+  
+  </mat-drawer-container>

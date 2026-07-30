@@ -1,0 +1,270 @@
+{
+  "GENERAL": {
+    "GO_CARE": "Go Care"
+  },
+  "HEADER": {
+    "ORGANIZATION": "Organization",
+    "MY_PROFILE": "My Porfile",
+    "BASIC_INFORMATION": "Basic information"
+  },
+  "ACTIONS": {
+    "CLOSE": "close",
+    "GOT_IT": "OK , got it",
+    "SUBMIT": "Submit",
+    "BACK": "Back to previous page",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "VERIFY": "Verify Account",
+    "TO_VERIFY": "Verify Account",
+    "RESEND": "Resend",
+    "RESET": "Reset",
+    "SEND_CODE": "Send Code",
+    "YES": "Yes",
+    "NO": "No",
+    "EDIT": "Edit",
+    "ACTIVATE": "Activate",
+    "DEACTIVATE": "Deactivate",
+    "SIGNOUT": "Sign out",
+    "CHANGE_IMAGES": "Change image",
+    "VERIFY1": "Submit"
+  },
+  "GENERAL_LABELS": {
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "PHONE": "Phone",
+    "COUNTRY": "Country",
+    "EMAIL": "Email",
+    "SUCCESS": "Success",
+    "ERROR": "Error",
+    "PHONE_CODE": "Phone Code",
+    "SELECT_CODE": "Select code",
+    "SEARCH": "Search"
+  },
+
+  "BRANCHES": {
+    "TARGET_AUDIENCE": "Target Audience",
+    "BRANCH_TYPES": {
+      "WOMEN": "Women",
+      "MEN": "Men",
+      "MALE": "Male",
+      "FEMALE": "Female",
+      "KIDS": "Kids",
+      "PETS": "Pets"
+    }
+  },
+  "BUSINESS_TYPES": {
+    "BEAUTY_SALON": "Beauty Salon",
+    "BEAUTY_CLINIC": "Beauty Clinic",
+    "MAKEUP_ARTIST": "Makeup Artist"
+  },
+  "COUNTRIES": {
+    "EGYPT": "Egypt",
+    "SAUDI_ARABIA": "Kingdom Saudi Arabia"
+  },
+  "CONFIRMATION_MESSAGE": {
+    "SUCCESS_OPERATION": "Successful operation",
+    "RESET_PASS_SUCCESSFULLY": "You have to reset a new password, to be able to join Go Care Dashboard",
+    "LOGOUT": "Are you sure to sign out?",
+    "ACTIVATION_CONFIRMATION": "Are you sure want to activate?",
+    "DEACTIVATION_CONFIRMATION": "Are you sure want to deactivate?"
+  },
+  "AUTH": {
+    "HAVE_ACCOUNT": "Have Account?",
+    "SIGNUP": {
+      "WELCOME_TO_GO_CARE": "Welcome To Go Care",
+      "COMMERCIAL_REGISTRATION": "Commercial Registration",
+      "SIGNUP": "Sign Up",
+      "FULL_NAME": "Full Name",
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "BUSINESS_NAME": "Business Name",
+      "BUSINESS_type": "Business Type",
+      "PASSWORD_HINT": "Password must contains 8 letters and numbers.",
+      "ADMIN_INFO": "Admin Information",
+      "COMPLETE_PROFILE": "Complete Profile",
+      "SOCIAL_COMPANIES": "with social accounts",
+      "SOCIAL_COMPANY": "with social account",
+      "OR_WITH": "or manual sign up",
+      "MAROUF_NUMBER": "Marouf Number",
+      "CHOOSE": "Choose your account",
+      "MATHCES": "These accounts matched your search.",
+      "SECONDS": "Seconds"
+    },
+    "SIGNIN": {
+      "WELCOME_BACK_TO_GO_CARE": "Welcome Back To Go Care",
+      "SIGNIN": "Sign In",
+      "OR_WITH": "or manual sign in",
+      "EMAIL_OR_PHONE": "Email Or Mobile Number",
+      "NOT_MEMBER": "Not a Member Yet?",
+      "YOUR_STYLE": "Reach your style in one place",
+      "YOUR_SOCIAL": "With social Accounts",
+      "YOUR_EMAIL": "With phone number or email",
+      "JOIN": "Join Now",
+      "FORGOT_PASSWORD": "Forgot Password?"
+    },
+    "FORGET_PASSWORD": {
+      "FORGET_PASSWORD": "Forgot Password ?",
+      "HINT": "Select which contact details should we use to reset your password:",
+      "VIA_MAIL": "Via Email:",
+      "VIA_SMS": "Via SMS:",
+      "SMS_CODE": "SMS Code",
+      "OTP_SMS": "We will send you the OTP via SMS.",
+      "ENTER_PHONE": "Enter your phone number",
+      "ENTER_EMAIL": "Enter your email",
+      "ENTER_PHONE_Email": "Enter the email address or mobile number associated with your go care account",
+      "OTP_MAIL": "We will send you the OTP via email."
+    },
+    "RESET_PASSWORD": {
+      "SETUP_NEW_PASSWORD": "Reset Password",
+      "ALREADY_RESET_PASSWORD": "Remember your password? ",
+      "RESET": "Reset Password",
+      "REPEAT_PASSWORD": "Repeat Password",
+      "AGREE": "I agree on ",
+      "TERMS": "Terms and Privacy Policy"
+    },
+    "VERIFICATION": {
+      "VERIFICATION": "Verification",
+      "VERIFICATION_CODE": "Verification Code",
+      "RESEND_CODE": "Resend Code",
+      "ENTER_OTP": "Enter your OTP code here",
+      "VERIFICATION_MESSAGE": "A Verification code is sent to verify your E-mail / phone number.",
+      "VERIFICATION_MESSAGE_1": "We have sent  to you a code to",
+      "NOT_RECEIVE_CODE": "Didn't receive the verification code? request new code",
+      "NOT_RECEIVE_CODE_1": "Didn’t receive a code?",
+      "ENTER_CODE": "Enter your verification code that we sent you through your e-mail or mobile number."
+    }
+  },
+  "VALIDATION": {
+    "REQUIRED": "{{name}} Field is required",
+    "MAX_LENGTH": "Max length is {{number}}",
+    "MIN_LENGTH": "{{name}} must be at least {{number}} characters",
+    "MIN_LENGTH_NUMBERS": "{{name}} must be at least {{number}} numbers",
+    "INVALID": "Invalid",
+    "EMAIL": "Please enter a valid Email",
+    "PASSWORD": "Password must contains 8 letters and numbers",
+    "PASSWORD_INCORRECT": "Password  is incorrect",
+    "CONFIRM_PASSWORD": "Password doesn’t match",
+    "PHONE": "Please enter a valid Phone",
+    "PHONE_FORMAT": "Add phone number with no spaces",
+    "COMMERCIAL_NOTVALID": "Commercial Registration number is not valid",
+    "MAROUF_NOTVALID": "Marouf number is not valid",
+    "EMAIL_OR_PHONE": "Added email/phone number is not correct",
+    "EMAIL_OR_MOBILE": "Added email/mobile number is not correct",
+    "NAME": "Special characters or numbers aren’t allowed",
+    "PASSWORD_HINT": "Use 8 or more characters with a mix of letters, numbers & symbols.",
+    "WRONG_PASSWORD": "Incorrect password format, minimum length 8 letters and numbers.",
+    "PASSWORD_DONT_MATCH": "Password doesn’t match.",
+    "OTP": "Entered otp is incorrect",
+    "BUSINESS_NAME_EXIST": "Business name is already used",
+    "EMAIL_PHONE_REQUIRED": "Please enter valid email or mobile number"
+  },
+  "ORGANIZATION": {
+    "ADMIN_PROFILE": {
+      "ADMIN_PROFILE": "Admin Profile",
+      "VIEW_SERVICE": "View services",
+      "BASIC_INFORMATION": "Basic information",
+      "CHOOSE": "Choose the type you want to view",
+      "BRANCH_NAME": "Branch Name",
+      "SECURITY": "Security",
+      "PASSWORD": "Password",
+      "EMAIL": "Email Address",
+      "COUNTRY": "Country",
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "MOBILE": "Mobile Number"
+    },
+    "SP_PROFILE": {
+      "BRANCHES": "Branches",
+      "BASIC_INFO": "Basic information",
+      "CHOOSE_CONTENT": "Choose content you want To preview",
+      "VIEW_SERICVE": "View serice"
+    },
+    "BRANCH_DETAILS": {
+      "BRANCH_ACTIVATION": "Activate/Deactivate branch",
+      "BASIC_INFORMATION": "Basic information",
+      "SET_MAIN_BRANCH": "Set as main branch",
+      "SOCIAL_ACCOUNTS": "Social accounts",
+      "TARGET_AUDIENCE": "Target Audience",
+      "WORKING_HOURS": "Working hours",
+      "ACTIVATION_MESSAGE": "Ability to activate or deactivate branch",
+      "TARGET_AUDIENCE_WOMEN_MESSASGE": "Services for women",
+      "TARGET_AUDIENCE_MEN_MESSASGE": "Services for men",
+      "TARGET_AUDIENCE_KIDS_MESSASGE": "Services for kids"
+    }
+  },
+
+  "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
+    "ORGANIZATION": "Organization",
+    "APPOINTMENTS": "Appointments",
+    "EMPLOYEES": "Employees",
+    "CLIENTS": "Clients",
+    "SERVICES": "Services",
+    "CHAT": "Private Chat",
+    "SIGNOUT": "Sign out",
+    "OFFERS": "Offers",
+    "PACKAGES": "PACKAGES"
+  },
+  "ERROR_MESSAGES": {
+    "CODE_BLOCKED": "Too many attempts please try again in 30 minutes. ",
+    "USER_NOTFOUND": "The email address or mobile number isn't connected to an account",
+    "FIELD_SIGNUP": "Failed to sign up",
+    "FIELD_LOGIN": "Failed to Login"
+  },
+
+  "SUCCESS_MESSAGES": {
+    "SIGNUP_SUCCESSFULLY": "Sign up Successfully"
+  },
+  "STATUS": {},
+
+  "SIGNIN": {
+    "WELCOME_BACK_TO_GO_CARE": "Welcome Back To Go Care",
+    "SIGNIN": "Sign In",
+    "EMAIL_OR_PHONE": "Email Or Mobile Number",
+    "NOT_MEMBER": "Not a Member Yet?",
+    "YOUR_STYLE": "Reach your style, your style in a click",
+    "YOUR_SOCIAL": "ًWith Social Accounts",
+    "YOUR_EMAIL": "With phone number or email",
+    "FORGOT_PASSWORD": "Forgot Password?"
+  },
+  "FORGET_PASSWORD": {
+    "FORGET_PASSWORD": "Forgot Password ?",
+    "HINT": "Select which contact details should we use to reset your password:",
+    "VIA_MAIL": "Via Email:",
+    "VIA_SMS": "Via SMS:",
+    "SMS_CODE": "SMS Code",
+    "OTP_SMS": "We will send you the OTP via SMS.",
+    "ENTER_PHONE": "Enter your phone number",
+    "ENTER_EMAIL": "Enter your email",
+    "ENTER_PHONE_Email": "Enter your Phone number Or Email Address",
+    "OTP_MAIL": "We will send you the OTP via email."
+  },
+  "RESET_PASSWORD": {
+    "SETUP_NEW_PASSWORD": "Reset Password",
+    "ALREADY_RESET_PASSWORD": "Remember your password? ",
+    "RESET": "Reset Password",
+    "REPEAT_PASSWORD": "Repeat Password",
+    "AGREE": "I Agree & ",
+    "TERMS": "Terms and Conditions"
+  },
+  "VERIFICATION": {
+    "VERIFICATION": "Verification",
+    "VERIFICATION_CODE": "Verification Code",
+    "RESEND_CODE": "Resend Code",
+    "ENTER_OTP": "Enter your OTP code here",
+    "VERIFICATION_MESSAGE": "A Verification code is sent to verify your E-mail / phone number.",
+    "VERIFICATION_MESSAGE_1": "We have sent  to you a code to",
+    "NOT_RECEIVE_CODE": "Didn't receive the verification code? request new code",
+    "NOT_RECEIVE_CODE_1": "Didn’t receive a code?",
+    "ENTER_CODE": "Enter your verification code that we sent you through your e-mail or mobile number."
+  },
+  "DAYS": {
+    "SATURDAY": "Saturday",
+    "SUNDAY": "Sunday",
+    "MONDAY": "Monday",
+    "TUESDAY": "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY": "Thursday",
+    "FRIDAY": "Friday"
+  }
+}

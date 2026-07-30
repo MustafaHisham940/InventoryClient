@@ -1,0 +1,53 @@
+
+ 
+<body dir="rtl">
+<h1>app-edite-item-bal</h1>
+
+<!-- Transparent Prompt -->
+<div class="container-fluid">
+    <div class="prompt-header">
+        <span>تعديل بيانات الرصيد</span>
+        <i class="fa-solid fa-box"></i>
+    </div>
+    <div class="prompt-body">
+        <form id="userForm">
+            <!-- First Input: Username -->
+            <div class="mb-4">
+                <label for="username" class="form-label">اسم المخزن</label>
+                <div class="input-group">
+                    <input type="text" class="form-control flex-row" id="_BCd" placeholder="" value="{{curr_BCd}}" disabled> 
+                    <span class="input-group-text"><i class="fa-solid fa-cart-flatbed"></i></span>
+                </div>
+                
+            </div>
+            
+            <!-- Second Input: Email -->
+            <div class="mb-4">
+                <label for="email" class="form-label">اسم الصنف</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="_ItmCd" placeholder="" value="{{curr_ItmCd}}" disabled>
+                    <span class="input-group-text"><i class="fa-solid fa-boxes-stacked"></i></span>
+                </div>
+              
+            </div>
+            
+            <!-- Third Input: Password -->
+            <div class="mb-4">
+                <label for="password" class="form-label">رصيد أول المدة	bBal</label>
+                <div class="input-group">
+                    <input type="number" class="form-control w-100" id="bBal" placeholder="" name="bBal" [appInputLimiter]="14" [(ngModel)]="newbalance.bBal">
+                    <span class="input-group-text"><i class="fa-solid fa-credit-card"></i></span>
+                </div>
+                
+            </div>
+            
+            <div class="buttons-container">
+                <button type="submit" class="btn btn-primary" (click)="editeITemBal()">تعديل</button>
+                <button type="button" class="btn btn-secondary" id="cancelBtn" (click)="goBack()">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+ 
+</body>

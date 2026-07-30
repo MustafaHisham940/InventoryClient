@@ -1,0 +1,227 @@
+<p>add-new-details works!</p>
+
+   
+
+    <!-- Transparent Prompt -->
+ 
+ 
+
+    <div class="conatinerPrompt container-fluid d-flex flex-column "dir="rtl">
+        
+  
+  
+        <div class="prompt-container">
+            <div class="prompt-header">
+                <span>  {{this.TrnsData.data[this.detailsMetaData.curr_TrsTy].Trns_name}} ({{this.detailsMetaData.curr_Store_Name}})</span>
+                
+                
+            </div>                        
+            <div class="prompt-body">
+          
+                <div class="row">
+                   <div class="col-md-6">
+                    <div class="select-filter" style="width: 220px">
+                        <div class="select-wrapper">
+                          <small class="fs-5"> رقم المستند</small>
+                          <input type="number" class="form-control" value="{{detailsMetaData.Item.trsNo}}">
+                        </div>
+                    </div>
+                   </div>
+                   <div class="col-md-6">
+                    <!--<button class="btn btn-primary mt-4" (click)="FindHeader()"> بحث</button>-->
+                   </div>
+                </div>
+
+                <div class="custom-divider"></div>
+          
+            <div class="row">
+            
+                    @if(detailsMetaData.curr_TrsTy==11  ||detailsMetaData.curr_TrsTy==2 ){
+                        <div class="col-md-2">
+                        <label for="clientId">كود العميل </label>
+                        <input type="text" value="{{detailsMetaData.Item.cstId}}" id="clientId" name="clientId" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="clientId">اسم العميل </label>
+                            <input type="text" value="{{detailsMetaData.Item.customerName}}" id="clientId" name="clientId" class="form-control" disabled>
+                            </div>
+                    }   
+                    @if(detailsMetaData.curr_TrsTy==1  ||detailsMetaData.curr_TrsTy==12 ){
+                        <div class="col-md-1">
+                        <label for="clientIdd">كود المورد </label>
+                        <input type="text" value="{{detailsMetaData.Item.cstId}}"  id="clientIdd" name="clientIdd" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="clientId">اسم المورد </label>
+                            <input type="text" value="{{detailsMetaData.Item.customerName}}" id="clientId" name="clientId" class="form-control" disabled>
+                            </div>
+                    }   
+                    @if(detailsMetaData.curr_TrsTy==1  ||detailsMetaData.curr_TrsTy==2 ||detailsMetaData.curr_TrsTy==11||detailsMetaData.curr_TrsTy==12 ){
+                     <!--  <div class="col-md-1">
+                        <label for="dTy">طريقةالسداد </label>
+                        <input type="text" value="{{SecHeaders.data[0].dTy}}" id="dTy" name="dTy" class="form-control" disabled>
+                        </div>--> 
+                    }   
+                    @if(detailsMetaData.curr_TrsTy==4 ){
+                        <div class="col-md-3">
+                        <label for="StrCd">كود المخزن المحول منه  </label>
+                        <input type="text" value="{{detailsMetaData.Item.strCd}}" id="StrCd" name="StrCd" class="form-control" disabled>
+                        </div>
+                    }  
+                    @if(detailsMetaData.curr_TrsTy==14 ){
+                        <div class="col-md-3">
+                        <label for="clientId">كود المخزن المحول اليه  </label>
+                        <input type="text" value="{{detailsMetaData.Item.strCd}}" id="clientId" name="clientId" class="form-control" disabled>
+                        </div>
+                    }  
+                    @if(detailsMetaData.curr_TrsTy==11 ){
+                        <div class="col-md-3">
+                        <label for="SPrc">السعرالمطلوب  </label>
+
+                        @if(detailsMetaData.sPrc==1){
+                        <input type="text" value="سعر المستهلاك" id="SPrc" name="SPrc" class="form-control" disabled>
+
+                        }
+                        @if(detailsMetaData.sPrc==2){
+                            <input type="text" value="سعر الجملة" id="SPrc" name="SPrc" class="form-control" disabled>
+
+                            }
+                        </div>
+                    } 
+                
+                    <div class="col-md-3">
+                        <label for="TrsDt">تاريخ السند </label>
+                        <input type="text" value="{{detailsMetaData.Item.trsDt }}" id="TrsDt" name="TrsDt" class="form-control" disabled>
+                        </div>
+                   
+                        @if(detailsMetaData.curr_TrsTy==1  ||detailsMetaData.curr_TrsTy==2 ||detailsMetaData.curr_TrsTy==11||detailsMetaData.curr_TrsTy==12 ){
+                            <div class="col-md-3">
+                            <label for="dTy">طريقة   السداد </label> 
+                            <div class="spanContainer">
+                                <div class="col-md-3">
+                                    @if(detailsMetaData.dTy == 1){
+                                        <span class="badge bg-dark-subtle"  style="color: black; font-size: large;" >اجــــــــــل</span>
+                                    }
+                                    @if(detailsMetaData.dTy == 2){
+                                    <span class="badge bg-primary-subtle"  style="color: black; font-size: large;" >نقــــــــدي</span>  
+                                    }
+                                </div>
+                            </div>                                                     
+                            </div>
+                          
+                        }   
+                        
+                
+            </div>
+
+          
+            
+            <!--<button matButton="elevated" class="btn btn-primary" (click)="openDialog()">اختر العميل</button>
+            <li>
+             كود العميل: <em>{{S_parentParent_selectedCustomer()}}</em>
+           </li>   -->                    
+        </div>
+        </div>
+
+
+  
+         <!--customer-->
+        <!--<div class="prompt-container">
+                
+                            <div class="prompt-header">
+                            <span>اختر المورد او العميل</span>
+                            <i class="fas fa-store"></i>
+                            </div>         
+
+                            <div class="prompt-body">
+                        
+                                
+                            </div>
+                                                
+        </div>-->
+
+
+                
+                
+                
+        <!--Items-->        
+        <div class="prompt-container mt-5">
+                    <div class="prompt-header">
+                        <span> الصنف  :  {{detailsMetaData.Item.itemName}} - كود الصنف  :  {{detailsMetaData.Item.itmCd}} </span>
+                        <i class="fas fa-store"></i>
+                        </div>  
+                        <div class="prompt-body ">
+                            
+                        
+                            <app-items-table-seprate
+                            (SelectedItemID)="onItemIdReceived($event)">                               
+                            </app-items-table-seprate>
+
+                        </div>
+        </div>
+
+                
+                
+                
+        <div class="prompt-container mt-5 mb-5">
+                        <div class="prompt-body ">
+                          
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="Qty">الكمية </label>
+                                    <input type="number" id="Qty" name="Qty" class="form-control" [(ngModel)]="_UpdateDetailsForm.qty">
+                                </div>
+                            
+
+                             
+                            <!--  <div class="col-md-3">
+                                    <label for="GQty">كمية الجملة </label>
+                                    <input type="number" id="GQty" name="GQty" class="form-control" >
+                                </div>-->
+                            
+
+                             
+                                <div class="col-md-3">
+                                    <label for="Pric">سعر الوحدة </label>
+                                    <input type="number" id="Pric" name="Pric" class="form-control"[(ngModel)]="_UpdateDetailsForm.pric">
+                                </div>
+                            
+
+                            
+                               <!-- <div class="col-md-3">
+                                    <label for="BCd">كود العبوة</label>
+                                    <input type="number" id="BCd" name="BCd" class="form-control">
+                                </div>
+                          
+
+                             
+                                <div class="col-md-3">
+                                    <label for="Bck">محتوى العبوة</label>
+                                    <input type="number" id="Bck" name="Bck" class="form-control">
+                                </div>-->
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary "  (click)="updateDtlsData()"> تعديل بيانات السطر</button>
+                                </div>
+
+
+                        </div>
+                        
+
+
+                        </div>
+        </div>
+
+
+
+
+    </div>
+         
+       
+ 
+    
+
+
+
+
+

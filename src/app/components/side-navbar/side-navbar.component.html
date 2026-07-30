@@ -1,0 +1,443 @@
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+   
+     
+     
+      <!-- Sidebar -->
+      <div class="sidebar d-flex flex-column align-items-center align-items-md-start  text-white   shadow"
+    [@slideInOut]="navState" >
+  
+   
+  <!---------------toggle------------------------------>
+
+  <div
+  id="sidebar-toggle-btn"
+  (click)="toggleNav()"
+  [style.left]="0 + 'px'">
+  <i class="fa-solid fa-bars" ></i>
+  </div>
+  <!-------------------------------------------------------------->
+<div class="seperate" >
+
+</div>
+
+    <div class="logo my-3 w-100 d-flex flex-column align-items-center justify-content-center  ">
+      <i class="fa-brands fa-uikit fs-1"></i>
+      <span class="ms-2 fw-bold fs-4" *ngIf="navState === 'expanded'">ادارة حسابات المخزون</span>
+    </div>
+  
+  <div class="contentNavbar pt-5">
+     <hr class="sidebar-separator">
+    @if(navState === 'expanded'){
+      <div class="slideoutContent nav nav-pills flex-column w-100 " >
+         
+  <!--
+         
+          <li  routerLink="/home" routerLinkActive=""><i class="nav-section fa-solid fa-house pe-2" ></i><a class="fw-100" >الرئيسة</a></li>
+         
+          <li appHoverEffect routerLink="/customers" routerLinkActive=""><i class="fa-solid fa-user pe-2 small"></i><a >العملاء </a></li>
+        
+          
+         
+          <li appHoverEffect routerLink="/items" routerLinkActive="" class="nav-section"><i class="fa-solid fa-box pe-2"></i><a >منتجات</a></li>
+         
+
+
+          <li appHoverEffect routerLink="" routerLinkActive="" class="nav-section"><i class="fa-solid fa-chart-line pe-2"></i><a >مبيعات</a></li>
+         
+          <li appHoverEffect routerLink="" routerLinkActive="" class="nav-section"><i class="fa-brands fa-buffer pe-2"></i><a >فواتير</a></li>
+          <li appHoverEffect routerLink="/UserDetails" routerLinkActive="" class="nav-section">          
+            <a (click)="isCollapsed = !isCollapsed"><i class="fa-solid fa-list-alt"></i>التقـــاريـــر</a>            
+          </li>
+          
+          <div [class.collapse]="isCollapsed" [class.show]="!isCollapsed">
+            <div class="card-body" style="background-color: #1f7cbc;">
+              <ul class="list-unstyled">
+                <li class="p-2"><a href="#" class="text-white me-4">التقرير الاول  <i class="fa-solid fa-circle fs-1"></i></a></li> 
+                <li class="p-2"><a href="#" class="text-white me-4">التقرير الثاني<i class="fa-solid fa-circle"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <li appHoverEffect routerLink="/UserDetails" routerLinkActive="" class="nav-section"><i  class="fa-solid fa-lock pe-2"></i><a >الصلاحيات</a></li>-->
+
+
+          
+         
+
+          
+          <li  routerLink="/home" routerLinkActive="">الرئيسية<i class="nav-section fa-solid fa-house pe-2" ></i><a class="fw-100" ></a></li>
+          
+
+          <!-- First Collapsible Section -->
+           
+           
+              <li class="nav-section">
+                <a (click)="collapseState.first = !collapseState.first">
+                  الحركة اليومية <i class="fa-solid fa-chart-simple"></i>
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.first">
+                <ul>
+                  <li>المشتـــــروات ‹</li>
+                  <li>مرتــجع البيـع ‹</li>
+                  <li>وارد تصنيــــع ‹</li>
+                  <li>إضافــة أخــرى ‹</li>
+                  <li>مبيـــعــــــــــات ‹</li>
+                  <li>مرتدات مشتروات ‹</li>
+                  <li>منصـرف للتصنيع ‹</li>
+                  <li>خصــــم أخــرى ‹</li>
+                </ul>
+              </div>
+
+
+
+            
+              <li class="nav-section">
+                <a (click)="collapseState.second = !collapseState.second">
+                  التعاملات النقدية <i class="fa-solid fa-coins"></i> 
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.second">
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                </ul>
+              </div>
+
+
+
+              <li class="nav-section">
+                <a (click)="collapseState.third = !collapseState.third">
+                  أصناف وأرصدة وعملاء <i class="fa-solid fa-briefcase"></i> 
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.third">
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                </ul>
+              </div>
+
+
+
+
+              <li class="nav-section">
+                <a (click)="collapseState.fourth = !collapseState.fourth">
+                  تعريفات <i class="fa-solid fa-hand-holding-dollar"></i>
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.fourth">
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                </ul>
+              </div>
+
+              تقارير<li  routerLink="/home" routerLinkActive=""><i class="fa-solid fa-bars-staggered"></i> ><a class="fw-100" ></a></li>
+
+
+
+
+
+              <li class="nav-section">
+                <a (click)="collapseState.fifth = !collapseState.fifth">
+                  الضبط والصيانة
+                </a>
+              </li>
+              <div [appCollapse]="collapseState.fifth">
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                </ul>
+              </div>
+            
+              <li  routerLink="/home" routerLinkActive=""><i class="nav-section fa-solid fa-house pe-2" ></i><a class="fw-100" >خروج</a></li>
+
+            
+            
+          <hr class="sidebar-separator">
+           
+
+          
+      </div>
+    }
+  
+  
+  
+    @if(navState === 'collapsed'){
+      <div class="slideInIcons ">
+        
+         <!-- <li appHoverEffect routerLink="/home" routerLinkActive=""><i class="fa-solid fa-house pe-2 mb-2" appNavbarHover></i><a class="fw-100"> </a></li>            
+          <li appHoverEffect routerLink="/customers" routerLinkActive=""><i class="fa-solid fa-user pe-2 mb-2" appNavbarHover></i><a ></a></li>
+          <li appHoverEffect routerLink="/items" routerLinkActive=""><i class="fa-solid fa-box pe-2 mb-2" appNavbarHover></i><a ></a></li>
+          <li appHoverEffect routerLink="" routerLinkActive=""><i class="fa-solid fa-chart-line pe-2 mb-2" appNavbarHover></i><a > </a></li>
+          <li appHoverEffect routerLink="" routerLinkActive=""><i class="fa-brands fa-buffer pe-2" appNavbarHover></i><a ></a></li>
+          <li appHoverEffect routerLink="/UserDetails" routerLinkActive=""><i class="fa-solid fa-lock pe-2" appNavbarHover></i><a ></a></li>-->
+
+         <!-- <li class="pe-2 mb-2" matIconButton [matMenuTriggerFor]="menu"  aria-label="Example icon-button with a menu">
+            <i class="fa-solid fa-user-circle"></i>
+          </li>
+          
+            <mat-menu #menu="matMenu" color="#1f7cbc"panelClass="shift-left-menu custom-menu custom-dark-menu" container-color="#666">
+              <button mat-menu-item>
+                <mat-icon>dialpad</mat-icon>
+                <span>صفحة صفحة الاصناف الاصناف</span>
+              </button>
+              <button mat-menu-item disabled>
+                <mat-icon>voicemail</mat-icon>
+                <span>Check voice mail</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>notifications_off</mat-icon>
+                <span>Disable alerts</span>
+              </button>
+            </mat-menu>-->
+         
+          
+          <!--   dashboard-->
+            <div class="rtl-menu-container  ">         
+              <a class=""><i class="fa-solid fa-home"></i></a>                
+              </div>
+              
+              <!-- Menu الحركات اليومية -->
+
+        <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-chart-simple"></i></a>                               
+          <div class="rtl-custom-menu">
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🏷️</span>
+              <span>المشتـــروات</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🔖</span>
+              <span>مرتجع البيع</span>
+            </button>
+
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🏭</span>
+              <span>وارد تصنيع</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">➕</span>
+              <span>إضافة أخرى</span>
+            </button>
+            <!--مبيعات-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">📈</span>
+              <span>مبيعات</span>
+            </button>
+            <!--مرتدات مشتروات-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🔄</span>
+              <span>مرتدات مشتروات</span>
+            </button>
+            <!--منصرف للتصنيع-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🛠️</span>
+              <span>منصرف للتصنيع</span>
+            </button>
+            <!--خصم أخرى-->
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">📉</span>
+              <span>منصرف للتصنيع</span>
+            </button>
+
+
+          </div>
+        </div>
+
+          <!--التعاملات النقدية-->
+        <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-coins"></i></a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">💸</span>
+              <span>المصروفات</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">💳</span>
+              <span>مدفوعات العملاء</span>
+            </button>
+
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🤝</span>
+              <span>تسديدات موردين</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🏠</span>
+              <span>مسحوبات شخصية</span>
+            </button>
+           
+
+
+          </div>
+        </div>
+
+
+         <!--أصناف وأرصدة وعملاء-->
+         <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-briefcase"></i></a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">📦</span>
+              <span>بيانات الاصناف</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">👥</span>
+              <span>بيانات العملاء والموردين</span>
+            </button>
+
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">💰</span>
+              <span>الأرصدة المخزنية</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🛒</span>
+              <span>تعريف المنتجات التامة</span>
+            </button>
+           
+
+
+          </div>
+        </div>
+
+
+
+         <!--أصناف وأرصدة وعملاء-->
+         <div class="rtl-menu-container  ">         
+          <a class="">  <i class="fa-solid fa-hand-holding-dollar"></i>  </a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🌐</span>
+              <span>تعريف المحافظات</span>
+            </button>
+
+            <button class="rtl-menu-item" routerLink="/Stores">
+              <span class="rtl-menu-icon">🚛</span>
+              <span>تعريف المخازن</span>
+            </button>
+
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🧴</span>
+              <span>العبوات</span>
+            </button>
+
+          
+           
+
+
+          </div>
+        </div>
+
+
+         <!--   reports-->
+         <div class="rtl-menu-container  ">         
+          <a class=""><i class="fa-solid fa-bars-staggered"></i></a>                
+          </div>
+
+
+          <!--<i class="fa-solid fa-screwdriver-wrench"></i>-->
+           <!--الضبط والصيانة-->
+         <div class="rtl-menu-container  ">         
+          <a class="">  <i class="fa-solid fa-screwdriver-wrench"></i>  </a>                               
+          <div class="rtl-custom-menu">
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">💲</span>
+              <span>ضبط التكلفة</span>
+            </button>
+
+            <button class="rtl-menu-item">
+              <span class="rtl-menu-icon">🧑‍💻</span>
+              <span>تعريف المستخدمين</span>
+            </button>
+
+
+          
+          </div>
+        </div>
+
+        <!--   reports-->
+        <div class="rtl-menu-container">         
+          <a > 
+          <i class="fa-solid fa-right-from-bracket"></i>
+
+          </a>
+        </div>
+
+        
+
+
+
+         
+      </div>
+  
+    }
+    
+  </div>
+    
+  
+  
+   
+  
+  
+  
+    
+    </div>
+   
+ <!-- Toggle Button -->
+
+   
+
+
+
+
+
+   
+ 
+   
+    
+
+
+
+
+  
+  
+
+   
+    
+  
+
+  
+
+
+

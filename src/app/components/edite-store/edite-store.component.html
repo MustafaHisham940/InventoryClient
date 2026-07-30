@@ -1,0 +1,96 @@
+<body>
+    <div class="container-fluid my-5">
+        <div class="card shadow-sm position-relative" dir="rtl">
+            <div class="card-ribbon w-100 text-center align-items-center justify-content-between">
+                <div class="pageLabel">
+                    <h2 class="mb-0 fw-bolder" style="color: white;">إضافة مخزن جديد</h2>
+                    <div class="iccc"></div>
+                </div>
+            </div>  
+            
+            
+            <form [formGroup]="addForm"  (ngSubmit)="addITem()">
+              
+                    <div class="card-body">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <label for="userName" class="form-label fw-bold">كود المخزن</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="strCd" value="{{_currStoreId}}"  disabled>
+                                        <span class="input-group-text"><i class="fas fa-industry"></i></span>
+                                    </div>
+                                     
+                                      
+                                    
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="userEmail" class="form-label fw-bold">اسم المخزن</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="strNm" id="strNm" placeholder="أدخل اسم المخزن" [appInputLimiter]="50">
+                                        <span class="input-group-text"><i class="fa-solid fa-store"></i></span>
+                                    </div>
+                                    @if(addForm.get('strNm')?.getError('required')){
+                                        <small style="color: #940529;">
+                                            <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                            اسم المخزن لا يمكن ان يكون فارغا
+                                        </small>
+                                    }
+        
+                                    @else if(addForm.get('strNm')?.getError('maxlength')){
+                                        <small style="color: #940529;">
+                                            <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                            اسم المخزن لا يمكن ان يتعدي 50 حرف
+                                        </small>
+                                    } @else{
+                                        <small >
+                                            <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                          الييانات مقبولة
+                                        </small>
+                                    }
+                                    
+                                </div>
+                   
+                                <div class="mb-4">
+                                    <label for="userPassword" class="form-label fw-bold">PNAM</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="pNam" id="pNam" placeholder="PNAM........."  [appInputLimiter]="50">
+                                        <span class="input-group-text"><i class="fa-solid fa-warehouse"></i></span>
+                                    </div>
+                                    @if(addForm.get('pNam')?.getError('required')){
+                                        <small style="color: #940529;">
+                                            <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                            هذا العنصر لا يمكن ان يكون فارغا
+                                        </small>
+                                    }
+        
+                                    @else if(addForm.get('pNam')?.getError('maxlength')){
+                                        <small style="color: #940529;">
+                                            <i class="fa-solid fa-circle-xmark" style="color: #940529;"></i>
+                                            هذا العنصر لا يمكن ان يتعدي 50 حرف
+                                        </small>
+                                    }
+                                    @else{
+                                        <small >
+                                            <i class="fa-solid fa-circle-check" style="color: #2d9a4e;"></i>
+                                          الييانات مقبولة
+                                        </small>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-start mt-4 gap-3">
+                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                            <button type="button" class="btn btn-secondary" routerLink="/Stores">إلغاء</button>
+                        </div>
+                    </div>
+                
+            </form>
+            
+           
+        </div>
+    </div>
+
+</body>

@@ -1,0 +1,44 @@
+.prompt-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+    width: 100%;
+    max-width: 90%;
+    
+}
+
+
+.prompt-header {
+    background-color: rgba(30, 127, 193, 0.9);
+    color: white;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.prompt-body {
+    padding: 25px;
+}
+.form-label {
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 8px;
+    display: block;
+}
+
+
+.form-select {
+    border: 1px solid #e5e7eb;
+    background-color: rgba(248, 250, 252, 0.8);
+    width: 100%;
+}
+
+
+

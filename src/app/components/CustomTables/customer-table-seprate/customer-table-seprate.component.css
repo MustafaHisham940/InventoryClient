@@ -1,0 +1,272 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.picker-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 18px 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1e7fc1 0%, #2563eb 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(30, 127, 193, 0.25);
+}
+
+.banner-icon {
+  font-size: 1.8rem;
+  opacity: 0.9;
+}
+
+.banner-text h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.banner-text span {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.banner-selected {
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 16px;
+}
+
+.banner-selected-label {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.banner-selected-name {
+  font-weight: 700;
+}
+
+.prompt-body {
+  width: min(1320px, 99vw);
+  margin: 0 auto;
+  padding: 24px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+.container {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.component-container {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  padding: 16px;
+}
+
+.search-header {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.section-label {
+  margin-bottom: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.search-input {
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  padding-right: 38px;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+}
+
+.btn {
+  border-radius: 10px;
+  min-height: 40px;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+.btn-search {
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  color: #ffffff;
+}
+
+.btn-search:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.btn-clear {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+}
+
+.btn-clear:hover {
+  background: #f3f4f6;
+}
+
+.table-container {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.table-responsive {
+  max-height: 560px;
+  overflow: auto;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f3f4f6;
+  color: #111827;
+  font-weight: 700;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  white-space: nowrap;
+  padding: 10px 12px;
+}
+
+.table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+  background: #eff6ff;
+}
+
+.table tbody tr.row-selected {
+  background: #dbeafe;
+}
+
+.table tbody tr.row-selected:hover {
+  background: #bfdbfe;
+}
+
+.col-select {
+  width: 44px;
+}
+
+.form-check-input {
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+
+.type-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4em 0.9em;
+  border-radius: 20px;
+}
+
+.type-badge.type-supplier {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+.type-badge.type-customer {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.type-badge.type-both {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.type-badge.type-unknown {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.pagination-container {
+  padding: 14px 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination-controls span {
+  font-weight: 600;
+  color: #374151;
+}
+
+@media (max-width: 992px) {
+  .prompt-body {
+    width: min(100%, 99vw);
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .component-container,
+  .search-header,
+  .table-container {
+    border-radius: 10px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px 10px;
+  }
+}

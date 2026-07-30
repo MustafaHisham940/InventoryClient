@@ -1,0 +1,422 @@
+.sidebar {
+  height: 100vh;
+  min-width: 70px;
+  max-width: 400PX;
+  transition: width 0.3s cubic-bezier(.4,0,.2,1);
+  overflow-x: visible;
+  position: fixed;
+  top: 0;
+  right: 0;   /* <-- Change this line */
+  z-index: 1000;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-color: #1e7fc1;
+  font-family: 'Cairo', 'Tajawal', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+}
+.logo {
+  height: 60px;
+  padding-top: 110px;
+ 
+  padding-left: 30px;
+  margin-right:4px ;
+}
+.nav-link {
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+.nav-link.active, .nav-link:hover {
+  background: #e3e3e3 !important;
+  color: #a4b5c7 !important;
+}
+.btn-link {
+  font-size: 1.5rem;
+}
+ul {
+  list-style-type: none; /* Removes bullet points */
+  list-style-image: none; /* Removes any image markers */
+  list-style-position: outside; /* Default, but can be set explicitly */
+  font-size: large;
+  
+}
+a{
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+/*  padding-right: 10px;*/
+padding: 5px;
+  font-size: x-large;
+  font-weight: 500;
+  font-weight: bold;
+  cursor: pointer;
+  
+}
+
+.slideInIcons a{
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+/*  padding-right: 10px;*/
+padding: 5px;
+  font-size: x-large;
+  font-weight: 500;
+  font-weight: bold;
+  cursor: pointer;
+  
+}
+
+
+
+.slideInIcons li{
+  margin-top: 10px;
+ border-radius: 10px;
+list-style: none;
+  
+}
+.slideoutContent li{
+ /* margin-top: 10px;*/
+ border-radius: 10px;
+
+  /* Add some padding for better hover area */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  cursor: pointer; /* Changes cursor to indicate interactivity */
+  position: relative; /* Needed for pseudo-elements if used */
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding: 10px;
+  width: 80%;
+}
+
+
+/* Simple background color change on hover */
+.slideoutContent li:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+ 
+}
+
+
+
+.slideInIcons i{
+  
+  font-size: x-large;
+   
+  padding-left:0px;
+  margin-left: -1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+i{
+  
+  font-size: x-large;
+   
+  padding-left:0px;
+  margin-left: -1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+
+}
+
+.slideInIcons{
+  padding-left: 30px;
+}
+i.small{padding-left:15px;
+  margin-left: 3px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+button{
+  margin-top: 10px;
+}
+.sidebar-separator {
+  border: none;
+  border-top: 2px solid #ffffff33; /* semi-transparent white */
+  margin: 0;        /* No margin */
+  width: 800px;      /* Full width */
+        /* No padding */
+ 
+  align-self: flex-start; /* Ensures it stretches in flex containers */
+}
+
+
+
+
+
+
+
+.slideoutContent li{
+
+  padding-left: 80px;
+/*  padding-bottom: 20px;*/
+}
+.slideoutContent  button{
+
+  padding-left: 80px;
+}
+
+
+/*********************************************/
+/* Sidebar links and icons */
+.sidebar a, .sidebar li, .sidebar i {
+  font-size: 1.1rem !important; /* Use rem for consistency */
+ /* font-weight: 500;*/
+  letter-spacing: 0.02em;
+}
+.sidebar i {
+  font-size: 1.3rem !important; /* Slightly larger for icons */
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-left: 0;
+  padding: 0;
+}
+
+/* Accordion button font size */
+.sidebar .accordion-button {
+  font-size: 1.1rem !important;
+  font-weight: 600;
+}
+
+/* Accordion body links */
+.sidebar .accordion-body li a {
+  font-size: 1rem !important;
+  font-weight: 500;
+}
+
+/* Remove .small class if not needed, or set it to a reasonable size */
+.sidebar i.small {
+  font-size: 1.1rem !important;
+  margin-left: 0;
+  padding: 0;
+}
+/***********************************************/
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 1000000000;
+  /* width is animated by Angular */
+}
+#sidebar-toggle-btn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -16px;
+  width: 15px;
+  min-height: 100vh;
+  overflow: hidden;
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  z-index: 1001;
+  transition: background 0.2s;
+  background-color: #1e6ea4;
+}
+ 
+
+::ng-deep .shift-left-menu .mat-menu-panel {
+  margin-left: -100px !important;
+  transform: translateX(-20px) !important;
+}
+
+
+
+
+
+
+.collapse {
+  transition: height 0.3s ease;
+  overflow: hidden;
+  display: block !important; /* Required for height transitions */
+}
+.collapse:not(.show) {
+  height: 0 !important;
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+
+/*****side menus hover*****/
+
+/* RTL Navbar - Vertical Sidebar */
+.rtl-navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: #2c3e50;
+  padding: 15px 10px;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  right: 0; /* Changed from left for RTL */
+  top: 0;
+}
+
+/* Menu container - positions the menu correctly */
+.rtl-menu-container {
+  position: relative;
+}
+
+/* Shared trigger button style - RTL adapted */
+.rtl-menu-trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #34495e;
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  text-align: right;
+}
+
+.rtl-menu-trigger:hover {
+  background-color: #3d566e;
+}
+
+/* RTL Menu positioning */
+.rtl-custom-menu {
+  position: absolute;
+  top: 80%;
+  right: 101%; /* Menu appears to the left of trigger in RTL */
+  margin-right: 5px; /* Small gap from trigger */
+  background-color: #E6F2FF; /* Light blue background */
+  border: 1px solid #B8D8FF; /* Light border */
+  /*background-color: white;*/
+  border-radius: 4px;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2); /* Shadow on left side */
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px); /* Slide from right */
+  transition: all 0.3s ease;
+  z-index: 1002;
+}
+
+/* Show menu when container is hovered */
+.rtl-menu-container:hover .rtl-custom-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* RTL Menu items */
+.rtl-menu-item {
+  z-index: 10000000000000000000000000000000;
+
+  display: flex;
+  flex-direction: row-reverse; /* Icon on right side */
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  text-align: right;
+  cursor: pointer;
+  color: #1A3D5C; /* Dark blue text */
+ /* color: #333;*/
+  font-size: 13px;
+  transition: background-color 0.2s;
+
+
+  
+}
+
+.rtl-menu-item:hover:not(:disabled) {
+ /* background-color: #f0f0f0;*/
+ background-color: #C4E0FF; /* Light blue hover */
+}
+
+/* RTL Icon positioning */
+.rtl-menu-icon {
+  margin-left: 10px; /* Changed from margin-right */
+  color: #1E7FC1; 
+}
+
+/* Text element for better RTL control */
+.rtl-menu-text {
+  flex-grow: 1;
+  text-align: right;
+}
+
+/* Active state for parent menu item */
+.rtl-menu-container:hover .rtl-menu-trigger {
+  background-color: #3d566e;
+}
+/* Active/highlighted item */
+.rtl-menu-item.active {
+  background-color: #1E7FC1;
+  color: white;
+}
+
+.rtl-menu-container-list{
+  padding-right: 80px; /* Adjust as needed */
+  display: inline-block; /* Makes padding work properly */
+}
+.rtl-menu-container a {
+  padding-right: 3px;
+  display: inline-flex; /* Better for icon alignment */
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  translate: -8px;
+  margin-top: 20px;
+
+
+}
+.rtl-custom-menu .rtl-menu-item span{
+  font-size: large;
+}
+
+
+.collapse-section {
+  margin-bottom: 1rem;
+    border-radius: 4px;
+  overflow: hidden;
+}
+
+.collapse-section button {
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+[appCollapse] {
+  padding: 0 1rem;
+}
+
+
+.nav-section ul li {
+  text-align: center;
+}
+[appCollapse] ul {
+  display: grid;
+  place-items: center; /* Centers both horizontally/vertically */
+  padding-right: 0;
+  list-style: none;
+}
+
+[appCollapse] ul li {
+border: #a4b5c7;
+border-bottom: #1A3D5C;
+
+}
