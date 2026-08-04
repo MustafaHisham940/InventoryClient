@@ -110,7 +110,7 @@ export class PersonalWithdrwalAddnewComponent implements OnInit, CanComponentDea
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this._toastrService.error('اضافة سند', 'برجاء استكمال رقم السند وتاريخ السند والعميل والمبلغ');
+      this._toastrService.error('اضافة سند', 'برجاء استكمال رقم السند وتاريخ السند والعميل والمبلغ', { positionClass: 'toast-center-center' });
       return;
     }
 
@@ -128,11 +128,11 @@ export class PersonalWithdrwalAddnewComponent implements OnInit, CanComponentDea
     this._HDetailsService.AddNewHeaders(newHeader).subscribe({
       next: () => {
         this.isSaved = true;
-        this._toastrService.success('اضافة سند', 'تمت اضافة سند المسحوبات الشخصية بنجاح');
+        this._toastrService.success('اضافة سند', 'تمت اضافة سند المسحوبات الشخصية بنجاح', { positionClass: 'toast-center-center' });
         this.navigateBackToMain();
       },
       error: (err) => {
-        this._toastrService.error('اضافة سند', err?.error?.Errors?.join(' , ') || 'حدث خطأ اثناء اضافة السند');
+        this._toastrService.error('اضافة سند', err?.error?.Errors?.join(' , ') || 'حدث خطأ اثناء اضافة السند', { positionClass: 'toast-center-center' });
       }
     });
   }

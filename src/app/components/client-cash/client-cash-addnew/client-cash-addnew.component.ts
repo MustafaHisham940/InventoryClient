@@ -90,7 +90,7 @@ export class ClientCashAddnewComponent implements OnInit, CanComponentDeactivate
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this._toastrService.error('اضافة سند', 'برجاء استكمال رقم السند وتاريخ السند والعميل/المورد والمبلغ');
+      this._toastrService.error('اضافة سند', 'برجاء استكمال رقم السند وتاريخ السند والعميل/المورد والمبلغ', { positionClass: 'toast-center-center' });
       return;
     }
 
@@ -108,11 +108,11 @@ export class ClientCashAddnewComponent implements OnInit, CanComponentDeactivate
     this._HDetailsService.AddNewHeaders(newHeader).subscribe({
       next: () => {
         this.isSaved = true;
-        this._toastrService.success('اضافة سند', 'تمت اضافة سند تسديد المورد بنجاح');
+        this._toastrService.success('اضافة سند', 'تمت اضافة سند تسديد المورد بنجاح', { positionClass: 'toast-center-center' });
         this._route.navigate(['/ClientCashMain']);
       },
       error: (err) => {
-        this._toastrService.error('اضافة سند', err?.error?.Errors?.join(' , ') || 'حدث خطأ اثناء اضافة السند');
+        this._toastrService.error('اضافة سند', err?.error?.Errors?.join(' , ') || 'حدث خطأ اثناء اضافة السند', { positionClass: 'toast-center-center' });
       }
     });
   }

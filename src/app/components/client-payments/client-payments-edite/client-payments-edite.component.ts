@@ -98,7 +98,7 @@ export class ClientPaymentsEditeComponent implements OnInit, CanComponentDeactiv
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this._toastrService.error('تعديل سند', 'برجاء استكمال تاريخ السند والعميل والمبلغ');
+      this._toastrService.error('تعديل سند', 'برجاء استكمال تاريخ السند والعميل والمبلغ', { positionClass: 'toast-center-center' });
       return;
     }
 
@@ -114,11 +114,11 @@ export class ClientPaymentsEditeComponent implements OnInit, CanComponentDeactiv
     this._HeaderServiceService.EditeHeadersDataNoStore(updateData, this.hdr.trsTy, this.hdr.trsNo).subscribe({
       next: () => {
         this.isSaved = true;
-        this._toastrService.success('تعديل سند', 'تم تعديل سند مدفوعات العميل بنجاح');
+        this._toastrService.success('تعديل سند', 'تم تعديل سند مدفوعات العميل بنجاح', { positionClass: 'toast-center-center' });
         this._route.navigate(['/ClientPaymentsMain']);
       },
       error: () => {
-        this._toastrService.error('تعديل سند', 'حدث خطأ اثناء تعديل السند');
+        this._toastrService.error('تعديل سند', 'حدث خطأ اثناء تعديل السند', { positionClass: 'toast-center-center' });
       }
     });
   }

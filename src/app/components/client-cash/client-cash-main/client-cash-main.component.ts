@@ -144,13 +144,13 @@ export class ClientCashMainComponent implements OnInit {
             tapToDismiss: true,
           });
         } else {
-          this._toastrService.success('حذف السند', 'تم حذف سند تسديد المورد بنجاح');
+          this._toastrService.success('حذف السند', 'تم حذف سند تسديد المورد بنجاح', { positionClass: 'toast-center-center' });
         }
         this.headerPendingDelete = null;
         this.loadHeaders();
       },
       error: () => {
-        this._toastrService.error('حذف السند', 'حدث خطأ اثناء حذف السند');
+        this._toastrService.error('حذف السند', 'حدث خطأ اثناء حذف السند', { positionClass: 'toast-center-center' });
         this.headerPendingDelete = null;
       }
     });
