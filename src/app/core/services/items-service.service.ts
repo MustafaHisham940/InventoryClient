@@ -90,4 +90,9 @@ export class ItemsServiceService {
     deleteItem(itemId: string): Observable<any> {
       return this._HttpClient.delete(`${environments.baseURL}/api/Items/${itemId}`);
     }
+
+    /**total counts (total items / total categories) */
+    getTotalCounts(): Observable<any> {
+      return this._HttpClient.get(`${environments.baseURL}/api/Items/getTotalCounts`);
+    }
 }

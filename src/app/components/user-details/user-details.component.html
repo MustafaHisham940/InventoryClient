@@ -175,7 +175,7 @@
                               <tbody>
         
         
-                                @for (item of _users.data ; track $index) {
+                                @for (item of pagedUsers ; track $index) {
                                   <tr>  
                                     <td>{{item.userSimpleId|truncate:8}}</td>
                                     <td>{{item.displayName|truncate:8}}</td>
@@ -229,18 +229,22 @@
                           </table>
                       </div>
                       <div class="d-flex justify-content-between align-items-center mt-3">
-                          <span class="text-muted small">عرض البيانات من 1 إلى 8 من أصل 256 ألف مدخل</span>
+                          <span class="text-muted small">عرض البيانات من {{showingFrom}} إلى {{showingTo}} من أصل {{_users.data.length}} مدخل</span>
                           <nav>
                               <ul class="pagination pagination-sm mb-0">
-                                  <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                                  <li class="page-item" [class.disabled]="currentPage === 1">
+                                    <button class="page-link" (click)="decrementPDg()">&lt;</button>
+                                  </li>
                                   @for (item of pagesList; track $index) {
-                                    <li class="page-item "><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
+                                    <li class="page-item" [class.active]="item === currentPage"><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
                                   }
-                                 
-                                  
-                                  
-                                 
-                                  <li class="page-item disabled "><a class="page-link">&gt;</a></li>
+
+
+
+
+                                  <li class="page-item" [class.disabled]="currentPage === responsePages">
+                                    <button class="page-link" (click)="incrementPDg()">&gt;</button>
+                                  </li>
                               </ul>
                           </nav>
                       </div>

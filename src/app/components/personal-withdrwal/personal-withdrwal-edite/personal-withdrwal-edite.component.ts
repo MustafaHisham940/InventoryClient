@@ -1,22 +1,29 @@
-import { Component, HostListener, inject, OnInit, signal, forwardRef } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderServiceService } from '../../../core/header-service.service';
 import { TokenService } from '../../../core/services/token.service';
-import { DialogOverviewExampleDialog } from '../../dynamic-transactions/dynamic-transactions.component';
 import { CanComponentDeactivate } from '../../../core/guards/unsaved-changes-guard.guard';
 import { Header } from '../../../core/interfaces/ivDtls';
 import { PERSONAL_WITHDRWAL_TRSTY } from '../personal-withdrwal.constants';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../../core/date-adapters/dd-mm-yyyy-date-adapter';
+import { dateToIso, isoToDate } from '../../../core/utils/date-iso';
 
 @Component({
   selector: 'app-personal-withdrwal-edite',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatMenuModule, MatButtonModule, forwardRef(() => DialogOverviewExampleDialog)],
+  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatMenuModule, MatButtonModule, MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './personal-withdrwal-edite.component.html',
   styleUrl: './personal-withdrwal-edite.component.css'
 })
@@ -48,13 +55,9 @@ export class PersonalWithdrwalEditeComponent implements OnInit, CanComponentDeac
     return true;
   }
 
-  selectedCustomerId = signal<number>(0);
-  selectedCustomerName = signal<string>('');
-
   private fb = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     trsDt: [null, [Validators.required]],
-    cstId: [null, [Validators.required, Validators.min(1)]],
     val: [null, [Validators.required]],
     rem: [null]
   });
@@ -68,33 +71,11 @@ export class PersonalWithdrwalEditeComponent implements OnInit, CanComponentDeac
 
     this.hdr = navigationState.data.hdr;
     this.cur_StoreName = navigationState.data.cur_StoreName;
-    this.selectedCustomerId.set(this.hdr.cstId);
-    this.selectedCustomerName.set(this.hdr.customerName);
 
     this.form.patchValue({
-      trsDt: this.hdr.trsDt ? String(this.hdr.trsDt).substring(0, 10) : null,
-      cstId: this.hdr.cstId,
+      trsDt: isoToDate(this.hdr.trsDt ? String(this.hdr.trsDt) : null),
       val: this.hdr.val,
       rem: this.hdr.rem
-    });
-  }
-
-  readonly dialog = inject(MatDialog);
-  openCustomerDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      data: {
-        S_CstID: this.selectedCustomerId(),
-        S_CstName: this.selectedCustomerName()
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (!result) {
-        return;
-      }
-      this.selectedCustomerId.set(result.S_CstID);
-      this.selectedCustomerName.set(result.S_CstName);
-      this.form.patchValue({ cstId: result.S_CstID });
     });
   }
 
@@ -113,13 +94,12 @@ export class PersonalWithdrwalEditeComponent implements OnInit, CanComponentDeac
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this._toastrService.error('تعديل سند', 'برجاء استكمال تاريخ السند والعميل والمبلغ', { positionClass: 'toast-center-center' });
+      this._toastrService.error('تعديل سند', 'برجاء استكمال تاريخ السند والمبلغ', { positionClass: 'toast-center-center' });
       return;
     }
 
     const updateData = {
-      trsDt: this.form.get('trsDt')?.value,
-      cstId: this.form.get('cstId')?.value,
+      trsDt: this.form.get('trsDt')?.value ? dateToIso(this.form.get('trsDt')?.value) : null,
       val: this.form.get('val')?.value,
       rem: this.form.get('rem')?.value,
       lUsr: this._TokenService.getGivenName(),

@@ -16,16 +16,23 @@
         <div class="col">
           <div class="d-flex gap-3 w-100 flex-wrap align-items-start">
 
-            <div class="search-box flex-fill">
+            <div class="search-box flex-fill select-filter">
               <label for="storeCode">كود المخزن</label>
-              <input
-                id="storeCode"
-                type="text"
-                placeholder="كود المخزن"
-                name="storeCode"
-                [(ngModel)]="storeCode"
-                #storeCodeModel="ngModel"
-                [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+              <div class="select-wrapper">
+                <i class="fas fa-warehouse"></i>
+                <select
+                  id="storeCode"
+                  class="custom-select"
+                  name="storeCode"
+                  [(ngModel)]="storeCode"
+                  #storeCodeModel="ngModel"
+                  [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+                  <option value="" disabled selected>اختر المخزن</option>
+                  @for (store of storesList; track store.strCd) {
+                    <option [value]="store.strCd">{{store.strNm}}</option>
+                  }
+                </select>
+              </div>
               <small class="field-warning" *ngIf="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">يجب ادخال هذا العنصر</small>
             </div>
 

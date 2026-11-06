@@ -97,7 +97,12 @@ export class CustomerServiceService {
   getTotalCounts():Observable<any>{
      
       return this._HttpClient.get(`${environments.baseURL}/api/Customers/GetTotalCount`)
-    
+
+  }
+
+  /**exact match by code - CustomerName, CustomerCode, CustomerType only */
+  getCustomerExactMatchById(id: string | number): Observable<any> {
+    return this._HttpClient.get(`${environments.baseURL}/api/Customers/GetCustomerExactMatchById/${id}`);
   }
 
 }

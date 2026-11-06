@@ -35,29 +35,32 @@
                               <div class="col">  <!-- Main content column -->
                                 <div class="d-flex gap-3 w-100">
                                   <div class="search-box flex-fill">
-                                    <label for="customer_code">كود الصنف</label>
-                                    <i class="fas fa-boxes"></i>
-                                    <input
-                                      id="item_code"
-                                      type="text"
-                                      placeholder="البحث ..."
-                                      [(ngModel)]="_Icustomfilter.specs.itmCd_search"
-                                      #itemCodeModel="ngModel"
-                                      [class.invalid-field]="hasItemCodeError() && (itemCodeModel.touched || itemCodeModel.dirty)">
-                                    <small class="field-warning" *ngIf="hasItemCodeError() && (itemCodeModel.touched || itemCodeModel.dirty)">كود الصنف حقل إجباري</small>
+                                    
+                                    <app-item-picker
+                                      [itemCode]="_Icustomfilter.specs.itmCd_search"
+                                      [itemName]="selectedItemName"
+                                      (itemSelected)="onItemPicked($event)">
+                                    </app-item-picker>
+                                    <small class="field-warning" *ngIf="hasItemCodeError() && itemCodeTouched">كود الصنف حقل إجباري</small>
                                   </div>
 
                               @if (multiStoreFlag=='True') {
-                                <div class="search-box flex-fill">
-                                  <label for="customer_code">كود المخزن</label>
-                                  <i class="fas fa-boxes"></i>
-                                  <input
-                                    id="store_code"
-                                    type="text"
-                                    placeholder="البحث ..."
-                                    [(ngModel)]="_Icustomfilter.specs.strCd_search"
-                                    #storeCodeModel="ngModel"
-                                    [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+                                <div class="search-box flex-fill select-filter">
+                                  <label for="store_code">كود المخزن</label>
+                                  <div class="select-wrapper">
+                                    <i class="fas fa-warehouse"></i>
+                                    <select
+                                      id="store_code"
+                                      class="custom-select"
+                                      [(ngModel)]="_Icustomfilter.specs.strCd_search"
+                                      #storeCodeModel="ngModel"
+                                      [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+                                      <option value="" disabled selected>اختر المخزن</option>
+                                      @for (store of storesList; track store.strCd) {
+                                        <option [value]="store.strCd">{{store.strNm}}</option>
+                                      }
+                                    </select>
+                                  </div>
                                   <small class="field-warning" *ngIf="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">كود المخزن حقل إجباري</small>
                                 </div>
                               }
@@ -73,39 +76,41 @@
 
 
                                   <div class="search-box flex-fill">
-                                    <label for="StartDate">تاريخ البداية</label>
+                                    <label for="startDate">تاريخ البداية</label>
                                     <div class="date-input-wrapper">
-                                        <i class="fas fa-calendar-alt"></i>
                                         <input
-                                            type="date"
-                                            placeholder="mm/dd/yyyy"
                                             id="startDate"
-                                            [(ngModel)]="_Icustomfilter.specs.startDate"
-                                            #startDateModel="ngModel"
-                                            [class.invalid-field]="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && (startDateModel.touched || startDateModel.dirty)">
+                                            [matDatepicker]="startPicker"
+                                            placeholder="dd/mm/yyyy"
+                                            [(ngModel)]="startDateObj"
+                                            (ngModelChange)="onStartDateObjChange($event)"
+                                            [class.invalid-field]="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && startDateTouched">
+                                        <mat-datepicker-toggle [for]="startPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startPicker></mat-datepicker>
                                     </div>
-                                    <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && (startDateModel.touched || startDateModel.dirty)">تاريخ البداية حقل إجباري</small>
+                                    <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && startDateTouched">تاريخ البداية حقل إجباري</small>
                                 </div>
-                                
+
                                 <div class="search-box flex-fill">
-                                    <label for="EndDate">تاريخ النهاية</label>
+                                    <label for="endDate">تاريخ النهاية</label>
                                     <div class="date-input-wrapper">
-                                        <i class="fas fa-calendar-alt"></i>
                                         <input
                                             id="endDate"
-                                            type="date"
-                                            placeholder="mm/dd/yyyy"
-                                            [(ngModel)]="_Icustomfilter.specs.endDate"
-                                            #endDateModel="ngModel"
-                                            [class.invalid-field]="((hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim()) && (endDateModel.touched || endDateModel.dirty)) || (hasDateOrderError() && (startDateModel.touched || startDateModel.dirty || endDateModel.touched || endDateModel.dirty))">
+                                            [matDatepicker]="endPicker"
+                                            placeholder="dd/mm/yyyy"
+                                            [(ngModel)]="endDateObj"
+                                            (ngModelChange)="onEndDateObjChange($event)"
+                                            [class.invalid-field]="((hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim()) && endDateTouched) || (hasDateOrderError() && (startDateTouched || endDateTouched))">
+                                        <mat-datepicker-toggle [for]="endPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #endPicker></mat-datepicker>
                                     </div>
-                                    <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim() && (endDateModel.touched || endDateModel.dirty)">تاريخ النهاية حقل إجباري</small>
-                                    <small class="field-warning" *ngIf="hasDateOrderError() && (startDateModel.touched || startDateModel.dirty || endDateModel.touched || endDateModel.dirty)">تاريخ البداية يجب أن يكون أقدم من تاريخ النهاية</small>
+                                    <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim() && endDateTouched">تاريخ النهاية حقل إجباري</small>
+                                    <small class="field-warning" *ngIf="hasDateOrderError() && (startDateTouched || endDateTouched)">تاريخ البداية يجب أن يكون أقدم من تاريخ النهاية</small>
                                 </div>
                                   
 
                                   <button
-                                    class="btn btn-success px-4"
+                                    class="btn btn-success px-4 py-0 "
                                     style="white-space: nowrap;"
                                     (click)="openPdfInline()"
                                     [disabled]="!_Icustomfilter.specs.startDate || !_Icustomfilter.specs.endDate || !_Icustomfilter.specs.itmCd_search?.trim() || (multiStoreFlag == 'True' && !_Icustomfilter.specs.strCd_search?.trim())">

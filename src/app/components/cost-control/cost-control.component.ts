@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ReportService } from '../../core/services/report.service';
 import { ToastrService } from 'ngx-toastr';
 import { EMPTY, switchMap, tap } from 'rxjs';
@@ -20,9 +21,9 @@ export class CostControlComponent implements OnInit{
   /**
    *
    */
-  constructor(private _ReportService:ReportService ,private _ToastrService:ToastrService ) {
-   
-    
+  constructor(private _ReportService:ReportService ,private _ToastrService:ToastrService , private _route:Router ) {
+
+
   }
   _categories:any
   ngOnInit(): void {
@@ -104,31 +105,10 @@ export class CostControlComponent implements OnInit{
    
 
   UpdateAllItemsNeedsCostControl() {
-    this._ReportService.AdjustItemStoreCost().pipe(
-  
-      switchMap((res) => {
-        console.log(res);
-  
-        if (res.isSuccess) {
-          this._ToastrService.success(res.message, "ضبط التكلفة" , {
-            positionClass:'toast-top-right'
-          });
-  
-          // ✅ just return the observable
-          return this._ReportService.getAllItemsNeedAdjustCost();
-        }
-  
-        return EMPTY; // stop the chain
-      })
-  
-    ).subscribe({
-      next: (res2) => {
-        console.log(res2);
-  
-        // ✅ handle result here
-        this._categories = res2;
-      }
-    });
+    // navigate to the dedicated screen that runs the adjustment
+    // item-by-item with a live progress bar, instead of firing the
+    // bulk endpoint inline from this page.
+    this._route.navigate(['/CostControlAllItems']);
   }
 
 

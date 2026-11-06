@@ -23,6 +23,11 @@
                 <!-- Search Row -->
              
               <div class="container-fluid pt-5">
+                  @if(_categories && _categories.length === 0){
+                    <div class="alert alert-dark fs-4 text-center" role="alert">
+                      لا يوجد اصناف تحتاج الي ضبط التكلفة
+                    </div>
+                  } @else {
                   <!-- Header Row -->
                   <div class="row g-3 mb-3 d-none d-md-flex">
                     <div class="col-md-2">
@@ -38,28 +43,28 @@
                       <strong>الإجراءات</strong>
                     </div>
                   </div>
-                
+
                   <!-- Data Rows -->
                   <div class="row g-3">
                     @for (item of _categories; track $index) {
                       <div class="col-12">
                         <div class="card border-0 shadow-sm mb-3">
                           <div class="card-body p-3">
-                            
-                            
+
+
                             <div class="row align-items-center">
                               <!-- Category ID Column -->
                               <div class="col-md-2 mb-2 mb-md-0">
                                 <div class="d-md-none text-muted small">مسلسل</div>
                                 <div class="fw-bold">{{$index+1}}</div>
                               </div>
-                              
+
                               <!-- Category Name Column -->
                               <div class="col-md-3 mb-2 mb-md-0">
                                 <div class="d-md-none text-muted small">اسم الصنف:</div>
                                 <div>{{item.strcd}}</div>
                               </div>
-                              
+
                               <!-- Category Name Column -->
                               <div class="col-md-3 mb-2 mb-md-0">
                                   <div class="d-md-none text-muted small">اسم المخزن:</div>
@@ -72,24 +77,25 @@
                                   <button type="button" class="btn btn-sm btn-outline-primary" (click)="UpdateSpecificItem(item.strcd,item.itmcd)" title="عرض التفاصيل">
                                     <i class="fas fa-box-open"></i>
                                   </button>
-                
+
                                 < <button class="btn btn-sm btn-outline-primary" (click)="getCustomerById(item.id, item.ctgName)" title="تعديل">
                                     <i class="fas fa-edit"></i>
                                   </button>
-                
+
                                   <button type="button" class="btn btn-sm btn-outline-danger" (click)="gotoDeleteComponent(item.id)" title="حذف">
                                     <i class="fas fa-trash"></i>
                                   </button>
                                 </div>
                               </div>
                             </div>
-                          
-                          
+
+
                           </div>
                         </div>
                       </div>
                     }
                   </div>
+                  }
                 </div>
           <!-- Pagination -->
            

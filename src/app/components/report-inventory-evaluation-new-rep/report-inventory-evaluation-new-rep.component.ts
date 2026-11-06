@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
 import { TokenService } from '../../core/services/token.service';
 import { InventoryEvaluationReportRequest } from '../../core/interfaces/inventory-evaluation-report';
+import { StoresService } from '../../core/services/stores.service';
 
 @Component({
   selector: 'app-report-inventory-evaluation-new-rep',
@@ -18,10 +19,12 @@ export class ReportInventoryEvaluationNewRepComponent {
   private reportService = inject(ReportService);
   private _TokenService = inject(TokenService);
   private sanitizer = inject(DomSanitizer);
+  private _StoresService = inject(StoresService);
 
   startItem: string = '';
   endItem: string = '';
   storeCode: string = '';
+  storesList: { strCd: string, strNm: string }[] = [];
 
   singleStoreCode: string | undefined;
   singleStoreName: string | undefined;
@@ -35,6 +38,12 @@ export class ReportInventoryEvaluationNewRepComponent {
     this.multiStoreFlag = this._TokenService.GetUserStoreSettings()?.MultiStore;
     this.singleStoreCode = this._TokenService.GetUserStoreSettings()?.SingleStoreCode;
     this.singleStoreName = this._TokenService.GetUserStoreSettings()?.SingleStoreName;
+
+    this._StoresService.GetStoresLookupList().subscribe({
+      next: (res) => {
+        this.storesList = res.data;
+      }
+    });
   }
 
   hasStartItemError(): boolean {

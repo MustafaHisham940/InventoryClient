@@ -5,11 +5,19 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
 import { TokenService } from '../../core/services/token.service';
 import { CustomerItemsSalesReportRequest } from '../../core/interfaces/customer-items-sales-report';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
 
 @Component({
   selector: 'app-report-customer-items-sales',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './report-customer-items-sales.component.html',
   styleUrl: './report-customer-items-sales.component.css'
 })
@@ -23,6 +31,28 @@ export class ReportCustomerItemsSalesComponent {
   endItem: string = '';
   startDate: string = '';
   endDate: string = '';
+
+  /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter for why this is needed
+   * instead of native <input type="date"> (its display format ignores `lang`
+   * and just follows OS/browser locale). Picker works with Date objects;
+   * startDate/endDate stay the same ISO yyyy-mm-dd strings the report API expects. */
+  startDateObj: Date | null = null;
+  endDateObj: Date | null = null;
+
+  private dateToIso(date: Date): string {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  onStartDateObjChange(date: Date | null): void {
+    this.startDate = date ? this.dateToIso(date) : '';
+  }
+
+  onEndDateObjChange(date: Date | null): void {
+    this.endDate = date ? this.dateToIso(date) : '';
+  }
 
   singleStoreCode: string | undefined;
   singleStoreName: string | undefined;

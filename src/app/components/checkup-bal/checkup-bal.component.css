@@ -359,6 +359,12 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    gap: 4px;
+}
+
+.date-input-wrapper input {
+    flex: 1;
+    min-width: 0;
 }
 
 .date-input-wrapper i {

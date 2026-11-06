@@ -15,7 +15,12 @@
                         </div>
                         <div class="col-md-3">
                             <label for="trsDt">تاريخ السند</label>
-                            <input type="date" id="trsDt" class="form-control" formControlName="trsDt">
+                            <div class="date-input-wrapper">
+                                <input id="trsDt" class="form-control" placeholder="dd/mm/yyyy"
+                                    [matDatepicker]="trsDtPicker" formControlName="trsDt">
+                                <mat-datepicker-toggle [for]="trsDtPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #trsDtPicker></mat-datepicker>
+                            </div>
                         </div>
                     </div>
 

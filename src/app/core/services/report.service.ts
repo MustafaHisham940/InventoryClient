@@ -8,6 +8,8 @@ import { ItemsBalancesReportRequest } from '../interfaces/items-balances-report'
 import { InventoryEvaluationReportRequest } from '../interfaces/inventory-evaluation-report';
 import { InventorySalesReportRequest } from '../interfaces/inventory-sales-report';
 import { DetailedItemSalesReportRequest } from '../interfaces/detailed-item-sales-report';
+import { DailyBoxReportRequest } from '../interfaces/daily-box-report';
+import { ExistDailyBoxReportRequest } from '../interfaces/exist-daily-box-report';
 import { ItemsEvaluationInDurationReportRequest } from '../interfaces/items-evaluation-in-duration-report';
 import { ClientSalesDetailedReportRequest } from '../interfaces/client-sales-detailed-report';
 import { CustomersSuppliersListReportRequest } from '../interfaces/customers-suppliers-list-report';
@@ -265,6 +267,38 @@ export class ReportService {
     );
   }
 
+  getExistDailyBoxReport(body: ExistDailyBoxReportRequest): Observable<Blob> {
+    return this._HttpClient.post(
+      `${environments.baseURL}/api/Reports/ExistDailyBox-16-report`,
+      body,
+      { responseType: 'blob' }
+    );
+  }
+
+  ExcelReport_getExistDailyBoxReport(body: ExistDailyBoxReportRequest): Observable<Blob> {
+    return this._HttpClient.post(
+      `${environments.baseURL}/api/ExcelReport/ExistDailyBox-16-report`,
+      body,
+      { responseType: 'blob' }
+    );
+  }
+
+  getDailyBoxReport(body: DailyBoxReportRequest): Observable<Blob> {
+    return this._HttpClient.post(
+      `${environments.baseURL}/api/Reports/DailyBox-15-report`,
+      body,
+      { responseType: 'blob' }
+    );
+  }
+
+  ExcelReport_getDailyBoxReport(body: DailyBoxReportRequest): Observable<Blob> {
+    return this._HttpClient.post(
+      `${environments.baseURL}/api/ExcelReport/DailyBox-15-report`,
+      body,
+      { responseType: 'blob' }
+    );
+  }
+
   getDetailedItemSalesReport(body: DetailedItemSalesReportRequest): Observable<Blob> {
     return this._HttpClient.post(
       `${environments.baseURL}/api/Reports/DetailedItemSales-8-report`,
@@ -276,6 +310,22 @@ export class ReportService {
   ExcelReport_getDetailedItemSalesReport(body: DetailedItemSalesReportRequest): Observable<Blob> {
     return this._HttpClient.post(
       `${environments.baseURL}/api/ExcelReport/DetailedItemSales-8-report`,
+      body,
+      { responseType: 'blob' }
+    );
+  }
+
+  getDetailedItemPurchasesReport(body: DetailedItemSalesReportRequest): Observable<Blob> {
+    return this._HttpClient.post(
+      `${environments.baseURL}/api/Reports/DetailedItemPurchaces-8-2-report`,
+      body,
+      { responseType: 'blob' }
+    );
+  }
+
+  ExcelReport_getDetailedItemPurchasesReport(body: DetailedItemSalesReportRequest): Observable<Blob> {
+    return this._HttpClient.post(
+      `${environments.baseURL}/api/ExcelReport/DetailedItemPurchaces-8-2-report`,
       body,
       { responseType: 'blob' }
     );

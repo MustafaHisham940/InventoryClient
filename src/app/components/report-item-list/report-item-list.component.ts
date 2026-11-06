@@ -45,12 +45,10 @@ export class ReportItemListComponent {
     return !this.endItem?.trim();
   }
 
-  hasStoreCodeError(): boolean {
-    return !this.storeCode?.trim();
-  }
+ 
 
   isFormInvalid(): boolean {
-    return this.hasFirstItemError() || this.hasEndItemError() || this.hasStoreCodeError();
+    return this.hasFirstItemError() || this.hasEndItemError() ;
   }
 
   search(): void {

@@ -38,6 +38,10 @@ onEditButtonClicked() {
   pagesList: number[] = []
   isDeleted!:number
   deletedCustomer!:string
+
+  // client-side pagination, since /api/Accounts/GetAllUsers returns every user in one shot
+  pageSize:number = 5
+  currentPage:number = 1
    
   _totalUSersCount:number=0
   _totalActiveUsersCount:number=0
@@ -71,11 +75,14 @@ onEditButtonClicked() {
     this._AccountService.getAllUsers().subscribe({
       next:(res)=>{
         this._users = res
+        this.currentPage = 1
+        this.calculatePageNumber()
+        this.fillPagesList()
       }
     }
-    
+
     )
-    
+
   }
   ngOnInit(): void {
     this._NgxSpinnerService.show()
@@ -114,51 +121,54 @@ onEditButtonClicked() {
   
   
   /*****************************PAgination***************** */
-  
-  calculatePageNumber(){
-    this.responsePages= Math.ceil(this.__iItems.count / this.__iItems.pageSize);
-    
-    console.log("pgIndx="+this.__iItems.pageIndex + "pgcount="+this.__iItems.count)
-    console.log("Hhhhhhhhh =  "+this.responsePages)
-   
+
+  get pagedUsers(){
+    const start = (this.currentPage - 1) * this.pageSize;
+    return (this._users.data ?? []).slice(start, start + this.pageSize);
   }
-  
-  
+
+  get showingFrom(): number {
+    if(!this._users.data?.length) return 0;
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get showingTo(): number {
+    if(!this._users.data?.length) return 0;
+    return Math.min(this.currentPage * this.pageSize, this._users.data.length);
+  }
+
+  calculatePageNumber(){
+    this.responsePages= Math.ceil((this._users.data?.length ?? 0) / this.pageSize);
+
+  }
+
+
   fillPagesList(){
     this.pagesList=[]
     for (let index = 0; index < this.responsePages; index++) {
        this.pagesList.push(index+1);
         console.log(this.pagesList)
     }
-     
+
   }
   navigatePaging(pgIdx:number){
-    //this._Icustomfilter.pageIndex=pgIdx;
-  //  console.log("currPage=" +this._Icustomfilter.pageIndex );
-  
-    this.searchCustomersNofill();
+    this.currentPage = pgIdx;
+  }
+
+  incrementPDg(){
+    if(this.currentPage < this.responsePages){
+      this.currentPage++;
+    }
+  }
+
+  decrementPDg(){
+    if(this.currentPage > 1){
+      this.currentPage--;
+    }
   }
   
   /*********************************** **********************/
-  
-  searchCustomersNofill() {
-   // console.log(this._Icustomfilter);
-     
-    /*this._itemsService.getFilteredItems(this._Icustomfilter).subscribe({
-      next: (res) => {
-        this.__iItems = res;
-        console.log( this.__iItems);
-        this.calculatePageNumber();
-        
-      },
-  
-      error: (err) => {
-        console.error('Error fetching customers:', err);
-      }
-  
-    });*/
-  }
-  
+
   clearFilter(){
   
    /* this._Icustomfilter = {

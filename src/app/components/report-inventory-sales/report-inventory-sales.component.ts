@@ -5,11 +5,20 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
 import { TokenService } from '../../core/services/token.service';
 import { InventorySalesReportRequest } from '../../core/interfaces/inventory-sales-report';
+import { StoresService } from '../../core/services/stores.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
 
 @Component({
   selector: 'app-report-inventory-sales',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './report-inventory-sales.component.html',
   styleUrl: './report-inventory-sales.component.css'
 })
@@ -18,12 +27,36 @@ export class ReportInventorySalesComponent {
   private reportService = inject(ReportService);
   private _TokenService = inject(TokenService);
   private sanitizer = inject(DomSanitizer);
+  private _StoresService = inject(StoresService);
 
   startDate: string = '';
   endTime: string = '';
-  storeCode: string = '';
+  storeCode: any = null;
   startItemCode: string = '';
   endItemCode: string = '';
+  storesList: { strCd: string, strNm: string }[] = [];
+
+  /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter for why this is needed
+   * instead of native <input type="date"> (its display format ignores `lang`
+   * and just follows OS/browser locale). Picker works with Date objects;
+   * startDate/endTime stay the same ISO yyyy-mm-dd strings the report API expects. */
+  startDateObj: Date | null = null;
+  endTimeObj: Date | null = null;
+
+  private dateToIso(date: Date): string {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  onStartDateObjChange(date: Date | null): void {
+    this.startDate = date ? this.dateToIso(date) : '';
+  }
+
+  onEndTimeObjChange(date: Date | null): void {
+    this.endTime = date ? this.dateToIso(date) : '';
+  }
 
   singleStoreCode: string | undefined;
   singleStoreName: string | undefined;
@@ -37,6 +70,12 @@ export class ReportInventorySalesComponent {
     this.multiStoreFlag = this._TokenService.GetUserStoreSettings()?.MultiStore;
     this.singleStoreCode = this._TokenService.GetUserStoreSettings()?.SingleStoreCode;
     this.singleStoreName = this._TokenService.GetUserStoreSettings()?.SingleStoreName;
+
+    this._StoresService.GetStoresLookupList().subscribe({
+      next: (res) => {
+        this.storesList = res.data;
+      }
+    });
   }
 
   hasStartDateError(): boolean {
@@ -48,7 +87,9 @@ export class ReportInventorySalesComponent {
   }
 
   hasStoreCodeError(): boolean {
-    return !this.storeCode?.trim();
+    // storeCode is legitimately null when "جمع المخازن" (all stores) is picked -
+    // only an unselected (empty string) dropdown counts as an error.
+    return this.storeCode === '';
   }
 
   hasStartItemCodeError(): boolean {
@@ -62,7 +103,7 @@ export class ReportInventorySalesComponent {
   isFormInvalid(): boolean {
     return this.hasStartDateError()
       || this.hasEndTimeError()
-      || this.hasStoreCodeError()
+    
       || this.hasStartItemCodeError()
       || this.hasEndItemCodeError();
   }
@@ -75,7 +116,7 @@ export class ReportInventorySalesComponent {
     const reqBody: InventorySalesReportRequest = {
       startDate: this.startDate,
       endTime: this.endTime,
-      storeCode: this.storeCode,
+      storeCode: this.storeCode??null,
       startItemCode: this.startItemCode,
       endItemCode: this.endItemCode,
       sysInfo: {

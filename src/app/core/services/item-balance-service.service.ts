@@ -75,4 +75,15 @@ export class ItemBalanceServiceService {
       return this._HttpClient.delete(`${environments.baseURL}/api/ItemBalance/deleteITemBal` , {params:httpParams}  )
     }
 
+    /**name of the item with the highest total OQty */
+    getMostBoughtItem(): Observable<any> {
+      return this._HttpClient.get(`${environments.baseURL}/api/ItemBalance/GetMostBoughtItem`);
+    }
+
+    /**item with the highest IQty in a specific store */
+    getTopItemByIQty(_BCd: string): Observable<any> {
+      let httpParams = new HttpParams().append("_BCd", _BCd);
+      return this._HttpClient.get(`${environments.baseURL}/api/ItemBalance/GetTopItemByIQty`, { params: httpParams });
+    }
+
 }

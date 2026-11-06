@@ -13,16 +13,68 @@ import { HDetailsService } from '../../core/hdetails.service';
 import { ItemCheckUpRequest } from '../../core/interfaces/itemCheckup';
 import { TokenService } from '../../core/services/token.service';
 import { StoreTokenSettings } from '../../core/interfaces/StoreTokenSettings';
+import { ItemPickerComponent } from '../item-picker/item-picker.component';
+import { StoresService } from '../../core/services/stores.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
 
 
 @Component({
   selector: 'app-report-items-card',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,ItemPickerComponent,MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './report-items-card.component.html',
   styleUrl: './report-items-card.component.css'
 })
 export class ReportItemsCardComponent {
+
+  selectedItemName: string = ''
+  itemCodeTouched: boolean = false
+
+  onItemPicked(selection: { itemCode: string, itemName: string }): void {
+    this._Icustomfilter.specs.itmCd_search = selection.itemCode
+    this.selectedItemName = selection.itemName
+    this.itemCodeTouched = true
+  }
+
+  /*****************************dd/mm/yyyy date inputs*****************************
+   * Native <input type="date"> displays according to the OS/browser locale, not the
+   * page - confirmed on this machine it renders mm/dd/yyyy no matter what `lang` is
+   * set on the element, and CSS can't touch a native picker's internal rendering.
+   * MatDatepicker draws its own popup + formats text via Intl (see the custom
+   * DdMmYyyyDateAdapter/DD_MM_YYYY_FORMATS), so the display is reliably dd/mm/yyyy
+   * on every machine while still giving a real calendar popup. The picker itself
+   * works with Date objects; _Icustomfilter.specs.startDate/endDate stays the same
+   * ISO yyyy-mm-dd string it always was, since that's what hasDateOrderError()'s
+   * `new Date(...)` comparisons and the report API expect.
+   */
+  startDateObj: Date | null = null
+  endDateObj: Date | null = null
+  startDateTouched: boolean = false
+  endDateTouched: boolean = false
+
+  private dateToIso(date: Date): string {
+    const yyyy = date.getFullYear()
+    const mm = String(date.getMonth() + 1).padStart(2, '0')
+    const dd = String(date.getDate()).padStart(2, '0')
+    return `${yyyy}-${mm}-${dd}`
+  }
+
+  onStartDateObjChange(date: Date | null): void {
+    this.startDateTouched = true
+    this._Icustomfilter.specs.startDate = date ? this.dateToIso(date) : ''
+  }
+
+  onEndDateObjChange(date: Date | null): void {
+    this.endDateTouched = true
+    this._Icustomfilter.specs.endDate = date ? this.dateToIso(date) : ''
+  }
 
   onEditButtonClicked() {
 //    this.gotoAddClient()
@@ -84,13 +136,15 @@ export class ReportItemsCardComponent {
     singleStoreCode:string|undefined
     singleStoreName:string|undefined
     multiStoreFlag:string|undefined
-  
+    storesList: { strCd: string, strNm: string }[] = []
+
     constructor(private _itemsService:ItemsServiceService,
       private Actroute:ActivatedRoute,
       private _route:Router,
       private reportService: ReportService,
   private sanitizer: DomSanitizer,
-  private _HDetailsService:HDetailsService, private _TokenService:TokenService
+  private _HDetailsService:HDetailsService, private _TokenService:TokenService,
+  private _StoresService:StoresService
     ){
       this.isDeleted=-1
       this.deletedCustomer=""
@@ -107,6 +161,12 @@ export class ReportItemsCardComponent {
     this.singleStoreCode=this._TokenService.GetUserStoreSettings()?.SingleStoreCode
     this.singleStoreName=this._TokenService.GetUserStoreSettings()?.SingleStoreName
     this.multiStoreFlag=this._TokenService.GetUserStoreSettings()?.MultiStore
+
+    this._StoresService.GetStoresLookupList().subscribe({
+      next:(res)=>{
+        this.storesList = res.data
+      }
+    })
 
 
     

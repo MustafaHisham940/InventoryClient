@@ -10,12 +10,21 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ICheckupBalRep } from '../../core/interfaces/icheckup-bal-rep';
 import { HeaderServiceService } from '../../core/header-service.service';
 import { HDetailsService } from '../../core/hdetails.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
+import { CustomerPickerComponent } from '../customer-picker/customer-picker.component';
 
 
 @Component({
   selector: 'app-checkup-bal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CustomerPickerComponent, MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './checkup-bal.component.html',
   styleUrl: './checkup-bal.component.css'
 })
@@ -25,6 +34,40 @@ export class CheckupBalComponent {
   //    this.gotoAddClient()
     }
     pdfUrl?: SafeResourceUrl;
+
+    cstIdText: string = '';
+    customerName: string = '';
+    customerCodeTouched: boolean = false;
+
+    onCustomerPicked(selection: { customerCode: string, customerName: string }): void {
+      this.cstIdText = selection.customerCode;
+      this.customerName = selection.customerName;
+      this._Icustomfilter.specs.cstId = /^\d+$/.test(selection.customerCode) ? Number(selection.customerCode) : undefined;
+      this.customerCodeTouched = true;
+    }
+
+    /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter for why this is needed
+     * instead of native <input type="date"> (its display format ignores `lang`
+     * and just follows OS/browser locale). Picker works with Date objects; the
+     * model fields stay the same ISO yyyy-mm-dd strings the report API expects. */
+    startDateObj: Date | null = null;
+    endDateObj: Date | null = null;
+
+    private dateToIso(date: Date): string {
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    onStartDateObjChange(date: Date | null): void {
+      this._Icustomfilter.specs.startDate = date ? this.dateToIso(date) : '';
+    }
+
+    onEndDateObjChange(date: Date | null): void {
+      this._Icustomfilter.specs.endDate = date ? this.dateToIso(date) : '';
+    }
+
     
       __iItems: IItems= { data: [] } as any;
       responsePages!:number

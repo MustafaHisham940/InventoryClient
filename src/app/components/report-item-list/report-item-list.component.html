@@ -42,19 +42,7 @@
               <small class="field-warning" *ngIf="hasEndItemError() && (endItemModel.touched || endItemModel.dirty)">يجب ادخال هذا العنصر</small>
             </div>
 
-            <div class="search-box flex-fill">
-              <label for="storeCode">كود المخزن</label>
-              <input
-                id="storeCode"
-                type="text"
-                placeholder="كود المخزن"
-                name="storeCode"
-                [(ngModel)]="storeCode"
-                #storeCodeModel="ngModel"
-                [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
-              <small class="field-warning" *ngIf="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">يجب ادخال هذا العنصر</small>
-            </div>
-
+           
             <button
               class="btn btn-success px-4"
               style="white-space: nowrap;"

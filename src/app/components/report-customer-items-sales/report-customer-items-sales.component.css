@@ -2,6 +2,19 @@
   border-color: #dc3545 !important;
 }
 
+/* Keeps each input and its mat-datepicker-toggle button (and the toggle's
+   internal .mat-mdc-focus-indicator span) on one row instead of stacking. */
+.date-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.date-input-wrapper input {
+  flex: 1;
+  min-width: 0;
+}
+
 .field-warning {
   display: block;
   margin-top: 4px;

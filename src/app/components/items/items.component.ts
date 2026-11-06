@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Icustomer,Icustomerfilter } from '../../core/interfaces/icustomer';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { ItemsServiceService } from '../../core/services/items-service.service';
+import { ItemBalanceServiceService } from '../../core/services/item-balance-service.service';
 import { IItems } from '../../core/interfaces/iitem';
 import { NavbarHoverDirective } from '../../core/directives/navbar-hover.directive';
 import { ToastrService } from 'ngx-toastr';
@@ -30,6 +31,8 @@ onEditButtonClicked() {
   pagesList: number[] = []
   isDeleted!:number
   deletedCustomer!:string
+  totalItemsCount: number | null = null
+  mostBoughtItemName: string | null = null
   private _ToastrService=inject(ToastrService)
    
  // _Icustomerfilter!:Icustomerfilter 
@@ -51,6 +54,7 @@ onEditButtonClicked() {
 
 
   constructor(private _itemsService:ItemsServiceService,
+    private _itemBalanceService:ItemBalanceServiceService,
     private Actroute:ActivatedRoute,
     private _route:Router
   ){
@@ -75,6 +79,18 @@ onEditButtonClicked() {
        this.calculatePageNumber();
        this.fillPagesList();
      }
+    })
+
+    this._itemsService.getTotalCounts().subscribe({
+      next:(res)=>{
+        this.totalItemsCount = res.data.myProperty.totalItemsCount
+      }
+    })
+
+    this._itemBalanceService.getMostBoughtItem().subscribe({
+      next:(res)=>{
+        this.mostBoughtItemName = res.data
+      }
     })
  }
 
@@ -102,6 +118,16 @@ onEditButtonClicked() {
 
 /*****************************PAgination***************** */
 
+get showingFrom(): number {
+  if(!this.__iItems.count) return 0;
+  return (this.__iItems.pageIndex - 1) * this.__iItems.pageSize + 1;
+}
+
+get showingTo(): number {
+  if(!this.__iItems.count) return 0;
+  return Math.min(this.__iItems.pageIndex * this.__iItems.pageSize, this.__iItems.count);
+}
+
 calculatePageNumber(){
   this.responsePages= Math.ceil(this.__iItems.count / this.__iItems.pageSize);
   
@@ -124,6 +150,20 @@ navigatePaging(pgIdx:number){
   console.log("currPage=" +this._Icustomfilter.pageIndex );
 
   this.searchCustomersNofill();
+}
+
+incrementPDg(){
+  if(this._Icustomfilter.pageIndex! <this.responsePages){
+    this._Icustomfilter.pageIndex=this._Icustomfilter.pageIndex!+1;
+    this.navigatePaging(this._Icustomfilter.pageIndex!);
+  }
+}
+
+decrementPDg(){
+  if(this._Icustomfilter.pageIndex! >1){
+    this._Icustomfilter.pageIndex=this._Icustomfilter.pageIndex!-1;
+    this.navigatePaging(this._Icustomfilter.pageIndex!);
+  }
 }
 
 /*********************************** **********************/

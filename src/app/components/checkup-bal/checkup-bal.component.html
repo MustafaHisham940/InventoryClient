@@ -35,29 +35,28 @@
                               <div class="col">  <!-- Main content column -->
                                 <div class="d-flex gap-3 w-100">
                                   <div class="search-box flex-fill">
-                                    <label for="customer_code">كود العميل</label>
-                                    <i class="fas fa-boxes"></i>
-                                    <input
-                                      id="customer_code"
-                                      type="number"
-                                      placeholder="البحث ..."
-                                      [(ngModel)]="_Icustomfilter.specs.cstId"
-                                      #customerCodeModel="ngModel"
-                                      [class.invalid-field]="hasCustomerCodeError() && (customerCodeModel.touched || customerCodeModel.dirty)">
-                                    <small class="field-warning" *ngIf="hasCustomerCodeError() && (customerCodeModel.touched || customerCodeModel.dirty)">كود العميل حقل إجباري</small>
+                                    <app-customer-picker
+                                      [customerCode]="cstIdText"
+                                      [customerName]="customerName"
+                                      (customerSelected)="onCustomerPicked($event)">
+                                    </app-customer-picker>
+                                    <small class="field-warning" *ngIf="hasCustomerCodeError() && customerCodeTouched">كود العميل حقل إجباري</small>
                                   </div>
                               
                                   <div class="search-box flex-fill">
                                     <label for="StartDate">تاريخ البداية</label>
                                     <div class="date-input-wrapper">
-                                        <i class="fas fa-calendar-alt"></i>
                                         <input
-                                            type="date"
-                                            placeholder="mm/dd/yyyy"
                                             id="StartDate"
-                                            [(ngModel)]="_Icustomfilter.specs.startDate"
+                                            name="StartDate"
+                                            [matDatepicker]="startDatePicker"
+                                            placeholder="dd/mm/yyyy"
+                                            [(ngModel)]="startDateObj"
+                                            (ngModelChange)="onStartDateObjChange($event)"
                                             #startDateModel="ngModel"
                                             [class.invalid-field]="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && (startDateModel.touched || startDateModel.dirty)">
+                                        <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startDatePicker></mat-datepicker>
                                     </div>
                                     <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && (startDateModel.touched || startDateModel.dirty)">تاريخ البداية حقل إجباري</small>
                                 </div>
@@ -65,14 +64,17 @@
                                 <div class="search-box flex-fill">
                                     <label for="EndDate">تاريخ النهاية</label>
                                     <div class="date-input-wrapper">
-                                        <i class="fas fa-calendar-alt"></i>
                                         <input
                                             id="EndDate"
-                                            type="date"
-                                            placeholder="mm/dd/yyyy"
-                                            [(ngModel)]="_Icustomfilter.specs.endDate"
+                                            name="EndDate"
+                                            [matDatepicker]="endDatePicker"
+                                            placeholder="dd/mm/yyyy"
+                                            [(ngModel)]="endDateObj"
+                                            (ngModelChange)="onEndDateObjChange($event)"
                                             #endDateModel="ngModel"
                                             [class.invalid-field]="((hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim()) && (endDateModel.touched || endDateModel.dirty)) || (hasDateOrderError() && (startDateModel.touched || startDateModel.dirty || endDateModel.touched || endDateModel.dirty))">
+                                        <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #endDatePicker></mat-datepicker>
                                     </div>
                                     <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim() && (endDateModel.touched || endDateModel.dirty)">تاريخ النهاية حقل إجباري</small>
                                     <small class="field-warning" *ngIf="hasDateOrderError() && (startDateModel.touched || startDateModel.dirty || endDateModel.touched || endDateModel.dirty)">تاريخ البداية يجب أن يكون أقدم من تاريخ النهاية</small>

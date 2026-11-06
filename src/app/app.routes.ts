@@ -54,10 +54,13 @@ import { ReportItemBalancesComponent } from './components/report-item-balances/r
 import { ReportInventorySalesComponent } from './components/report-inventory-sales/report-inventory-sales.component';
 import { InventoryPurchacesReportComponent } from './components/inventory-purchaces-report/inventory-purchaces-report.component';
 import { ReportDetailedItemSalesComponent } from './components/report-detailed-item-sales/report-detailed-item-sales.component';
+import { ReportDetailedItemPurchasesComponent } from './components/report-detailed-item-purchases/report-detailed-item-purchases.component';
 import { ReportItemsEvaluationInDurationComponent } from './components/report-items-evaluation-in-duration/report-items-evaluation-in-duration.component';
 import { ClientSalesDetailedReportComponent } from './components/client-sales-detailed-report/client-sales-detailed-report.component';
 import { CustomersSuppliersListReportComponent } from './components/customers-suppliers-list-report/customers-suppliers-list-report.component';
 import { ClientPurchasesDetailedReportComponent } from './components/client-purchases-detailed-report/client-purchases-detailed-report.component';
+import { ReportDailyBoxComponent } from './components/report-daily-box/report-daily-box.component';
+import { ReportExistDailyBoxComponent } from './components/report-exist-daily-box/report-exist-daily-box.component';
 import { ReportInventoryEvaluationNewRepComponent } from './components/report-inventory-evaluation-new-rep/report-inventory-evaluation-new-rep.component';
 import { ReportStoreItemsNeedComponent } from './components/report-store-items-need/report-store-items-need.component';
 import { ReportCustomerItemsSalesComponent } from './components/report-customer-items-sales/report-customer-items-sales.component';
@@ -138,12 +141,15 @@ export const routes: Routes = [
             {path:'7reportStoreItemsNeed' , component:ReportStoreItemsNeedComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
 
             {path:'8reportDetailedItemSales' , component:ReportDetailedItemSalesComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
+            {path:'8-2reportDetailedItemPurchases' , component:ReportDetailedItemPurchasesComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
             {path:'9reportItemsEvaluationInDuration' , component:ReportItemsEvaluationInDurationComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
            
            {path:'11reportCustomerItemsSales' , component:ReportCustomerItemsSalesComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
            {path:'12reportCustomersSuppliersList' , component:CustomersSuppliersListReportComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
             {path:'13reportClientSalesDetailed' , component:ClientSalesDetailedReportComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},            
             {path:'14reportClientPurchasesDetailed' , component:ClientPurchasesDetailedReportComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
+            {path:'15reportDailyBox' , component:ReportDailyBoxComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
+            {path:'16reportExistDailyBox' , component:ReportExistDailyBoxComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},
         
             {path:'CostControlbySearch' , component:ModifiyCostbySearchComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},            
             {path:'CostControlAllItems' , component:AdjusCostForAllItemsComponent,data:{ roles :['المشتروات']} ,canActivate:[rolesGuard]},            

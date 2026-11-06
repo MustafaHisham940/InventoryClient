@@ -1,0 +1,18 @@
+<div class="d-flex gap-3 align-items-end flex-wrap" dir="rtl">
+
+    <div class="flex-fill">
+        <label class="form-label">البحث بكود مورد/العميل</label>
+        <input #codeInput type="text" class="form-control" [value]="customerCode"
+               (input)="onCustomerCodeInput(codeInput.value)">
+    </div>
+
+    <div class="flex-fill">
+        <label class="form-label">عرض اسم المورد/عميل</label>
+        <input type="text" class="form-control" [value]="customerName" disabled>
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="openCustomerDialog()">
+        اختر العميل
+    </button>
+
+</div>

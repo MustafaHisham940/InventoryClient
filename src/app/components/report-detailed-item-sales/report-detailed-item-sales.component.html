@@ -17,52 +17,67 @@
           <div class="d-flex gap-3 w-100 flex-wrap align-items-start">
 
             <div class="search-box flex-fill">
-              <label for="itemCode">كود الصنف</label>
-              <input
-                id="itemCode"
-                type="text"
-                placeholder="كود الصنف"
-                name="itemCode"
-                [(ngModel)]="itemCode"
-                #itemCodeModel="ngModel"
-                [class.invalid-field]="hasItemCodeError() && (itemCodeModel.touched || itemCodeModel.dirty)">
-              <small class="field-warning" *ngIf="hasItemCodeError() && (itemCodeModel.touched || itemCodeModel.dirty)">يجب ادخال هذا العنصر</small>
+              <app-item-picker
+                [itemCode]="itemCode"
+                [itemName]="itemName"
+                (itemSelected)="onItemPicked($event)">
+              </app-item-picker>
+              <small class="field-warning" *ngIf="hasItemCodeError() && itemCodeTouched">يجب ادخال هذا العنصر</small>
             </div>
 
-            <div class="search-box flex-fill">
+            <div class="search-box flex-fill select-filter">
               <label for="storeCode">كود المخزن</label>
-              <input
-                id="storeCode"
-                type="text"
-                placeholder="كود المخزن"
-                name="storeCode"
-                [(ngModel)]="storeCode"
-                #storeCodeModel="ngModel"
-                [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+              <div class="select-wrapper">
+                <i class="fas fa-warehouse"></i>
+                <select
+                  id="storeCode"
+                  class="custom-select"
+                  name="storeCode"
+                  [(ngModel)]="storeCode"
+                  #storeCodeModel="ngModel"
+                  [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
+                  <option value="" disabled selected>اختر المخزن</option>
+                  @for (store of storesList; track store.strCd) {
+                    <option [value]="store.strCd">{{store.strNm}}</option>
+                  }
+                </select>
+              </div>
               <small class="field-warning" *ngIf="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">يجب ادخال هذا العنصر</small>
             </div>
 
             <div class="search-box flex-fill">
               <label for="startDate">تاريخ البداية</label>
-              <input
-                id="startDate"
-                type="date"
-                name="startDate"
-                [(ngModel)]="startDate"
-                #startDateModel="ngModel"
-                [class.invalid-field]="hasStartDateError() && (startDateModel.touched || startDateModel.dirty)">
+              <div class="date-input-wrapper">
+                <input
+                  id="startDate"
+                  name="startDate"
+                  [matDatepicker]="startDatePicker"
+                  placeholder="dd/mm/yyyy"
+                  [(ngModel)]="startDateObj"
+                  (ngModelChange)="onStartDateObjChange($event)"
+                  #startDateModel="ngModel"
+                  [class.invalid-field]="hasStartDateError() && (startDateModel.touched || startDateModel.dirty)">
+                <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+              </div>
               <small class="field-warning" *ngIf="hasStartDateError() && (startDateModel.touched || startDateModel.dirty)">يجب ادخال هذا العنصر</small>
             </div>
 
             <div class="search-box flex-fill">
               <label for="endDate">تاريخ النهاية</label>
-              <input
-                id="endDate"
-                type="date"
-                name="endDate"
-                [(ngModel)]="endDate"
-                #endDateModel="ngModel"
-                [class.invalid-field]="hasEndDateError() && (endDateModel.touched || endDateModel.dirty)">
+              <div class="date-input-wrapper">
+                <input
+                  id="endDate"
+                  name="endDate"
+                  [matDatepicker]="endDatePicker"
+                  placeholder="dd/mm/yyyy"
+                  [(ngModel)]="endDateObj"
+                  (ngModelChange)="onEndDateObjChange($event)"
+                  #endDateModel="ngModel"
+                  [class.invalid-field]="hasEndDateError() && (endDateModel.touched || endDateModel.dirty)">
+                <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+              </div>
               <small class="field-warning" *ngIf="hasEndDateError() && (endDateModel.touched || endDateModel.dirty)">يجب ادخال هذا العنصر</small>
             </div>
 

@@ -19,7 +19,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.18);
     overflow: hidden;
     width: 100%;
-    max-width: 900px;
+    
 }
 
 .prompt-header {
@@ -76,4 +76,17 @@ label {
 .btn-secondary {
     border-radius: 8px;
     font-weight: 600;
+}
+
+/* Keeps the input and its mat-datepicker-toggle button (and the toggle's
+   internal .mat-mdc-focus-indicator span) on one row instead of stacking. */
+.date-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.date-input-wrapper input {
+  flex: 1;
+  min-width: 0;
 }

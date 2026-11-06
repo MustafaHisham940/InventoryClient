@@ -76,10 +76,7 @@ export class ItemBalanceComponent implements OnInit{
       this.curPdgIdx=1
     }
   
-    _totalCustomerCount:number=0
-    _totalBidderCount:number =0
-    _totalBuyerCount:number=0
-    _totalBothCount:number=0
+    _topItem: { itemCode?: string, itemName?: string, iQty?: number, oQty?: number, balance?: number } | null = null
     ngOnInit() {
 
       const navigationState =history.state
@@ -87,6 +84,12 @@ export class ItemBalanceComponent implements OnInit{
         this.SelectedStore = navigationState.data
         this._Icustomerfilter._BCd=this.SelectedStore.store_id
         console.log("navigationState = " , this.SelectedStore.store_id)
+
+        this._ItemBalanceServiceService.getTopItemByIQty(this.SelectedStore.store_id).subscribe({
+          next:(res)=>{
+            this._topItem = res.data
+          }
+        })
       }else{
         this._route.navigate(['/ItemBalance'])
       }
@@ -135,12 +138,22 @@ export class ItemBalanceComponent implements OnInit{
   }
   
   
+  get showingFrom(): number {
+    if(!this._itemBAlance.count) return 0;
+    return (this._itemBAlance.pageIndex - 1) * this._itemBAlance.pageSize + 1;
+  }
+
+  get showingTo(): number {
+    if(!this._itemBAlance.count) return 0;
+    return Math.min(this._itemBAlance.pageIndex * this._itemBAlance.pageSize, this._itemBAlance.count);
+  }
+
   calculatePageNumber(){
     this.responsePages= Math.ceil(this._itemBAlance.count / this._itemBAlance.pageSize);
-    
+
     console.log("pgIndx="+this._itemBAlance.pageIndex + "pgcount="+this._itemBAlance.count)
     console.log("Hhhhhhhhh =  "+this.responsePages)
-   
+
   }
   
   

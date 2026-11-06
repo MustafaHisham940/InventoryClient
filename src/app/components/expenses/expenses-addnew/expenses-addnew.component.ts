@@ -1,21 +1,28 @@
-import { Component, HostListener, inject, OnInit, signal, forwardRef } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { HDetailsService } from '../../../core/hdetails.service';
 import { TokenService } from '../../../core/services/token.service';
-import { DialogOverviewExampleDialog } from '../../dynamic-transactions/dynamic-transactions.component';
 import { CanComponentDeactivate } from '../../../core/guards/unsaved-changes-guard.guard';
 import { EXPENSES_TRSTY } from '../expenses.constants';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../../core/date-adapters/dd-mm-yyyy-date-adapter';
+import { dateToIso, isoToDate } from '../../../core/utils/date-iso';
 
 @Component({
   selector: 'app-expenses-addnew',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatMenuModule, MatButtonModule, forwardRef(() => DialogOverviewExampleDialog)],
+  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatMenuModule, MatButtonModule, MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './expenses-addnew.component.html',
   styleUrl: './expenses-addnew.component.css'
 })
@@ -46,14 +53,10 @@ export class ExpensesAddnewComponent implements OnInit, CanComponentDeactivate {
     return true;
   }
 
-  selectedCustomerId = signal<number>(0);
-  selectedCustomerName = signal<string>('');
-
   private fb = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     trsNo: [null, [Validators.required]],
-    trsDt: [null, [Validators.required]],
-    cstId: [null, [Validators.required, Validators.min(1)]],
+    trsDt: [new Date(), [Validators.required]], // defaults to today
     val: [null, [Validators.required]],
     rem: [null]
   });
@@ -76,25 +79,6 @@ export class ExpensesAddnewComponent implements OnInit, CanComponentDeactivate {
     });
   }
 
-  readonly dialog = inject(MatDialog);
-  openCustomerDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      data: {
-        S_CstID: this.selectedCustomerId(),
-        S_CstName: this.selectedCustomerName()
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (!result) {
-        return;
-      }
-      this.selectedCustomerId.set(result.S_CstID);
-      this.selectedCustomerName.set(result.S_CstName);
-      this.form.patchValue({ cstId: result.S_CstID });
-    });
-  }
-
   private navigateBackToMain(): void {
     this._route.navigate(['/ExpensesMain'], {
       state: {
@@ -110,7 +94,7 @@ export class ExpensesAddnewComponent implements OnInit, CanComponentDeactivate {
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this._toastrService.error('اضافة سند', 'برجاء استكمال رقم الفاتورة وتاريخ الفاتورة والعميل والمبلغ', { positionClass: 'toast-center-center' });
+      this._toastrService.error('اضافة سند', 'برجاء استكمال رقم الفاتورة وتاريخ الفاتورة والمبلغ', { positionClass: 'toast-center-center' });
       return;
     }
 
@@ -118,8 +102,7 @@ export class ExpensesAddnewComponent implements OnInit, CanComponentDeactivate {
       strCd: this.storeData.StrCd,
       trsTy: EXPENSES_TRSTY,
       trsNo: this.form.get('trsNo')?.value,
-      trsDt: this.form.get('trsDt')?.value,
-      cstId: this.form.get('cstId')?.value,
+      trsDt: this.form.get('trsDt')?.value ? dateToIso(this.form.get('trsDt')?.value) : null,
       val: this.form.get('val')?.value,
       rem: this.form.get('rem')?.value,
       oWn: this._TokenService.getGivenName()

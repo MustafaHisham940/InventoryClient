@@ -2,51 +2,37 @@
     <div class="container-fluid py-4">
         <div class="container py-5  TotalSection">
             <div class="row">
-                <!-- Total Customers Card -->
+                <!-- Top Selling Store Card -->
                 <div class="col-md-4 mb-4">
                     <div class="stats-card total-customers">
                         <div class="card-body">
-                            <h5 class="card-title">إجمالي عدد الفئات</h5>
+                            <h5 class="card-title">المخزن الاكثر مبيعا</h5>
                             <div class="d-flex justify-content-between align-items-end">
-                                <h2 class="card-number">5,423</h2>
-                                <span class="badge bg-success">
-                                    <i class="fas fa-arrow-up me-1"></i> 16% هذا الشهر
-                                </span>
+                                <h2 class="card-number">{{ _topSellingStoreName ?? '...' }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-        
-                <!-- Members Card -->
+
+                <!-- Top Selling Store Sales Value Card -->
                 <div class="col-md-4 mb-4">
                     <div class="stats-card members">
                         <div class="card-body">
-                            <h5 class="card-title">الفئات الاكثر ملبعا</h5>
+                            <h5 class="card-title">قيمة مبيعات المخزن الاكثر مبيعا</h5>
                             <div class="d-flex justify-content-between align-items-end">
-                                <h2 class="card-number"></h2>
-                                <span class="badge bg-primary">
-                                    <i class="fas fa-arrow-up me-1"></i> 1% هذا الشهر
-                                </span>
+                                <h2 class="card-number">{{ _topSellingStoreValue ?? '...' }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-        
-                <!-- Active Now Card -->
+
+                <!-- Total Stores Count Card -->
                 <div class="col-md-4 mb-4">
                     <div class="stats-card active-now">
                         <div class="card-body">
-                            <h5 class="card-title">عدد الفئات</h5>
+                            <h5 class="card-title">إجمالي عدد المخازن</h5>
                             <div class="d-flex justify-content-between align-items-end">
-                                <h2 class="card-number">189</h2>
-                                <div class="active-users">
-                                    <div class="user-avatars">
-                                        <img  alt="User" class="rounded-circle">
-                                        <img  alt="User" class="rounded-circle">
-                                        <img  alt="User" class="rounded-circle">
-                                        <span class="more-users">+12</span>
-                                    </div>
-                                </div>
+                                <h2 class="card-number">{{ _totalStoresCount ?? '...' }}</h2>
                             </div>
                         </div>
                     </div>
@@ -237,18 +223,22 @@
 
 
                       <div class="d-flex justify-content-between align-items-center mt-3">
-                          <span class="text-muted small">عرض البيانات من 1 إلى 8 من أصل 256 ألف مدخل</span>
+                          <span class="text-muted small">عرض البيانات من {{showingFrom}} إلى {{showingTo}} من أصل {{_stores.count}} مدخل</span>
                           <nav>
                               <ul class="pagination pagination-sm mb-0">
-                                  <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                                  <li class="page-item" [class.disabled]="_Icustomfilter._pageIndex === 1">
+                                    <button class="page-link" (click)="decrementPDg()">&lt;</button>
+                                  </li>
                                   @for (item of pagesList; track $index) {
-                                    <li class="page-item "><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
+                                    <li class="page-item" [class.active]="item === _Icustomfilter._pageIndex"><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
                                   }
-                                 
-                                  
-                                  
-                                 
-                                  <li class="page-item disabled "><a class="page-link">&gt;</a></li>
+
+
+
+
+                                  <li class="page-item" [class.disabled]="_Icustomfilter._pageIndex === responsePages">
+                                    <button class="page-link" (click)="incrementPDg()">&gt;</button>
+                                  </li>
                               </ul>
                           </nav>
                       </div>

@@ -2,55 +2,53 @@
     <div class="container-fluid py-4"><!--containerx for full screen-->
         <div class="container py-5  TotalSection">
             <div class="row">
-                <!-- Total Customers Card -->
-                <div class="col-md-3 col-lg-4  col-sm-4 mb-4">
+                <!-- Top Item By IQty - Item Name -->
+                <div class="col-md-3 col-lg-3 col-sm-6 mb-4">
                     <div class="stats-card total-customers">
                         <div class="card-body">
-                            <h5 class="card-title">إجمالي الارصدة المخزنية</h5>
+                            <h5 class="card-title">الصنف الاكثر توفرا</h5>
                             <div class="d-flex justify-content-between align-items-end">
-                                <h2 class="card-number">{{_totalCustomerCount}}</h2>
-                                 <!--<span class="badge bg-success">
-                                   <i class="fas fa-arrow-up me-1"></i> 16% هذا الشهر
-                                </span>-->
+                                <h2 class="card-number">{{ _topItem?.itemName ?? '...' }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-        
-                <!-- Members Card -->
-                <div class="col-md-3 col-lg-4 col-sm-1 mb-4">
+
+                <!-- Top Item By IQty - IQty -->
+                <div class="col-md-3 col-lg-3 col-sm-6 mb-4">
                     <div class="stats-card members">
                         <div class="card-body">
-                            <h5 class="card-title">اجمالي عدد العمليات</h5>
+                            <h5 class="card-title">الكمية الواردة</h5>
                             <div class="d-flex justify-content-between align-items-end">
-                                <h2 class="card-number">{{_totalBidderCount}}</h2>
-                               <!-- <span class="badge bg-primary">
-                                    <i class="fas fa-arrow-up me-1"></i> 1% هذا الشهر
-                                </span>-->
+                                <h2 class="card-number">{{ _topItem?.iQty ?? '...' }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-        
-                <!-- Active Now Card -->
-                <div class="col-md-3 col-lg-4 col-sm-1 mb-4">
+
+                <!-- Top Item By IQty - OQty -->
+                <div class="col-md-3 col-lg-3 col-sm-6 mb-4">
                     <div class="stats-card active-now">
                         <div class="card-body">
-                            <h5 class="card-title">اجمالي الارصدة</h5>
+                            <h5 class="card-title">الكمية المنصرفة</h5>
                             <div class="d-flex justify-content-between align-items-end">
-                                <h2 class="card-number">{{_totalBuyerCount}}</h2>
-                                <!--<div class="active-users">
-                                    <div class="user-avatars">
-                                        <img  alt="User" class="rounded-circle">
-                                        <img  alt="User" class="rounded-circle">
-                                        <img  alt="User" class="rounded-circle">
-                                        <span class="more-users">+12</span>
-                                    </div>
-                                </div>-->
+                                <h2 class="card-number">{{ _topItem?.oQty ?? '...' }}</h2>
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
+
+                <!-- Top Item By IQty - Balance -->
+                <div class="col-md-3 col-lg-3 col-sm-6 mb-4">
+                    <div class="stats-card Start-now">
+                        <div class="card-body">
+                            <h5 class="card-title">الرصيد الحالي</h5>
+                            <div class="d-flex justify-content-between align-items-end">
+                                <h2 class="card-number">{{ _topItem?.balance ?? '...' }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -235,15 +233,19 @@
                               </tbody>
                           </table>
                       </div>
-                      <div class="d-flex justify-content-center align-items-center mt-3">
-                       <!--  <span class="text-muted small">عرض البيانات من 1 إلى 10 من أصل {{_totalCustomerCount}}  مدخل</span>--> 
+                      <div class="d-flex justify-content-between align-items-center mt-3">
+                          <span class="text-muted small">عرض البيانات من {{showingFrom}} إلى {{showingTo}} من أصل {{_itemBAlance.count}} مدخل</span>
                           <nav>
                               <ul class="pagination pagination-sm mb-0">
-                                  <li class="page-item"><a class="page-link" (click)="decrementPDg()">&lt;</a></li>
+                                  <li class="page-item" [class.disabled]="_Icustomerfilter._pageIndex === 1">
+                                    <button class="page-link" (click)="decrementPDg()">&lt;</button>
+                                  </li>
                                   @for (item of pagesList; track $index) {
-                                    <li class="page-item "><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
-                                  }                             
-                                  <li class="page-item disabled " (click)="incrementPDg()"><a class="page-link">&gt;</a></li>
+                                    <li class="page-item" [class.active]="item === _Icustomerfilter._pageIndex"><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
+                                  }
+                                  <li class="page-item" [class.disabled]="_Icustomerfilter._pageIndex === responsePages">
+                                    <button class="page-link" (click)="incrementPDg()">&gt;</button>
+                                  </li>
                               </ul>
                           </nav>
                       </div>

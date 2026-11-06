@@ -87,8 +87,12 @@ export class StoresmainComponent implements OnInit{
   }
 
 
+  _topSellingStoreName: string | null = null
+  _topSellingStoreValue: number | null = null
+  _totalStoresCount: number | null = null
+
   ngOnInit(): void {
-    
+
     this.isDeleted=-1 // no element is set to be deleted
     this.deletedCustomer=-1 // the id of customer is to be deleted is null
     this._Icustomfilter._pageIndex=1;
@@ -99,17 +103,25 @@ export class StoresmainComponent implements OnInit{
 
     this.curr_EditedCtg_name=""
     this.curr_EditedCtrg_Id=-1
-    
+
     this._StoresService.GetAllStoresFiltered(this._Icustomfilter).subscribe({
 
      next:(res)=>{
-      
+
       this._stores=res
-      
+
        console.log("Welcome!!!!!",res)
        this.calculatePageNumber();
        this.fillPagesList();
      }
+    })
+
+    this._StoresService.GetTopSellingStore().subscribe({
+      next:(res)=>{
+        this._topSellingStoreName = res.data.storeName
+        this._topSellingStoreValue = res.data.totalSalesValue
+        this._totalStoresCount = res.data.totalStoresCount
+      }
     })
  }
 
@@ -137,6 +149,16 @@ export class StoresmainComponent implements OnInit{
 
 /*****************************PAgination***************** */
 
+get showingFrom(): number {
+  if(!this._stores.count) return 0;
+  return (this._stores.pageIndex - 1) * this._stores.pageSize + 1;
+}
+
+get showingTo(): number {
+  if(!this._stores.count) return 0;
+  return Math.min(this._stores.pageIndex * this._stores.pageSize, this._stores.count);
+}
+
 calculatePageNumber(){
   this.responsePages= Math.ceil(this._stores.count / this._stores.pageSize);
   
@@ -159,6 +181,20 @@ navigatePaging(pgIdx:number){
   console.log("currPage=" +this._Icustomfilter._pageIndex );
 
   this.searchCustomersNofill();
+}
+
+incrementPDg(){
+  if(this._Icustomfilter._pageIndex! <this.responsePages){
+    this._Icustomfilter._pageIndex=this._Icustomfilter._pageIndex!+1;
+    this.navigatePaging(this._Icustomfilter._pageIndex!);
+  }
+}
+
+decrementPDg(){
+  if(this._Icustomfilter._pageIndex! >1){
+    this._Icustomfilter._pageIndex=this._Icustomfilter._pageIndex!-1;
+    this.navigatePaging(this._Icustomfilter._pageIndex!);
+  }
 }
 
 /*********************************** **********************/

@@ -44,4 +44,14 @@ export class StoresService {
   DeleteStore(_id:string  ):Observable<any>{
     return this._HttpClient.delete(`${environments.baseURL}/api/StoreDef/DeleteStore/${_id}`  )
   }
+
+  /**top-selling store (highest sum(val) of Sales headers), its sales value, and the total store count */
+  GetTopSellingStore(): Observable<any> {
+    return this._HttpClient.get(`${environments.baseURL}/api/StoreDef/GetTopSellingStore`);
+  }
+
+  /**lightweight store code/name list for dropdowns */
+  GetStoresLookupList(): Observable<any> {
+    return this._HttpClient.get(`${environments.baseURL}/api/StoreDef/GetStoresLookupList`);
+  }
 }

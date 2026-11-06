@@ -423,6 +423,39 @@
   align-items: center;
 }
 
+/* Monthly sales/purchases card: Tajawal title in white (the header is blue) */
+.chart-title.monthly-title {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  font-weight: 700;
+  color: #fff !important;
+}
+
+.chart-title.monthly-title i {
+  color: #fff !important;
+}
+
+.monthly-controls .btn {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.monthly-controls .btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.monthly-controls .btn:disabled {
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.stock-store-select {
+  width: auto;
+  min-width: 160px;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
 .chart-card-body {
   padding: 20px;
   position: relative;
@@ -437,8 +470,18 @@ canvas {
 }
 
 /* For stock report charts */
+/* Stock report: the body grows with its content (title + chart) instead of the fixed 300px used by the other charts */
+.chart-card-body.stock-body {
+  height: auto;
+}
+
+.stock-chart-box {
+  position: relative;
+  height: 250px;
+}
+
 #stockInChart, #stockOutChart {
-  height: 250px !important;
+  height: 100% !important;
 }
 
 .padddingtoop{

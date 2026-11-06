@@ -1,0 +1,66 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.prompt-body {
+  position: relative;
+  width: min(1320px, 99vw);
+  margin: 0 auto;
+  padding: 0 24px 24px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1);
+  overflow: hidden;
+}
+
+/* Action Buttons - matches app-item-dialogue's own confirm/cancel row */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px 8px 4px;
+}
+
+.button-group .btn {
+  min-width: 130px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-back {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.btn-back:hover {
+  background: #f3f4f6;
+  transform: translateY(-1px);
+}
+
+.btn-confirm {
+  background: #16a34a;
+  border: 1px solid #16a34a;
+  color: #ffffff;
+}
+
+.btn-confirm:hover:not(:disabled) {
+  background: #15803d;
+  border-color: #15803d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.btn-confirm:disabled {
+  background: #a7f3d0;
+  border-color: #a7f3d0;
+  color: #ffffff;
+  cursor: not-allowed;
+  opacity: .7;
+}

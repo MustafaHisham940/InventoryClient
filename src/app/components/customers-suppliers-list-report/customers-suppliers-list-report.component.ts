@@ -21,6 +21,7 @@ export class CustomersSuppliersListReportComponent {
 
   startCstmr: number | null = null;
   endCstmr: number | null = null;
+  customerType: number | null = null;
 
   singleStoreCode: string | undefined;
   singleStoreName: string | undefined;
@@ -44,8 +45,12 @@ export class CustomersSuppliersListReportComponent {
     return this.endCstmr === null || this.endCstmr === undefined || (this.endCstmr as any) === '';
   }
 
+  hasCustomerTypeError(): boolean {
+    return this.customerType === null || this.customerType === undefined;
+  }
+
   isFormInvalid(): boolean {
-    return this.hasStartCstmrError() || this.hasEndCstmrError();
+    return this.hasStartCstmrError() || this.hasEndCstmrError() || this.hasCustomerTypeError();
   }
 
   search(): void {
@@ -56,6 +61,7 @@ export class CustomersSuppliersListReportComponent {
     const reqBody: CustomersSuppliersListReportRequest = {
       startCstmr: Number(this.startCstmr),
       endCstmr: Number(this.endCstmr),
+      customerType: Number(this.customerType),
       sysInfo: {
         accptMinus: 0,
         multiStore: this.multiStoreFlag === 'True',

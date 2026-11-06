@@ -1,8 +1,11 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { Chart, ChartConfiguration, ChartTypeRegistry } from 'chart.js';
 import { registerables } from 'chart.js';
 import { SlidingNotificationComponent } from "../sliding-notification/sliding-notification.component";
 import { ReportService } from '../../core/services/report.service';
+import { DashboardService, MonthlyTotal, StockInOut } from '../../core/services/dashboard.service';
+import { StoresService } from '../../core/services/stores.service';
 
 // Register all Chart.js components
 Chart.register(...registerables);
@@ -10,7 +13,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-home', 
   standalone: true,
-  imports: [SlidingNotificationComponent],
+  imports: [SlidingNotificationComponent, DecimalPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -22,9 +25,29 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
    *
    */
   notificationCostFlag:boolean=false
-  constructor(private _ReportService:ReportService) {
-    
+  constructor(private _ReportService:ReportService, private _DashboardService:DashboardService, private _StoresService:StoresService) {
+
   }
+
+  // Stat cards - null means "not loaded (yet)" and shows a dash.
+  todaySales: number | null = null;
+  todayPurchases: number | null = null;
+  productsInStock: number | null = null;
+
+  /** shown in the monthly chart title */
+  readonly currentYear = new Date().getFullYear();
+
+  // Monthly bar chart: filled from the API, the chart itself is created after the view exists, so whichever comes last applies it.
+  private monthlyTotals: MonthlyTotal[] | null = null;
+
+  // Stock report (IvItmBal). Multi-store users get a store dropdown; single-store users are fixed to their own store.
+  stockStoreChoosable = false;
+  stockStores: { strCd: string, strNm: string }[] = [];
+  /** null = all stores */
+  stockStoreCode: string | null = null;
+  stockTotalIn: number | null = null;
+  stockTotalOut: number | null = null;
+  private stockData: StockInOut | null = null;
   
   @ViewChild('barChartCanvas') barChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('pieChartCanvas') pieChartCanvas!: ElementRef<HTMLCanvasElement>;
@@ -41,7 +64,80 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.notificationCostFlag=res.isSuccess
       }
     })
-    // Component initialization
+    this.loadStatCards();
+  }
+
+  /** Scope (all stores vs. the user's single store) comes from the login token, see DashboardService.resolveScope */
+  private loadStatCards(): void {
+    const scope = this._DashboardService.resolveScope();
+    if (!scope.ok) {
+      console.warn('Dashboard cards skipped: the token has no usable store settings.');
+      return;
+    }
+
+    this._DashboardService.getMonthlySalesPurchases(scope.storeCode).subscribe({
+      next: (res) => {
+        this.monthlyTotals = res.data;
+        this.applyMonthlyToChart();
+      },
+      error: (err) => console.error('Could not load the monthly sales/purchases chart:', err)
+    });
+
+    this.stockStoreChoosable = scope.storeCode === null;
+    this.stockStoreCode = scope.storeCode;
+    if (this.stockStoreChoosable) {
+      this._StoresService.GetStoresLookupList().subscribe({
+        next: (res) => this.stockStores = res.data,
+        error: (err) => console.error('Could not load the stores list:', err)
+      });
+    }
+    this.loadStock();
+
+    this._DashboardService.getHomeStats(scope.storeCode).subscribe({
+      next: (res) => {
+        this.todaySales = res.data.todaySales;
+        this.todayPurchases = res.data.todayPurchases;
+        this.productsInStock = res.data.productsInStock;
+      },
+      error: (err) => console.error('Could not load the dashboard cards:', err)
+    });
+  }
+
+  /** fetches the stock in/out numbers for the selected store (all stores when none is selected) */
+  private loadStock(): void {
+    this._DashboardService.getStockInOut(this.stockStoreCode).subscribe({
+      next: (res) => {
+        this.stockData = res.data;
+        this.stockTotalIn = res.data.totalIn;
+        this.stockTotalOut = res.data.totalOut;
+        this.applyStockToCharts();
+      },
+      error: (err) => console.error('Could not load the stock report:', err)
+    });
+  }
+
+  /** the store dropdown of the stock report ('' = all stores) */
+  onStockStoreChange(value: string): void {
+    this.stockStoreCode = value ? value : null;
+    this.loadStock();
+  }
+
+  private applyStockToCharts(): void {
+    if (!this.stockData) return;
+    const label = (i: { itmNm: string | null, itmCd: string }) => i.itmNm?.trim() || i.itmCd;
+
+    const inChart = this.charts['stockInChart'];
+    if (inChart) {
+      inChart.data.labels = this.stockData.topIn.map(label);
+      inChart.data.datasets[0].data = this.stockData.topIn.map(i => i.qty);
+      inChart.update();
+    }
+    const outChart = this.charts['stockOutChart'];
+    if (outChart) {
+      outChart.data.labels = this.stockData.topOut.map(label);
+      outChart.data.datasets[0].data = this.stockData.topOut.map(i => i.qty);
+      outChart.update();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -72,11 +168,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const config: ChartConfiguration<'bar'> = {
       type: 'bar',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: [] as string[],
         datasets: [
           {
-            label: 'Sales',
-            data: [65, 59, 80, 81, 56, 55, 40, 45, 60, 70, 85, 90],
+            label: 'المبيعات',
+            data: [] as number[],
             backgroundColor: 'rgba(78, 115, 223, 0.8)',
             borderColor: 'rgba(78, 115, 223, 1)',
             borderWidth: 2,
@@ -84,8 +180,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             borderSkipped: false,
           },
           {
-            label: 'Revenue',
-            data: [28, 48, 40, 19, 86, 27, 90, 65, 45, 55, 70, 80],
+            label: 'المشتريات',
+            data: [] as number[],
             backgroundColor: 'rgba(28, 200, 138, 0.8)',
             borderColor: 'rgba(28, 200, 138, 1)',
             borderWidth: 2,
@@ -144,6 +240,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     this.charts['barChart'] = new Chart(ctx, config);
+    this.applyMonthlyToChart();
   }
 
   private createPieChart(): void {
@@ -327,10 +424,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const stockInConfig: ChartConfiguration<'bar'> = {
         type: 'bar',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          labels: [] as string[],
           datasets: [{
-            label: 'Stock In',
-            data: [100, 150, 200, 250, 180, 120],
+            label: 'الوارد',
+            data: [] as number[],
             backgroundColor: 'rgba(78, 115, 223, 0.8)',
             borderColor: 'rgba(78, 115, 223, 1)',
             borderWidth: 1,
@@ -371,6 +468,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       };
       this.charts['stockInChart'] = new Chart(stockInCtx, stockInConfig);
+      this.applyStockToCharts();
     }
 
     // Stock Out Chart
@@ -379,10 +477,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const stockOutConfig: ChartConfiguration<'bar'> = {
         type: 'bar',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          labels: [] as string[],
           datasets: [{
-            label: 'Stock Out',
-            data: [80, 120, 90, 60, 150, 100],
+            label: 'الصادر',
+            data: [] as number[],
             backgroundColor: 'rgba(231, 74, 59, 0.8)',
             borderColor: 'rgba(231, 74, 59, 1)',
             borderWidth: 1,
@@ -423,45 +521,28 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       };
       this.charts['stockOutChart'] = new Chart(stockOutCtx, stockOutConfig);
+      this.applyStockToCharts();
     }
   }
 
   // Update methods for interactive features
-  updateBarChart(period: string): void {
+  /** pushes the loaded 12 months into the bar chart (no-op until both the chart and the data exist) */
+  private applyMonthlyToChart(): void {
     const chart = this.charts['barChart'];
-    if (!chart) return;
+    if (!chart || !this.monthlyTotals) return;
 
-    let newData: number[][] = [];
-    let newLabels: string[] = [];
-
-    switch (period) {
-      case 'monthly':
-        newLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        newData = [
-          [65, 59, 80, 81, 56, 55, 40, 45, 60, 70, 85, 90],
-          [28, 48, 40, 19, 86, 27, 90, 65, 45, 55, 70, 80]
-        ];
-        break;
-      case 'quarterly':
-        newLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
-        newData = [
-          [204, 192, 150, 245],
-          [116, 132, 200, 205]
-        ];
-        break;
-      case 'yearly':
-        newLabels = ['2020', '2021', '2022', '2023', '2024'];
-        newData = [
-          [850, 920, 1100, 1250, 1400],
-          [720, 850, 980, 1150, 1300]
-        ];
-        break;
-    }
-
-    chart.data.labels = newLabels;
-    chart.data.datasets[0].data = newData[0];
-    chart.data.datasets[1].data = newData[1];
+    chart.data.labels = this.monthlyTotals.map(m =>
+      new Date(m.year, m.month - 1, 1).toLocaleDateString('ar-EG', { month: 'long' }));
+    chart.data.datasets[0].data = this.monthlyTotals.map(m => m.sales);
+    chart.data.datasets[1].data = this.monthlyTotals.map(m => m.purchases);
     chart.update();
+  }
+
+  /** only 'monthly' is backed by real data for now (the quarterly / yearly buttons are disabled) */
+  updateBarChart(period: string): void {
+    if (period === 'monthly') {
+      this.applyMonthlyToChart();
+    }
   }
 
   updateLineChart(period: string): void {

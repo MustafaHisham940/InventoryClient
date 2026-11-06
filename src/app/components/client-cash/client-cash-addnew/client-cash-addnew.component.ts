@@ -11,11 +11,20 @@ import { TokenService } from '../../../core/services/token.service';
 import { DialogOverviewExampleDialog } from '../../dynamic-transactions/dynamic-transactions.component';
 import { CanComponentDeactivate } from '../../../core/guards/unsaved-changes-guard.guard';
 import { CLIENT_CASH_STR_CD, CLIENT_CASH_TRSTY } from '../client-cash.constants';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../../core/date-adapters/dd-mm-yyyy-date-adapter';
+import { dateToIso } from '../../../core/utils/date-iso';
 
 @Component({
   selector: 'app-client-cash-addnew',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatMenuModule, MatButtonModule, forwardRef(() => DialogOverviewExampleDialog)],
+  imports: [FormsModule, ReactiveFormsModule, MatIconModule, MatMenuModule, MatButtonModule, forwardRef(() => DialogOverviewExampleDialog), MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './client-cash-addnew.component.html',
   styleUrl: './client-cash-addnew.component.css'
 })
@@ -51,7 +60,7 @@ export class ClientCashAddnewComponent implements OnInit, CanComponentDeactivate
   private fb = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     trsNo: [null, [Validators.required]],
-    trsDt: [null, [Validators.required]],
+    trsDt: [new Date(), [Validators.required]], // defaults to today
     cstId: [null, [Validators.required, Validators.min(1)]],
     val: [null, [Validators.required]],
     rem: [null]
@@ -98,7 +107,7 @@ export class ClientCashAddnewComponent implements OnInit, CanComponentDeactivate
       strCd: CLIENT_CASH_STR_CD,
       trsTy: CLIENT_CASH_TRSTY,
       trsNo: this.form.get('trsNo')?.value,
-      trsDt: this.form.get('trsDt')?.value,
+      trsDt: this.form.get('trsDt')?.value ? dateToIso(this.form.get('trsDt')?.value) : null,
       cstId: this.form.get('cstId')?.value,
       val: this.form.get('val')?.value,
       rem: this.form.get('rem')?.value,

@@ -1,7 +1,7 @@
 <body dir="rtl">
     <div class="conatinerPrompt container-fluid d-flex flex-column">
 
-        <div class="prompt-container">
+        <div class="prompt-container ">
             <div class="prompt-header">
                 <span>اضافة سند مصروفات ({{storeData?.StoreName}})</span>
             </div>
@@ -15,28 +15,16 @@
                         </div>
                         <div class="col-md-3">
                             <label for="trsDt">تاريخ الفاتورة</label>
-                            <input type="date" id="trsDt" class="form-control" formControlName="trsDt">
+                            <div class="date-input-wrapper">
+                                <input id="trsDt" class="form-control" placeholder="dd/mm/yyyy"
+                                    [matDatepicker]="trsDtPicker" formControlName="trsDt">
+                                <mat-datepicker-toggle [for]="trsDtPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #trsDtPicker></mat-datepicker>
+                            </div>
                         </div>
                     </div>
 
                     <div class="custom-divider"></div>
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="cstId">كود العميل</label>
-                            <input type="number" id="cstId" class="form-control" [value]="selectedCustomerId()"
-                                placeholder="اختر العميل" disabled>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="cstName">اسم العميل</label>
-                            <input type="text" id="cstName" class="form-control" [value]="selectedCustomerName()"
-                                placeholder="اختر العميل" disabled>
-                        </div>
-                        <div class="col-md-3 d-flex align-items-end">
-                            <button type="button" class="btn btn-primary w-100" (click)="openCustomerDialog()">اختر
-                                العميل</button>
-                        </div>
-                    </div>
 
                     <div class="row mt-3">
                         <div class="col-md-3">

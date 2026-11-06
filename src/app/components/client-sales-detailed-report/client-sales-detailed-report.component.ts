@@ -5,11 +5,20 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
 import { TokenService } from '../../core/services/token.service';
 import { ClientSalesDetailedReportRequest } from '../../core/interfaces/client-sales-detailed-report';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
+import { CustomerPickerComponent } from '../customer-picker/customer-picker.component';
 
 @Component({
   selector: 'app-client-sales-detailed-report',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CustomerPickerComponent, MatDatepickerModule],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
+  ],
   templateUrl: './client-sales-detailed-report.component.html',
   styleUrl: './client-sales-detailed-report.component.css'
 })
@@ -20,8 +29,40 @@ export class ClientSalesDetailedReportComponent {
   private sanitizer = inject(DomSanitizer);
 
   cstmrCode: number | null = null;
+  cstmrCodeText: string = '';
+  cstmrName: string = '';
+  cstmrCodeTouched: boolean = false;
   startDate: string = '';
   endDate: string = '';
+
+  onCustomerPicked(selection: { customerCode: string, customerName: string }): void {
+    this.cstmrCodeText = selection.customerCode;
+    this.cstmrName = selection.customerName;
+    this.cstmrCode = /^\d+$/.test(selection.customerCode) ? Number(selection.customerCode) : null;
+    this.cstmrCodeTouched = true;
+  }
+
+  /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter for why this is needed
+   * instead of native <input type="date"> (its display format ignores `lang`
+   * and just follows OS/browser locale). Picker works with Date objects; the
+   * model fields stay the same ISO yyyy-mm-dd strings the report API expects. */
+  startDateObj: Date | null = null;
+  endDateObj: Date | null = null;
+
+  private dateToIso(date: Date): string {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  onStartDateObjChange(date: Date | null): void {
+    this.startDate = date ? this.dateToIso(date) : '';
+  }
+
+  onEndDateObjChange(date: Date | null): void {
+    this.endDate = date ? this.dateToIso(date) : '';
+  }
 
   singleStoreCode: string | undefined;
   singleStoreName: string | undefined;

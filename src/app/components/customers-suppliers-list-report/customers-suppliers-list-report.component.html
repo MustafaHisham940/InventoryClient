@@ -42,6 +42,26 @@
               <small class="field-warning" *ngIf="hasEndCstmrError() && (endCstmrModel.touched || endCstmrModel.dirty)">يجب ادخال هذا العنصر</small>
             </div>
 
+            <div class="search-box flex-fill select-filter">
+              <label for="customerType">النوع</label>
+              <div class="select-wrapper">
+                <i class="fas fa-users"></i>
+                <select
+                  id="customerType"
+                  class="custom-select"
+                  name="customerType"
+                  [(ngModel)]="customerType"
+                  #customerTypeModel="ngModel"
+                  [class.invalid-field]="hasCustomerTypeError() && (customerTypeModel.touched || customerTypeModel.dirty)">
+                  <option [ngValue]="null" disabled>اختر النوع</option>
+                  <option [ngValue]="1">مورد</option>
+                  <option [ngValue]="2">عميل</option>
+                  <option [ngValue]="3">كلاهما</option>
+                </select>
+              </div>
+              <small class="field-warning" *ngIf="hasCustomerTypeError() && (customerTypeModel.touched || customerTypeModel.dirty)">يجب ادخال هذا العنصر</small>
+            </div>
+
             <button
               class="btn btn-success px-4"
               style="white-space: nowrap;"
