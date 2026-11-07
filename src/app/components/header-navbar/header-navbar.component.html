@@ -20,27 +20,45 @@
 
 
                               
-                              <mat-menu #menu="matMenu" class="">
-                                <div class="box">
-                                    <div class="card">
-                                        <div class="profile-header">
-                                            <span class="profile-initial mr-2">{{currdisplayname[0]}}</span>
-                                            <div class="discription ms-2">
-                                                <div class="profile-title"></div>
-                                                <!-- pop up menu-->
-                                                <a class="profile-email" (click)="showUserData(currdisplayname)">{{currdisplayname}}</a>
-                                                <div class="profile-status"></div>
-                                            </div>
-                                            <a class="settings-icon" (click)="UpdateUserData(currdisplayname)">&#9881;</a>
+                              <mat-menu #menu="matMenu" class="um-panel">
+                                <div class="um" dir="rtl">
+
+                                    <div class="um-head">
+                                        <span class="um-avatar">{{ currdisplayname?.[0] }}</span>
+                                        <div class="um-id">
+                                            <div class="um-name">{{ currdisplayname }}</div>
+                                            @if (currEmail) {
+                                                <div class="um-email" dir="ltr">{{ currEmail }}</div>
+                                            }
                                         </div>
-                                        <div class="profile-message">
-                                            We can't sync to your account since we need to confirm that it's you. Please sign in again to verify your account.
-                                        </div>
-                                        <button class="sign-in-btn" (click)="logout()">Log out</button>
-                                        <button class="sign-in-btn" (click)="gotoResetPAssword()">Reset password</button>
-                                         
-                                         
                                     </div>
+
+                                    <div class="um-chips">
+                                        @if (mainRole) {
+                                            <span class="um-chip um-chip-role"><i class="fas fa-user-shield"></i> {{ mainRole }}</span>
+                                        }
+                                        <span class="um-chip um-chip-store" [class.um-chip-all]="canPickStore">
+                                            <i class="fas fa-warehouse"></i>
+                                            {{ canPickStore ? 'جميع المخازن' : (storeName || 'لا يوجد مخزن محدد') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="um-list">
+                                        <button type="button" class="um-item" (click)="showUserData(currdisplayname)">
+                                            <i class="fas fa-id-card"></i> بياناتي
+                                        </button>
+                                        <button type="button" class="um-item" (click)="UpdateUserData(currdisplayname)">
+                                            <i class="fas fa-user-pen"></i> تعديل بياناتي
+                                        </button>
+                                        <button type="button" class="um-item" (click)="gotoResetPAssword()">
+                                            <i class="fas fa-key"></i> تغيير كلمة المرور
+                                        </button>
+                                    </div>
+
+                                    <button type="button" class="um-logout" (click)="logout()">
+                                        <i class="fas fa-right-from-bracket"></i> تسجيل الخروج
+                                    </button>
+
                                 </div>
                               </mat-menu>
                               
@@ -51,6 +69,13 @@
                         <a class="dropdown-item" >Profile</a>
                         <a class="dropdown-item"  >Logout</a>
                     </div>
+                </div>
+                <div class="tb-info" dir="rtl">
+                    @if (mainRole) {
+                        <span title="الدور">{{ mainRole }}</span>
+                        <span class="tb-sep">|</span>
+                    }
+                    <span title="المخزن المصرّح به">{{ canPickStore ? 'جميع المخازن' : (storeName || 'لا يوجد مخزن محدد') }}</span>
                 </div>
                 <div class="notification mr-3 ps-5">
                     <i class="fa fa-bell"></i>

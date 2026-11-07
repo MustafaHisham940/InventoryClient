@@ -1,463 +1,262 @@
- 
- <h1>app-dynamic-transactions</h1>
-<body dir="rtl">
-    <div class="conatinerPrompt container-fluid d-flex flex-column ">  
-        
-        @if(DynamicPrompts.NormalFlag == 1){
-           
-            <div class="prompt-container">
-                <div class="prompt-header">
-                    <span>  {{this.TrnsData.data[curr_TrsTy].Trns_name}} ({{curr_StoreName}})</span>
-                    
-                    <div class="actionButtons">
-                    <button class="btn add-btn fs-4"  title="اضافة هيدر" (click)="AddNewHeaderSeperate()">+</button>
-                    <button class="btn edit-btn fs-4" title="تعديل هيدر" (click)="editeHeader()">✎</button>
-                    <button class="btn delete-btn fs-4" title="حذف هيدر" (click)="clickDelete()">× </button>
-                    </div>
-                </div>                        
-                <div class="prompt-body">
-              
-                    <div class="row">
-                       <div class="col-md-6">
-                        <div class="select-filter" style="width: 220px">
-                            <div class="select-wrapper">
-                              <small class="fs-5"> رقم المستند</small>
-                              <select class="custom-select" id="typeSelect"  [(ngModel)]="curr_TrstNo" (change)="setisActiveCurr_TrstNo()"  >
-                                @for(item of StaicTrstNoArr; track $index) {
-                                    <option [ngValue]="item" >{{item}}</option>
-                                  }
-                              </select>
-                            </div>
-                        </div>
-                       </div>
-                       <div class="col-md-6">
-                        <!--<button class="btn btn-primary mt-4" (click)="FindHeader()"> بحث</button>-->
-                       </div>
-                    </div>
-    
-                    <div class="custom-divider"></div>
-              
-                <div class="row">
-                
-                        @if(curr_TrsTy==11  ||curr_TrsTy==2 ){
-                            <div class="col-md-2">
-                            <label for="clientId">كود العميل </label>
-                            <input type="text" value="{{SecHeaders.data[0].cstId}}" id="clientId" name="clientId" class="form-control" disabled>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="clientId">اسم العميل </label>
-                                <input type="text" value="{{SecHeaders.data[0].customerName}}" id="clientId" name="clientId" class="form-control" disabled>
-                                </div>
-                        }   
-                        @if(curr_TrsTy==1  ||curr_TrsTy==12 ){
-                            <div class="col-md-1">
-                            <label for="clientIdd">كود المورد </label>
-                            <input type="text" value="{{SecHeaders.data[0].cstId}}"  id="clientIdd" name="clientIdd" class="form-control" disabled>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="clientId">اسم المورد </label>
-                                <input type="text" value="{{SecHeaders.data[0].customerName}}" id="clientId" name="clientId" class="form-control" disabled>
-                                </div>
-                        }   
-                        @if(curr_TrsTy==1  ||curr_TrsTy==2 ||curr_TrsTy==11||curr_TrsTy==12 ){
-                         <!--  <div class="col-md-1">
-                            <label for="dTy">طريقةالسداد </label>
-                            <input type="text" value="{{SecHeaders.data[0].dTy}}" id="dTy" name="dTy" class="form-control" disabled>
-                            </div>--> 
-                        }   
-                        @if(curr_TrsTy==4 ){
-                            <div class="col-md-3">
-                            <label for="StrCd">كود المخزن المحول منه  </label>
-                            <input type="text" value="{{SecHeaders.data[0].strCd}}" id="StrCd" name="StrCd" class="form-control" disabled>
-                            </div>
-                        }  
-                        @if(curr_TrsTy==14 ){
-                            <div class="col-md-3">
-                            <label for="clientId">كود المخزن المحول اليه  </label>
-                            <input type="text" value="{{SecHeaders.data[0].strCd}}" id="clientId" name="clientId" class="form-control" disabled>
-                            </div>
-                        }  
-                        @if(curr_TrsTy==11 ){
-                            <div class="col-md-3">
-                            <label for="SPrc">السعرالمطلوب  </label>
+<div class="tx-page" dir="rtl">
 
-                            @if(SecHeaders.data[0].sPrc==1){
-                            <input type="text" value="سعر المستهلاك" id="SPrc" name="SPrc" class="form-control" disabled>
+  <!-- ========================= view a document ========================= -->
+  @if (DynamicPrompts.NormalFlag == 1) {
 
-                            }
-                            @if(SecHeaders.data[0].sPrc==2){
-                                <input type="text" value="سعر الجملة" id="SPrc" name="SPrc" class="form-control" disabled>
-    
-                                }
-                            </div>
-                        } 
-                    
-                        <div class="col-md-3">
-                            <label for="TrsDt">تاريخ السند </label>
-                            <input type="text" value="{{SecHeaders.data[0].trsDt }}" id="TrsDt" name="TrsDt" class="form-control" disabled>
-                            </div>
-                       
-                            @if(curr_TrsTy==1  ||curr_TrsTy==2 ||curr_TrsTy==11||curr_TrsTy==12 ){
-                                <div class="col-md-3">
-                                <label for="dTy">طريقة   السداد </label> 
-                                <div class="spanContainer">
-                                    <div class="col-md-3">
-                                        @if(SecHeaders.data[0].dTy == 1){
-                                            <span class="badge bg-dark-subtle"  style="color: black; font-size: large;" >نقدي</span>
-                                        }
-                                         @if(SecHeaders.data[0].dTy == 2){
-                                         <span class="badge bg-primary-subtle"  style="color: black; font-size: large;" >اجل</span>  
-                                           }
-                                    </div>
-                                </div>                                                     
-                                </div>
-                              
-                            }   
-
-                            
-                              <div class="col-md-3">
-                                <label for="HdrValue">قيمة الفاتورة بالجنية  </label>
-                                <input type="text" value="{{hdrValue()?.totalVal}}" id="HdrValue" name="HdrValue" class="form-control" disabled>
-                                </div>
-                            
-                            
-                    
-                </div>
-    
-              
-                
-                <!--<button matButton="elevated" class="btn btn-primary" (click)="openDialog()">اختر العميل</button>
-                <li>
-                 كود العميل: <em>{{S_parentParent_selectedCustomer()}}</em>
-               </li>   -->                    
-            </div>
-            </div>
-
-
-            
-                <div class="prompt-container mt-5">
-
-                    <div class="prompt-body ">
-                    @if (curr_TrstNo > 0 && Headers.data.length > 0) {
-                            <app-trns-table
-                            [curr_TrsTy]="curr_TrsTy"
-                            [curr_Store_id]="curr_Store"
-                            [isActiveCurr_TrstNo]="curr_TrstNo"
-                            [isActiveCurr_CstID]="SecHeaders.data[0].cstId"
-                            [curr_Store_Name]="curr_StoreName"
-                            [curr_TrsDt]="SecHeaders.data[0].trsDt"
-                            [curr_dty]="SecHeaders.data[0].dTy"
-                            ></app-trns-table>
-                    }
-                    </div>
-
-                </div>  
-        }
-    
-       
-        @if(DynamicPrompts.AddFlag==1){
-            <div class="prompt-container">
-                <div class="prompt-header">
-                    <span>  {{this.TrnsData.data[curr_TrsTy].Trns_name}} ({{curr_StoreName}})</span>
-                    <div class="actionButtons">
-                        <button class="btn reload-btn fs-4" title="Reload" (click)="backToNormal()">↻</button>
-                    </div>
-                </div>                        
-                <div class="prompt-body">
-              
-                    <form [formGroup]="AddnewHeaderForm" >
-                    <div class="row">
-                       <div class="col-md-6">
-                        <div class="select-filter">
-                            <div class="select-wrapper">
-                              <small class="fs-5"> رقم المستند</small>
-                              <input type="number"  id="trsNo" name="trsNo" class="form-control"  formControlName="trsNo" >
-                            </div>
-                        </div>
-                       </div>
-                       
-                    </div>
-    
-                    <div class="custom-divider"></div>
-              
-                    <div class="row">
-                        @if(curr_TrsTy==11  ||curr_TrsTy==2 ){
-                            <div class="col-md-3">
-                            <label for="clientId">كود العميل </label>
-                            <input type="number" [value]="S_parentParent_selectedCustomer()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled >
-                            </div>
-                            <div class="col-md-6">
-                                <label for="clientId">العميل / المورد</label>
-                                <input type="text" [value]="S_parentParent_selectedCustomerName()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled>
-                                </div>
-                           <div class="col-md-3">
-                            <button type="button"   class="btn btn-primary" (click)="openDialog()">اختر الكود</button>
-                            <li>    
-                             كود العميل/المورد: <em>{{S_parentParent_selectedCustomer()}}</em>
-                           </li>   
-                           </div>
-                        }   
-                        @if(curr_TrsTy==1  ||curr_TrsTy==12 ){
-                            <div class="col-md-3">
-                                <label for="clientId">كود العميل </label>
-                                <input type="text" [value]="S_parentParent_selectedCustomer()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="clientId">العميل / المورد</label>
-                                    <input type="text" [value]="S_parentParent_selectedCustomerName()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled>
-                                    <h1>{{Curr_CustomerName}}</h1>
-                                    </div>
-                               <div class="col-md-3">
-                                <button type="button"   class="btn btn-primary" (click)="openDialog()">اختر الكود</button>
-                               <!-- <li>    
-                                 كود العميل/المورد: <em>{{S_parentParent_selectedCustomer()}}</em>
-                               </li>   -->
-                               </div>
-                        }   
-                    </div>
-
-
-                    <div class="row">
-                    
-                        
-                            @if(curr_TrsTy==1  ||curr_TrsTy==2 ||curr_TrsTy==11||curr_TrsTy==12 ){
-                                <div class="col-md-3">
-                                <label for="dTy">طريقةالسداد </label>
-                                <select name="dTy" id="dTy" class="form-control form-select " formControlName="dTy">                                
-                                    <option value="1">نقدي</option>
-                                    <option value="2">اجل</option>
-                                </select>                        
-                                </div>
-                            }   
-                            @if(curr_TrsTy==4 ){
-                                <div class="col-md-3">
-                                <label for="StrCd">كود المخزن المحول منه  </label>
-                                <input type="text" value="" id="StrCd" name="StrCd" class="form-control "  placeholder="اضف كود المخزن" formControlName="strCd">
-                                </div>
-                            }  
-                            @if(curr_TrsTy==14 ){
-                                <div class="col-md-3">
-                                <label for="StoreID">كود المخزن المحول اليه  </label>
-                                <input type="text" value="" id="StoreID" name="StoreID" class="form-control"  placeholder="اضف كود المخزن" formControlName="strCd">
-                                </div>
-                            }  
-                            @if(curr_TrsTy==11 ){
-                                <div class="col-md-3  ">
-                                    <label for="sPrc">السعر المطلوب </label>
-                                    <select name="sPrc" id="sPrc" class="form-control " formControlName="sPrc">
-                                        <option value="1">مستهلك</option>
-                                        <option value="2">جملة</option>
-                                    </select>                        
-                                    </div>
-                                 
-                               
-                            } 
-                        
-                            <div class="col-md-3">
-                                <label for="TrsDt">تاريخ السند </label>
-                                <input type="datetime-local" value="" id="TrsDt" name="TrsDt" class="form-control" formControlName="trsDt" >
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="submit" class="btn btn-primary mt-4" (click)="onSubmit()"> اضافة</button>
-                                   </div>
-        
-                        
-                    </div>
-                </form>                                                      
-                 </div>
-            </div>
-
-
-
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-        <div class="prompt-container mt-5">
-
-            <div class="prompt-body ">
-               
-                   
-                 
-                <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
-                  
-                    <div class="d-flex justify-content-center align-items-center mb-3">
-                        <div class="customer-filters">
-                            <!-- Search Row with Label -->
-                            <div class="row g-3 mb-4 align-items-center">  <!-- Added align-items-center -->
-                            <div class="col-auto">  <!-- Changed to col-auto for label -->
-                                <h3 class="section-label m-0">بحث متقدم</h3>  <!-- Removed mb-3 -->
-                            </div>
-                            
-                            
-                            <div class="col">  <!-- Main content column -->
-                                <div class="d-flex gap-3 w-100">
-                                <div class="search-box flex-fill">
-                                     
-                                    <input  class="form-control" type="number" placeholder="البحث برقم السطر ..." >
-                                </div>
-                                <div class="search-box flex-fill">
-                                    
-                                    <input  class="form-control" type="text" placeholder="كود الصنف..." >
-                                </div>
-                                <div class="search-box flex-fill">
-                                    
-                                    
-                                    <input class="form-control"  type="number" placeholder="البحث بكود العميل/مورد..." >
-                                </div>
-                                <button class="btn btn-success px-4" style="white-space: nowrap;" (click)="fakeSearch()">
-                                    <i class="fas fa-search me-2"></i>بحث
-                                </button>
-                                </div>
-                            </div>
-                            </div>
-                    
-                            <!-- Filters Row with Label -->
-                            <div class="row g-3 align-items-center">  <!-- Added align-items-center -->
-                            <div class="col-auto">  <!-- Changed to col-auto for label -->
-                                <h3 class="section-label m-0">تصفية النتائج</h3>  <!-- Removed mb-3 -->
-                            </div>
-                            <div class="col">  <!-- Main content column -->
-                                <div class="d-flex justify-content-start gap-3 flex-wrap">  <!-- Changed to justify-content-start -->
-                                <div class="select-filter"  >
-                                    <div class="search-box flex-fill">
-                                         
-                                        <input type="number" placeholder="البحث  بكود السند..."  class="form-control">
-                                    </div>
-                                </div>
-                           
-                                <div class="select-filter" style="width: 220px">
-                                    <div class="select-wrapper">
-                                     
-                                    <select class="custom-select" id="sortSelect">
-                                        <option value="" selected disabled>الترتيب</option>
-                                        <option value="name_desc">تصاعديًا</option>
-                                        <option value="name_asc">تنازليًا</option>
-                                    </select>
-                                    </div>
-                                </div>
-                                
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-            </div>                      
-           
-
- <!--Fakeeeee Add New Item Form -->
- 
-    <div class="StaticAddBar row add-form-row p-2 border rounded mb-3">
-      <div class="col-md-1 mb-2">
-        <input type="number" class="form-control" placeholder="اضف رقم السطر الجديد" disabled>
-      </div>
-      <div class="col-md-2 mb-2">
-        <input type="input" class="form-control" placeholder="المخزن" disabled >
-      </div>
-      <div class="col-md-2 mb-2">
-        <div class="input-group" dir="ltr">
-          <input  type="text" class="form-control" placeholder="اختر الصنف" disabled>
-          <button class="btn btn-outline-secondary" type="button"   disabled>
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-      <div class="col-md-1 mb-2">
-        <input type="number" class="form-control" placeholder="ادخل الكمية"  disabled>
-      </div>
-      <div class="col-md-2 mb-2">
-        <input type="number" class="form-control" placeholder="ادخل السعر"  disabled>
-      </div>
-      <div class="col-md-2 mb-2">
-        <input type="datetime-local" class="form-control" placeholder="اختر تاريخ الاضافة"   disabled>
-      </div>
-      <div class="col-md-2 mb-2">
-        <button type="submit" class="btn btn-sm btn-outline-primary w-100"  (click)="fakeAddNewDetails()">
-          <i class="fas fa-plus"></i> إضافة
-        </button>
-      </div>
-    </div>
- 
-            <!-- Fakeeee Header Row -->
-<div class="row table-header bg-light   mb-2 d-none d-md-flex">
-    <div class="col-md-1 fw-bold">رقم السطر</div>
-    <div class="col-md-2 fw-bold">المخزن</div>
-    <div class="col-md-2 fw-bold">الصنف</div>
-    <div class="col-md-1 fw-bold">الكمية</div>
-    <div class="col-md-2 fw-bold">السعر</div>
-    <div class="col-md-2 fw-bold">القيمة</div>
-    <div class="col-md-2 fw-bold">الإجراءات</div>
-  </div>
-  
- 
-  
-  <!-- Data Rows -->
- 
-  
-  <!-- Pagination -->
-  <div class="d-flex justify-content-between align-items-center mt-3">
-    <span class="text-muted small">عرض البيانات من 0 إلى 10 من أصل  مدخل</span>
-    <nav>
-      <ul class="pagination pagination-sm mb-0">
-        <li class="page-item"><a class="page-link" >&lt;</a></li>
-                                   
-        <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-      </ul>
-    </nav>
-  </div>
-
-            </div>
-
-        </div>
-            
-        }        
-       
-    
-    
-    
-    </div>
-
-        @if(isHeaderDeleted !=-1){
-
-
-    <div class="position-fixed top-0 start-0 w-100 h-100 backdrop-blur"></div>
-      
-        <div class="modal-backdrop fade show" style="z-index: 1040;"></div>
-        <div class="modal position-fixed d-block" tabindex="-1" style="z-index: 1050;">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-              <!-- Modal Header -->
-              <div class="modal-header bg-primary text-white border-0 rounded-top-3">
-                <div class="modal-title w-100 text-center">
-                  <i class="bi bi-exclamation-triangle-fill fs-1 d-block mb-2"></i>
-                  <h2 class="mb-0 fw-bold">تأكيد الهيدر</h2>
-                </div>
-              </div>
-              
-              <!-- Modal Body -->
-              <div class="modal-body text-center py-4">
-                <p class="lead text-muted mb-4">
-                  سوف يتم حذف الهيدر وجميع السدطور المتعلقة بالهيدر
-                </p>
-                <div class="d-flex justify-content-center gap-3">
-                  <button type="button" class="btn btn-lg btn-outline-secondary px-4 flex-grow-1" (click)="dontDelete()">
-                    <i class="bi bi-x-circle me-2"></i> إلغاء
-                  </button>
-                  <button type="button" class="btn btn-lg btn-dark px-4 flex-grow-1" (click)="deleteHeader()">
-                    <i class="bi bi-trash3 me-2"></i> حذف
-                  </button>
-                </div>
-              </div>
-            </div>
+    <section class="tx-card">
+      <header class="tx-card-header">
+        <div class="tx-title">
+          <span class="tx-title-icon"><i class="fa-solid fa-file-invoice"></i></span>
+          <div>
+            <h2>{{ this.TrnsData.data[curr_TrsTy].Trns_name }}</h2>
+            <span class="tx-store"><i class="fa-solid fa-warehouse"></i>{{ curr_StoreName }}</span>
           </div>
         </div>
-        
-        
+
+        <div class="tx-actions">
+          <button type="button" class="tx-btn tx-btn-light" title="اضافة هيدر" (click)="AddNewHeaderSeperate()">
+            <i class="fa-solid fa-plus"></i>إضافة
+          </button>
+          <button type="button" class="tx-btn tx-btn-light" title="تعديل هيدر" (click)="editeHeader()">
+            <i class="fa-solid fa-pen"></i>تعديل
+          </button>
+          <button type="button" class="tx-btn tx-btn-danger" title="حذف هيدر" (click)="clickDelete()">
+            <i class="fa-solid fa-trash"></i>حذف
+          </button>
+        </div>
+      </header>
+
+      <div class="tx-card-body">
+
+        <!-- document picker -->
+        <div class="tx-docbar">
+          <label for="typeSelect">رقم المستند</label>
+          <select class="tx-select" id="typeSelect" [(ngModel)]="curr_TrstNo" (change)="setisActiveCurr_TrstNo()">
+            @for (item of StaicTrstNoArr; track $index) {
+              <option [ngValue]="item">{{ item }}</option>
+            }
+          </select>
+          <span class="tx-muted">{{ StaicTrstNoArr.length }} مستند</span>
+        </div>
+
+        <!-- header data -->
+        <div class="tx-grid">
+
+          @if (curr_TrsTy == 11 || curr_TrsTy == 2) {
+            <div class="tx-field">
+              <span class="tx-label">كود العميل</span>
+              <span class="tx-value">{{ SecHeaders.data[0]?.cstId }}</span>
+            </div>
+            <div class="tx-field tx-field-wide">
+              <span class="tx-label">اسم العميل</span>
+              <span class="tx-value">{{ SecHeaders.data[0]?.customerName }}</span>
+            </div>
           }
-    
-       
-   </body>
+
+          @if (curr_TrsTy == 1 || curr_TrsTy == 12) {
+            <div class="tx-field">
+              <span class="tx-label">كود المورد</span>
+              <span class="tx-value">{{ SecHeaders.data[0]?.cstId }}</span>
+            </div>
+            <div class="tx-field tx-field-wide">
+              <span class="tx-label">اسم المورد</span>
+              <span class="tx-value">{{ SecHeaders.data[0]?.customerName }}</span>
+            </div>
+          }
+
+          @if (curr_TrsTy == 4) {
+            <div class="tx-field">
+              <span class="tx-label">كود المخزن المحول منه</span>
+              <span class="tx-value">{{ SecHeaders.data[0]?.strCd }}</span>
+            </div>
+          }
+
+          @if (curr_TrsTy == 14) {
+            <div class="tx-field">
+              <span class="tx-label">كود المخزن المحول اليه</span>
+              <span class="tx-value">{{ SecHeaders.data[0]?.strCd }}</span>
+            </div>
+          }
+
+          @if (curr_TrsTy == 11) {
+            <div class="tx-field">
+              <span class="tx-label">السعر المطلوب</span>
+              <span class="tx-value">
+                @if (SecHeaders.data[0]?.sPrc == 1) { سعر المستهلك }
+                @else if (SecHeaders.data[0]?.sPrc == 2) { سعر الجملة }
+                @else { — }
+              </span>
+            </div>
+          }
+
+          <div class="tx-field">
+            <span class="tx-label">تاريخ السند</span>
+            <span class="tx-value" dir="ltr">{{ SecHeaders.data[0]?.trsDt | date:'dd/MM/yyyy  HH:mm' }}</span>
+          </div>
+
+          @if (curr_TrsTy == 1 || curr_TrsTy == 2 || curr_TrsTy == 11 || curr_TrsTy == 12) {
+            <div class="tx-field">
+              <span class="tx-label">طريقة السداد</span>
+              <span class="tx-value">
+                @if (SecHeaders.data[0]?.dTy == 1) { <span class="tx-pill tx-pill-cash"><i class="fa-solid fa-money-bill-wave"></i>نقدي</span> }
+                @else if (SecHeaders.data[0]?.dTy == 2) { <span class="tx-pill tx-pill-credit"><i class="fa-solid fa-clock"></i>آجل</span> }
+                @else { — }
+              </span>
+            </div>
+          }
+
+          <div class="tx-field tx-total">
+            <span class="tx-label">قيمة الفاتورة بالجنية</span>
+            <span class="tx-value tx-total-value">{{ hdrValue()?.totalVal }}</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- document lines -->
+    <section class="tx-card tx-card-lines">
+      @if (curr_TrstNo > 0 && Headers.data.length > 0) {
+        <app-trns-table
+          [curr_TrsTy]="curr_TrsTy"
+          [curr_Store_id]="curr_Store"
+          [isActiveCurr_TrstNo]="curr_TrstNo"
+          [isActiveCurr_CstID]="SecHeaders.data[0].cstId"
+          [curr_Store_Name]="curr_StoreName"
+          [curr_TrsDt]="SecHeaders.data[0].trsDt"
+          [curr_dty]="SecHeaders.data[0].dTy"
+        ></app-trns-table>
+      } @else {
+        <div class="tx-empty">
+          <i class="fa-regular fa-file-lines"></i>
+          <h5>لا توجد مستندات من هذا النوع</h5>
+          <p>اضغط "إضافة" لإنشاء مستند جديد ثم أضف إليه الأصناف.</p>
+        </div>
+      }
+    </section>
+  }
+
+  <!-- ========================= add a document ========================= -->
+  @if (DynamicPrompts.AddFlag == 1) {
+
+    <section class="tx-card">
+      <header class="tx-card-header">
+        <div class="tx-title">
+          <span class="tx-title-icon"><i class="fa-solid fa-file-circle-plus"></i></span>
+          <div>
+            <h2>{{ this.TrnsData.data[curr_TrsTy].Trns_name }} — مستند جديد</h2>
+            <span class="tx-store"><i class="fa-solid fa-warehouse"></i>{{ curr_StoreName }}</span>
+          </div>
+        </div>
+
+        <div class="tx-actions">
+          <button type="button" class="tx-btn tx-btn-light" title="الرجوع للمستندات" (click)="backToNormal()">
+            <i class="fa-solid fa-rotate-right"></i>رجوع
+          </button>
+        </div>
+      </header>
+
+      <div class="tx-card-body">
+        <form [formGroup]="AddnewHeaderForm" class="tx-form">
+
+          <div class="tx-grid">
+
+            <div class="tx-field">
+              <label class="tx-label" for="trsNo">رقم المستند</label>
+              <input type="number" id="trsNo" name="trsNo" class="tx-input" formControlName="trsNo">
+            </div>
+
+            @if (curr_TrsTy == 11 || curr_TrsTy == 2 || curr_TrsTy == 1 || curr_TrsTy == 12) {
+              <div class="tx-field">
+                <label class="tx-label" for="addClientId">{{ (curr_TrsTy == 11 || curr_TrsTy == 2) ? 'كود العميل' : 'كود المورد' }}</label>
+                <input type="text" id="addClientId" class="tx-input" [value]="S_parentParent_selectedCustomer()" placeholder="اختر من القائمة" disabled>
+              </div>
+              <div class="tx-field tx-field-wide">
+                <label class="tx-label" for="addClientName">العميل / المورد</label>
+                <div class="tx-inline">
+                  <input type="text" id="addClientName" class="tx-input" [value]="S_parentParent_selectedCustomerName()" placeholder="اختر من القائمة" disabled>
+                  <button type="button" class="tx-btn tx-btn-primary" (click)="openDialog()">
+                    <i class="fa-solid fa-magnifying-glass"></i>اختر الكود
+                  </button>
+                </div>
+                @if (curr_TrsTy == 1 || curr_TrsTy == 12) {
+                  <span class="tx-muted">{{ Curr_CustomerName }}</span>
+                }
+              </div>
+            }
+
+            @if (curr_TrsTy == 1 || curr_TrsTy == 2 || curr_TrsTy == 11 || curr_TrsTy == 12) {
+              <div class="tx-field">
+                <label class="tx-label" for="dTy">طريقة السداد</label>
+                <select name="dTy" id="dTy" class="tx-select" formControlName="dTy">
+                  <option value="1">نقدي</option>
+                  <option value="2">اجل</option>
+                </select>
+              </div>
+            }
+
+            @if (curr_TrsTy == 4) {
+              <div class="tx-field">
+                <label class="tx-label" for="StrCd">كود المخزن المحول منه</label>
+                <input type="text" id="StrCd" name="StrCd" class="tx-input" placeholder="اضف كود المخزن" formControlName="strCd">
+              </div>
+            }
+
+            @if (curr_TrsTy == 14) {
+              <div class="tx-field">
+                <label class="tx-label" for="StoreID">كود المخزن المحول اليه</label>
+                <input type="text" id="StoreID" name="StoreID" class="tx-input" placeholder="اضف كود المخزن" formControlName="strCd">
+              </div>
+            }
+
+            @if (curr_TrsTy == 11) {
+              <div class="tx-field">
+                <label class="tx-label" for="sPrc">السعر المطلوب</label>
+                <select name="sPrc" id="sPrc" class="tx-select" formControlName="sPrc">
+                  <option value="1">مستهلك</option>
+                  <option value="2">جملة</option>
+                </select>
+              </div>
+            }
+
+            <div class="tx-field">
+              <label class="tx-label" for="TrsDt">تاريخ السند</label>
+              <input type="datetime-local" id="TrsDt" name="TrsDt" class="tx-input" formControlName="trsDt">
+            </div>
+
+          </div>
+
+          <div class="tx-form-actions">
+            <button type="submit" class="tx-btn tx-btn-primary tx-btn-lg" (click)="onSubmit()">
+              <i class="fa-solid fa-plus"></i>إضافة المستند
+            </button>
+            <button type="button" class="tx-btn tx-btn-ghost tx-btn-lg" (click)="backToNormal()">إلغاء</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="tx-card tx-card-lines">
+      <div class="tx-empty">
+        <i class="fa-solid fa-circle-info"></i>
+        <h5>أضف المستند أولاً</h5>
+        <p>بعد إضافة المستند ستتمكن من إضافة الأصناف إليه.</p>
+      </div>
+    </section>
+  }
+
+</div>
+
+<!-- ========================= delete confirmation ========================= -->
+@if (isHeaderDeleted != -1) {
+  <div class="tx-modal-backdrop" (click)="dontDelete()"></div>
+  <div class="tx-modal" role="dialog" aria-modal="true" aria-labelledby="txDeleteTitle" dir="rtl">
+    <span class="tx-modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+    <h3 id="txDeleteTitle">تأكيد حذف المستند</h3>
+    <p>سوف يتم حذف المستند وجميع الأسطر المتعلقة به، ولا يمكن التراجع عن ذلك.</p>
+    <div class="tx-modal-actions">
+      <button type="button" class="tx-btn tx-btn-ghost tx-btn-lg" (click)="dontDelete()">إلغاء</button>
+      <button type="button" class="tx-btn tx-btn-danger tx-btn-lg" (click)="deleteHeader()"><i class="fa-solid fa-trash"></i>حذف</button>
+    </div>
+  </div>
+}

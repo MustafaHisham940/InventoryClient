@@ -9,7 +9,8 @@ export interface InventorySalesReportSysInfo {
 export interface InventorySalesReportRequest {
   startDate: string;
   endTime: string;
-  storeCode: string;
+  /** null = all stores (multi-store users only) */
+  storeCode: string | null;
   startItemCode: string;
   endItemCode: string;
   sysInfo: InventorySalesReportSysInfo;

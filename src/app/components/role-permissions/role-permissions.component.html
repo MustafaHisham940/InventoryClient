@@ -1,0 +1,127 @@
+<div class="container-fluid">
+  <div class="card shadow-sm position-relative mt-5" dir="rtl">
+
+    <header class="rp-header">
+      <h2><i class="fa-solid fa-user-shield"></i>الأدوار والصلاحيات</h2>
+    </header>
+
+    <div class="card-body">
+      <div class="row g-4">
+
+        <!-- roles -->
+        <div class="col-lg-4">
+          <div class="roles-panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0 fw-bold">الأدوار</h5>
+              <button class="btn btn-success btn-sm" (click)="startAdd()">
+                <i class="fas fa-plus me-1"></i>دور جديد
+              </button>
+            </div>
+
+            @if (editingRole) {
+              <div class="role-form mb-3">
+                <label class="form-label" for="roleName">{{ selectedRole ? 'تعديل الدور' : 'اسم الدور الجديد' }}</label>
+                <input id="roleName" class="form-control mb-2" [(ngModel)]="roleName" name="roleName"
+                       placeholder="مثال: Admin / Manager / Cashier" (keyup.enter)="saveRole()">
+                <div class="form-check mb-3">
+                  <input id="roleSuper" type="checkbox" class="form-check-input" [(ngModel)]="roleIsSuper" name="roleIsSuper">
+                  <label for="roleSuper" class="form-check-label">صلاحية كاملة (كل الصفحات الحالية والمستقبلية)</label>
+                </div>
+                <div class="form-check mb-3">
+                  <input id="roleDefault" type="checkbox" class="form-check-input" [(ngModel)]="roleIsDefault" name="roleIsDefault">
+                  <label for="roleDefault" class="form-check-label">دور افتراضي (يُمنح لكل مستخدم جديد)</label>
+                </div>
+                <button class="btn btn-primary btn-sm me-2" (click)="saveRole()">حفظ</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">إلغاء</button>
+              </div>
+            }
+
+            <ul class="list-group role-list">
+              @for (role of roles; track role.id) {
+                <li class="list-group-item role-item" [class.active]="selectedRole?.id === role.id" (click)="selectRole(role)">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold">{{ role.name }}</span>
+                    <span>
+                      @if (role.isDefault) {
+                        <span class="badge bg-info text-dark">افتراضي</span>
+                      }
+                      @if (role.isSuperAdmin) {
+                        <span class="badge bg-warning text-dark">كامل الصلاحيات</span>
+                      }
+                    </span>
+                  </div>
+                  <small class="role-meta">
+                    @if (role.isSuperAdmin) { كل الصفحات } @else { {{ role.pagesCount }} صفحة }
+                    · {{ role.usersCount }} مستخدم
+                  </small>
+                </li>
+              } @empty {
+                <li class="list-group-item text-muted">لا توجد أدوار</li>
+              }
+            </ul>
+
+            @if (selectedRole && !editingRole) {
+              <div class="mt-3">
+                <button class="btn btn-outline-primary btn-sm me-2" (click)="startRename()">
+                  <i class="fas fa-edit me-1"></i>تعديل الاسم
+                </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="deleteRole()">
+                  <i class="fas fa-trash me-1"></i>حذف
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- pages of the selected role -->
+        <div class="col-lg-8">
+          @if (!selectedRole) {
+            <div class="empty-state">اختر دوراً من القائمة لتحديد الصفحات المسموح بها، أو أضف دوراً جديداً.</div>
+          } @else if (selectedRole.isSuperAdmin) {
+            <div class="empty-state">
+              الدور <strong>{{ selectedRole.name }}</strong> له صلاحية كاملة على جميع الصفحات (الحالية والتي ستضاف لاحقاً).
+              لتحديد صفحات بعينها ألغِ خيار "صلاحية كاملة" من تعديل الدور.
+            </div>
+          } @else {
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <h5 class="mb-0 fw-bold">صفحات الدور: {{ selectedRole.name }}
+                <small class="text-muted">({{ allowed.size }} من {{ totalPages }})</small>
+              </h5>
+              <div class="d-flex gap-2 align-items-center">
+                <input class="form-control form-control-sm search-input" [(ngModel)]="search" name="search" placeholder="بحث عن صفحة...">
+                <button class="btn btn-outline-secondary btn-sm" (click)="selectAll(true)">تحديد الكل</button>
+                <button class="btn btn-outline-secondary btn-sm" (click)="selectAll(false)">إلغاء الكل</button>
+                <button class="btn btn-primary btn-sm" [disabled]="!dirty" (click)="savePages()">
+                  <i class="fas fa-save me-1"></i>حفظ الصلاحيات
+                </button>
+              </div>
+            </div>
+
+            <div class="pages-grid">
+              @for (group of groups; track group.name) {
+                @if (visiblePages(group).length > 0) {
+                  <div class="page-group">
+                    <label class="group-title">
+                      <input type="checkbox"
+                             [checked]="groupState(group) === 'all'"
+                             [indeterminate]="groupState(group) === 'some'"
+                             (change)="toggleGroup(group, $any($event.target).checked)">
+                      <span>{{ group.name }}</span>
+                    </label>
+                    @for (page of visiblePages(group); track page.key) {
+                      <label class="page-item">
+                        <input type="checkbox" [checked]="isChecked(page.key)" (change)="toggle(page.key, $any($event.target).checked)">
+                        <span>{{ page.label }}</span>
+                      </label>
+                    }
+                  </div>
+                }
+              }
+            </div>
+          }
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

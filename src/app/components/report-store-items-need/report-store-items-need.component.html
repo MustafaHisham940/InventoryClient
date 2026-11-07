@@ -1,94 +1,46 @@
-<div class="card shadow-sm position-relative" dir="rtl">
+<app-report-shell
+  title="تقرير احتياج الأصناف للمخزن"
+  icon="fa-cart-flatbed"
+  submitLabel="بحث"
+  [canSubmit]="!isFormInvalid()"
+  [loading]="loading"
+  [pdfUrl]="pdfUrl"
+  [showExcel]="excelReportFlag === 1"
+  (search)="search()"
+  (excel)="downloadExcel()">
 
-  <div class="card-ribbon w-100 text-center align-items-center justify-content-between">
-    <div class="pageLabel">
-      <h2 class="mb-0 fw-bolder" style="color: white;">تقرير احتياج الأصناف للمخزن</h2>
-    </div>
+  <app-store-scope-field [(storeCode)]="storeCode"></app-store-scope-field>
+
+  <div class="rpt-field">
+    <label for="startItem">من صنف</label>
+    <input
+      id="startItem"
+      type="text"
+      class="rpt-input"
+      placeholder="كود الصنف"
+      name="startItem"
+      [(ngModel)]="startItem"
+      #startItemModel="ngModel"
+      [class.rpt-invalid]="hasStartItemError() && (startItemModel.touched || startItemModel.dirty)">
+    @if (hasStartItemError() && (startItemModel.touched || startItemModel.dirty)) {
+      <small class="rpt-error">يجب ادخال هذا العنصر</small>
+    }
   </div>
 
-  <div class="card-body">
-    <div class="customer-filters">
-      <div class="row g-3 mb-4 align-items-center">
-        <div class="col-auto">
-          <h4 class="section-label m-0">بحث متقدم</h4>
-        </div>
-
-        <div class="col">
-          <div class="d-flex gap-3 w-100 flex-wrap align-items-start">
-
-            <div class="search-box flex-fill select-filter">
-              <label for="storeCode">كود المخزن</label>
-              <div class="select-wrapper">
-                <i class="fas fa-warehouse"></i>
-                <select
-                  id="storeCode"
-                  class="custom-select"
-                  name="storeCode"
-                  [(ngModel)]="storeCode"
-                  #storeCodeModel="ngModel"
-                  [class.invalid-field]="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">
-                  <option value="" disabled selected>اختر المخزن</option>
-                  @for (store of storesList; track store.strCd) {
-                    <option [value]="store.strCd">{{store.strNm}}</option>
-                  }
-                </select>
-              </div>
-              <small class="field-warning" *ngIf="hasStoreCodeError() && (storeCodeModel.touched || storeCodeModel.dirty)">يجب ادخال هذا العنصر</small>
-            </div>
-
-            <div class="search-box flex-fill">
-              <label for="startItem">من صنف</label>
-              <input
-                id="startItem"
-                type="text"
-                placeholder="من صنف"
-                name="startItem"
-                [(ngModel)]="startItem"
-                #startItemModel="ngModel"
-                [class.invalid-field]="hasStartItemError() && (startItemModel.touched || startItemModel.dirty)">
-              <small class="field-warning" *ngIf="hasStartItemError() && (startItemModel.touched || startItemModel.dirty)">يجب ادخال هذا العنصر</small>
-            </div>
-
-            <div class="search-box flex-fill">
-              <label for="endtItem">إلى صنف</label>
-              <input
-                id="endtItem"
-                type="text"
-                placeholder="إلى صنف"
-                name="endtItem"
-                [(ngModel)]="endtItem"
-                #endtItemModel="ngModel"
-                [class.invalid-field]="hasEndtItemError() && (endtItemModel.touched || endtItemModel.dirty)">
-              <small class="field-warning" *ngIf="hasEndtItemError() && (endtItemModel.touched || endtItemModel.dirty)">يجب ادخال هذا العنصر</small>
-            </div>
-
-            <button
-              class="btn btn-success px-4"
-              style="white-space: nowrap;"
-              (click)="search()"
-              [disabled]="isFormInvalid()">
-              <i class="fas fa-search me-2"></i>بحث
-            </button>
-
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="rpt-field">
+    <label for="endtItem">إلى صنف</label>
+    <input
+      id="endtItem"
+      type="text"
+      class="rpt-input"
+      placeholder="كود الصنف"
+      name="endtItem"
+      [(ngModel)]="endtItem"
+      #endtItemModel="ngModel"
+      [class.rpt-invalid]="hasEndtItemError() && (endtItemModel.touched || endtItemModel.dirty)">
+    @if (hasEndtItemError() && (endtItemModel.touched || endtItemModel.dirty)) {
+      <small class="rpt-error">يجب ادخال هذا العنصر</small>
+    }
   </div>
 
-  <div class="card-body pt-0" *ngIf="excelReportFlag === 1">
-    <button
-      class="btn btn-info"
-      style="color: white; background-color: #1e7fc1;"
-      (click)="downloadExcel()">
-      <i class="fa fa-download" style="color: white;" aria-hidden="true"></i> تحميل ملف اكسيل
-    </button>
-  </div>
-</div>
-
-<iframe
-  *ngIf="pdfUrl"
-  [src]="pdfUrl"
-  width="100%"
-  height="800px">
-</iframe>
+</app-report-shell>

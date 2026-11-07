@@ -1,233 +1,158 @@
-<div class="trns-table-panel">
-<div class="dev-tag" title="اسم الكومبوننت">app-trns-table</div>
-                <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
-                    
-                    <div class="d-flex justify-content-center align-items-center mb-3">
-                        <div class="customer-filters">
-                            <!-- Search Row with Label -->
-                            <div class="row g-3 mb-4 align-items-center">  <!-- Added align-items-center -->
-                            <div class="col-auto">  <!-- Changed to col-auto for label -->
-                                <h3 class="section-label m-0">بحث متقدم</h3>  <!-- Removed mb-3 -->
-                            </div>
-                            
-                            
-                            <div class="col">  <!-- Main content column -->
-                                <div class="d-flex gap-3 w-100">
-                                <div class="search-box flex-fill">
-                                    <i class="fas fa-id-card"></i>
-                                    <input type="number" placeholder="البحث برقم السطر ..." [(ngModel)]="_Icustomerfilter._LnNo">
-                                </div>
-                                <div class="search-box flex-fill">
-                                    <i class="fas fa-user"></i>
-                                    <input type="text" placeholder="كود الصنف..." [(ngModel)] = "_Icustomerfilter._ItmCd">
-                                </div>
-                               <!-- <div class="search-box flex-fill">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    
-                                    <input type="number" placeholder="البحث بكود العميل/مورد..." [value]="isActiveCurr_CstID()">
-                                </div>-->
-                                <button class="btn btn-success px-4" style="white-space: nowrap;" (click)="searchCustomers()">
-                                    <i class="fas fa-search me-2"></i>بحث
-                                </button>
-                                </div>
-                            </div>
-                            </div>
-                    
-                            <!-- Filters Row with Label -->
-                            <div class="row g-3 align-items-center">  <!-- Added align-items-center -->
-                            <div class="col-auto">  <!-- Changed to col-auto for label -->
-                                <h3 class="section-label m-0">تصفية النتائج</h3>  <!-- Removed mb-3 -->
-                            </div>
-                            <div class="col">  <!-- Main content column -->
-                                <div class="d-flex justify-content-start gap-3 flex-wrap">  <!-- Changed to justify-content-start -->
-                                <!--<div class="select-filter" style="width: 220px">
-                                    <div class="search-box flex-fill">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <input type="number" placeholder="البحث  بكود السند..." value="{{isActiveCurr_TrstNo()}}">
-                                    </div>
-                                </div>-->
-                              <!--  <div class="select-filter" style="width: 220px">
-                                    <div class="select-wrapper">
-                                    <i class="fas fa-users"></i>
-                                    <select class="custom-select" id="typeSelect" [(ngModel)]="_Icustomerfilter.Type" >
-                                        <option value="" selected disabled>نوع العميل</option>
-                                        <option value="1">مورد</option>
-                                        <option value="2">عميل</option>
-                                        <option value="3">كلاهما</option>
-                                    </select>
-                                    </div>
-                                </div>-->
-                                <div class="select-filter" style="width: 220px">
-                                    <div class="select-wrapper">
-                                    <i class="fas fa-sort"></i>
-                                    <select class="custom-select" id="sortSelect" [(ngModel)]="_Icustomerfilter._Sort">
-                                        <option value="" selected disabled>الترتيب</option>
-                                        <option value="name_desc">تصاعديًا</option>
-                                        <option value="name_asc">تنازليًا</option>
-                                    </select>
-                                    </div>
-                                </div>
-                                <button class="btn btn-outline-secondary px-4" style="white-space: nowrap;" (click)="clearFilter()">
-                                    <i class="fas fa-times me-2"></i>مسح الفلتر
-                                </button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-            </div>                      
-           
+<div class="tl-panel" dir="rtl">
 
- <!-- Add New Item Form -->
- <form [formGroup]="AddNewDetails"   class="mb-3">
-    <div class="StaticAddBar row add-form-row p-2 border rounded mb-3">
-      <div class="col-md-1 mb-2">
-        <label for=""> اضف رقم السطر</label>
-        <input type="number" class="form-control" placeholder="اضف رقم السطر الجديد" formControlName="lnNo">
+  <!-- ========================= add a line ========================= -->
+  <section class="tl-section">
+    <h4 class="tl-heading"><i class="fa-solid fa-circle-plus"></i>إضافة صنف للمستند</h4>
+
+    <form [formGroup]="AddNewDetails" class="tl-add">
+      <div class="tl-field tl-field-sm">
+        <label for="tlLnNo">رقم السطر</label>
+        <input id="tlLnNo" type="number" class="tl-input" placeholder="رقم السطر" formControlName="lnNo">
       </div>
-   <!-- <div class="col-md-2 mb-2">
-        <input type="input" class="form-control" placeholder="المخزن"   value="{{curr_Store_Name}}">
-      </div>-->  
-      <div class="col-md-1 mb-2">
-        <div class="input-group" dir="ltr">
-          <label for=""> ابحث عن الصنف</label>
-          <input  #var_searchItemCodeDom   type="text" class="form-control" formControlName="var_searchItemCode" (input)="FindItemNameExactMAtch(var_searchItemCodeDom.value)">       
-          <button class="btn btn-outline-secondary" (click)="FindItemNameExactMAtch(var_searchItemCodeDom.value)" >            
+
+      <div class="tl-field tl-field-md">
+        <label for="tlItemCode">كود الصنف</label>
+        <div class="tl-inline" dir="ltr">
+          <input id="tlItemCode" #var_searchItemCodeDom type="text" class="tl-input" placeholder="ابحث بالكود"
+                 formControlName="var_searchItemCode" (input)="FindItemNameExactMAtch(var_searchItemCodeDom.value)">
+          <button type="button" class="tl-icon-btn" title="بحث" (click)="FindItemNameExactMAtch(var_searchItemCodeDom.value)">
             <i class="fas fa-search"></i>
           </button>
         </div>
       </div>
-      <div class="col-md-2 mb-2">
-        @if(var_ItemInputSwitch==1){
-          <label for=""> اختر الصنف</label>
-        <input [value]="animal()?.itmNm" type="text" class="form-control" placeholder="اختر الصنف"  disabled>
+
+      <div class="tl-field tl-field-lg">
+        <label>الصنف</label>
+        @if (var_ItemInputSwitch == 1) {
+          <input [value]="animal()?.itmNm" type="text" class="tl-input" placeholder="اسم الصنف" disabled>
         }
-        @if(var_ItemInputSwitch==2){
-          <label for=""> اختر الصنف</label>
-          <input   type="text" class="form-control" placeholder="اختر الصنف" [value]="dynamicItemSearch.itmNm" disabled>
+        @if (var_ItemInputSwitch == 2) {
+          <input type="text" class="tl-input" placeholder="اسم الصنف" [value]="dynamicItemSearch.itmNm" disabled>
+        }
+        @if (var_ItemInputSwitch != 1 && var_ItemInputSwitch != 2) {
+          <input type="text" class="tl-input" placeholder="اسم الصنف" disabled>
         }
       </div>
-      <div class="col-md-1 mb-2 mt-3">
-       
-        <div class="btn btn-primary " type="button" (click)="openDialog()"> اختر الصنف</div>
-      </div>
 
-
-      <div class="col-md-2 mb-2">
-        <label for=""> ادخل الكمية</label>
-        <input type="number" class="form-control" placeholder="ادخل الكمية" formControlName="qty">
-      </div>
-      <div class="col-md-2 mb-2">
-        <label for=""> ادخل السعر</label>
-        <input type="number" class="form-control" placeholder="ادخل السعر" formControlName="pric" [value]="AddNewDetails.get('pric')?.value">
-      </div>
-       
-      <div class="col-md-2 mt-3 p-2 ">
-        <button type="submit" class="btn btn-sm btn-outline-primary w-100" (click)="AddnewGetails()">
-          <i class="fas fa-plus"></i> إضافة
+      <div class="tl-field tl-field-btn">
+        <button type="button" class="tl-btn tl-btn-soft" (click)="openDialog()">
+          <i class="fa-solid fa-list"></i>اختر الصنف
         </button>
       </div>
-    </div>
-  </form>
 
-            <!-- Header Row -->
-<div class="row table-header bg-light   mb-2 d-none d-md-flex">
-    <div class="col-md-1 fw-bold">رقم السطر</div>
-    <!--<div class="col-md-2 fw-bold">المخزن</div>-->
-    <div class="col-md-2 fw-bold">الصنف</div>
-    <div class="col-md-1 fw-bold">الكمية</div>
-    <div class="col-md-2 fw-bold">السعر</div>
-    <div class="col-md-2 fw-bold">القيمة</div>
-    <div class="col-md-2 fw-bold">الإجراءات</div>
-  </div>
-  
- 
-  
-  <!-- Data Rows -->
-  @for (item of _customers.data ; track $index) {
-  <div class="row data-row p-2 border-bottom">
-    <div class="col-md-1 mb-2">
-      <input [value]="item.lnNo" type="text" class="form-control" disabled>
-    </div>
-    <!--<div class="col-md-2 mb-2">
-      <input [value]="item.storeName" type="text" class="form-control" disabled>
-    </div>-->
-    <div class="col-md-2 mb-2">
-      <input [value]="item.itemName" type="text" class="form-control" disabled>
-    </div>
-    <div class="col-md-1 mb-2">
-      <input [value]="item.qty" type="text" class="form-control" disabled>
-    </div>
-    <div class="col-md-2 mb-2">
-      <input [value]="item.pric" type="text" class="form-control" disabled>
-    </div>
-    <div class="col-md-2 mb-2">
-      <input [value]="item.pric * item.qty" type="text" class="form-control" disabled>
-    </div>
-    <div class="col-md-2 mb-2">
-      <div class="d-flex gap-1">
-        <button class="btn btn-sm btn-outline-primary" (click)="editeDetailsData(item)">
-          <i class="fas fa-edit"></i>
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-danger" (click)="clickDelete(item)">
-          <i class="fas fa-trash"></i>
+      <div class="tl-field tl-field-sm">
+        <label for="tlQty">الكمية</label>
+        <input id="tlQty" type="number" class="tl-input" placeholder="الكمية" formControlName="qty">
+      </div>
+
+      <div class="tl-field tl-field-sm">
+        <label for="tlPric">السعر</label>
+        <input id="tlPric" type="number" class="tl-input" placeholder="السعر" formControlName="pric" [value]="AddNewDetails.get('pric')?.value">
+      </div>
+
+      <div class="tl-field tl-field-btn">
+        <button type="submit" class="tl-btn tl-btn-primary" (click)="AddnewGetails()">
+          <i class="fa-solid fa-plus"></i>إضافة
         </button>
       </div>
+    </form>
+  </section>
+
+  <!-- ========================= search ========================= -->
+  <section class="tl-section">
+    <div class="tl-toolbar">
+      <div class="tl-search">
+        <i class="fas fa-id-card"></i>
+        <input type="number" placeholder="البحث برقم السطر ..." [(ngModel)]="_Icustomerfilter._LnNo">
+      </div>
+      <div class="tl-search">
+        <i class="fas fa-barcode"></i>
+        <input type="text" placeholder="كود الصنف..." [(ngModel)]="_Icustomerfilter._ItmCd">
+      </div>
+      <div class="tl-search tl-search-select">
+        <i class="fas fa-sort"></i>
+        <select id="sortSelect" [(ngModel)]="_Icustomerfilter._Sort">
+          <option value="" selected disabled>الترتيب</option>
+          <option value="name_desc">تصاعديًا</option>
+          <option value="name_asc">تنازليًا</option>
+        </select>
+      </div>
+      <button type="button" class="tl-btn tl-btn-primary" (click)="searchCustomers()">
+        <i class="fas fa-search"></i>بحث
+      </button>
+      <button type="button" class="tl-btn tl-btn-ghost" (click)="clearFilter()">
+        <i class="fas fa-times"></i>مسح الفلتر
+      </button>
     </div>
-  </div>
-  }
-  
-  <!-- Pagination -->
-  <div class="d-flex justify-content-between align-items-center mt-3">
-    <!--<span class="text-muted small">عرض البيانات من 1 إلى 10 من أصل {{_totalCustomerCount}} مدخل</span>-->
-    <nav>
-      <ul class="pagination pagination-sm mb-0">
-        <li class="page-item"><a class="page-link" (click)="decrementPDg()">&lt;</a></li>
+  </section>
+
+  <!-- ========================= lines ========================= -->
+  <section class="tl-section">
+    <div class="tl-table-wrap">
+      <table class="tl-table">
+        <thead>
+          <tr>
+            <th class="tl-num">رقم السطر</th>
+            <th>الصنف</th>
+            <th class="tl-num">الكمية</th>
+            <th class="tl-num">السعر</th>
+            <th class="tl-num">القيمة</th>
+            <th class="tl-col-actions">الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of _customers.data; track $index) {
+            <tr>
+              <td class="tl-num" data-label="رقم السطر">{{ item.lnNo }}</td>
+              <td data-label="الصنف" class="tl-item">{{ item.itemName }}</td>
+              <td class="tl-num" data-label="الكمية">{{ item.qty }}</td>
+              <td class="tl-num" data-label="السعر">{{ item.pric }}</td>
+              <td class="tl-num tl-strong" data-label="القيمة">{{ item.pric * item.qty }}</td>
+              <td class="tl-col-actions" data-label="الإجراءات">
+                <button type="button" class="tl-icon-btn" title="تعديل السطر" (click)="editeDetailsData(item)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="tl-icon-btn tl-icon-danger" title="حذف السطر" (click)="clickDelete(item)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr class="tl-empty-row">
+              <td colspan="6">
+                <i class="fa-regular fa-folder-open"></i>
+                لا توجد أسطر في هذا المستند بعد — أضف صنفاً من النموذج بالأعلى.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- pagination -->
+    <div class="tl-footer">
+      <nav class="tl-pager" aria-label="التنقل بين الصفحات">
+        <button type="button" title="السابق" (click)="decrementPDg()"><i class="fa-solid fa-chevron-right"></i></button>
         @for (item of pagesList; track $index) {
-          <li class="page-item"><button class="page-link" (click)="navigatePaging(item)">{{item}}</button></li>
-        }                             
-        <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-      </ul>
-    </nav>
+          <button type="button" [class.active]="item === _Icustomerfilter._pageIndex" (click)="navigatePaging(item)">{{ item }}</button>
+        }
+        <button type="button" title="التالي" (click)="incrementPDg()"><i class="fa-solid fa-chevron-left"></i></button>
+      </nav>
+    </div>
+  </section>
 
+  <!-- ========================= delete line confirmation ========================= -->
+  @if (isDetailsDeleted != -1) {
+    <div class="tl-modal-backdrop" (click)="cancelDelete()"></div>
+    <div class="tl-modal" role="dialog" aria-modal="true" aria-labelledby="tlDeleteTitle" dir="rtl">
+      <span class="tl-modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+      <h3 id="tlDeleteTitle">تأكيد حذف السطر</h3>
+      <p>سوف يتم حذف هذا السطر من الفاتورة.</p>
+      <div class="tl-modal-actions">
+        <button type="button" class="tl-btn tl-btn-ghost tl-btn-lg" (click)="cancelDelete()">إلغاء</button>
+        <button type="button" class="tl-btn tl-btn-danger tl-btn-lg" (click)="deleteDetail()"><i class="fa-solid fa-trash"></i>حذف</button>
+      </div>
+    </div>
+  }
 
-    @if(isDetailsDeleted !=-1){
-
-
-      <div class="position-fixed top-0 start-0 w-100 h-100 backdrop-blur"></div>
-         
-          <div class="modal-backdrop fade show" style="z-index: 1040;"></div>
-          <div class="modal position-fixed d-block" tabindex="-1" style="z-index: 1050;">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content border-0 shadow-lg">
-                <!-- Modal Header -->
-                <div class="modal-header bg-primary text-white border-0 rounded-top-3">
-                  <div class="modal-title w-100 text-center">
-                    <i class="bi bi-exclamation-triangle-fill fs-1 d-block mb-2"></i>
-                    <h2 class="mb-0 fw-bold">تأكيد حذف السطر</h2>
-                  </div>
-                </div>
-                
-                <!-- Modal Body -->
-                <div class="modal-body text-center py-4">
-                  <p class="lead text-muted mb-4">
-                    سوف يتم حذف هذا السطر من الفاتورة
-                  </p>
-                  <div class="d-flex justify-content-center gap-3">
-                    <button type="button" class="btn btn-lg btn-outline-secondary px-4 flex-grow-1" (click)="cancelDelete()">
-                      <i class="bi bi-x-circle me-2"></i> إلغاء
-                    </button>
-                    <button type="button" class="btn btn-lg btn-dark px-4 flex-grow-1" (click)="deleteDetail()">
-                      <i class="bi bi-trash3 me-2"></i> حذف
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-            }
-  </div>
 </div>

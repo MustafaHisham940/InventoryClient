@@ -2,38 +2,47 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ReportService } from '../../core/services/report.service';
-import { TokenService } from '../../core/services/token.service';
-import { ClientSalesDetailedReportRequest } from '../../core/interfaces/client-sales-detailed-report';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { ReportService } from '../../core/services/report.service';
+import { StoreScopeService } from '../../core/services/store-scope.service';
+import { ClientSalesDetailedReportRequest } from '../../core/interfaces/client-sales-detailed-report';
 import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
+import { dateToIso } from '../../core/utils/date-iso';
 import { CustomerPickerComponent } from '../customer-picker/customer-picker.component';
+import { ReportShellComponent } from '../report-shared/report-shell.component';
 
 @Component({
   selector: 'app-client-sales-detailed-report',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomerPickerComponent, MatDatepickerModule],
+  imports: [CommonModule, FormsModule, CustomerPickerComponent, MatDatepickerModule, ReportShellComponent],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
   ],
-  templateUrl: './client-sales-detailed-report.component.html',
-  styleUrl: './client-sales-detailed-report.component.css'
+  templateUrl: './client-sales-detailed-report.component.html'
 })
 export class ClientSalesDetailedReportComponent {
 
   private reportService = inject(ReportService);
-  private _TokenService = inject(TokenService);
+  private storeScope = inject(StoreScopeService);
   private sanitizer = inject(DomSanitizer);
 
   cstmrCode: number | null = null;
   cstmrCodeText: string = '';
   cstmrName: string = '';
   cstmrCodeTouched: boolean = false;
-  startDate: string = '';
-  endDate: string = '';
+
+  /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter. The pickers work with Date objects,
+   * the request carries yyyy-mm-dd strings. */
+  startDateObj: Date | null = null;
+  endDateObj: Date | null = null;
+
+  pdfUrl?: SafeResourceUrl;
+  excelReportFlag: number = -1;
+  loading = false;
+  private lastReqBody?: ClientSalesDetailedReportRequest;
 
   onCustomerPicked(selection: { customerCode: string, customerName: string }): void {
     this.cstmrCodeText = selection.customerCode;
@@ -42,58 +51,27 @@ export class ClientSalesDetailedReportComponent {
     this.cstmrCodeTouched = true;
   }
 
-  /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter for why this is needed
-   * instead of native <input type="date"> (its display format ignores `lang`
-   * and just follows OS/browser locale). Picker works with Date objects; the
-   * model fields stay the same ISO yyyy-mm-dd strings the report API expects. */
-  startDateObj: Date | null = null;
-  endDateObj: Date | null = null;
-
-  private dateToIso(date: Date): string {
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  }
-
-  onStartDateObjChange(date: Date | null): void {
-    this.startDate = date ? this.dateToIso(date) : '';
-  }
-
-  onEndDateObjChange(date: Date | null): void {
-    this.endDate = date ? this.dateToIso(date) : '';
-  }
-
-  singleStoreCode: string | undefined;
-  singleStoreName: string | undefined;
-  multiStoreFlag: string | undefined;
-
-  pdfUrl?: SafeResourceUrl;
-  excelReportFlag: number = -1;
-  private lastReqBody?: ClientSalesDetailedReportRequest;
-
-  ngOnInit(): void {
-    this.multiStoreFlag = this._TokenService.GetUserStoreSettings()?.MultiStore;
-    this.singleStoreCode = this._TokenService.GetUserStoreSettings()?.SingleStoreCode;
-    this.singleStoreName = this._TokenService.GetUserStoreSettings()?.SingleStoreName;
-  }
-
   hasCstmrCodeError(): boolean {
     return this.cstmrCode === null || this.cstmrCode === undefined || (this.cstmrCode as any) === '';
   }
 
   hasStartDateError(): boolean {
-    return !this.startDate?.trim();
+    return !this.startDateObj;
   }
 
   hasEndDateError(): boolean {
-    return !this.endDate?.trim();
+    return !this.endDateObj;
+  }
+
+  hasDateOrderError(): boolean {
+    return !!this.startDateObj && !!this.endDateObj && this.startDateObj > this.endDateObj;
   }
 
   isFormInvalid(): boolean {
     return this.hasCstmrCodeError()
       || this.hasStartDateError()
-      || this.hasEndDateError();
+      || this.hasEndDateError()
+      || this.hasDateOrderError();
   }
 
   search(): void {
@@ -103,23 +81,22 @@ export class ClientSalesDetailedReportComponent {
 
     const reqBody: ClientSalesDetailedReportRequest = {
       cstmrCode: Number(this.cstmrCode),
-      startDate: this.startDate,
-      endDate: this.endDate,
-      sysInfo: {
-        accptMinus: 0,
-        multiStore: this.multiStoreFlag === 'True',
-        singleStrCd: this.singleStoreCode ?? '',
-        companyName: '',
-        storeName: this.singleStoreName ?? ''
-      }
+      startDate: dateToIso(this.startDateObj!),
+      endDate: dateToIso(this.endDateObj!),
+      sysInfo: this.storeScope.sysInfo()
     };
 
     this.lastReqBody = reqBody;
+    this.loading = true;
 
-    this.reportService.getClientSalesDetailedReport(reqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      this.excelReportFlag = 1;
+    this.reportService.getClientSalesDetailedReport(reqBody).subscribe({
+      next: blob => {
+        const url = window.URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.excelReportFlag = 1;
+        this.loading = false;
+      },
+      error: () => this.loading = false
     });
   }
 

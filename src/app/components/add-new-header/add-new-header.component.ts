@@ -100,6 +100,19 @@ _updateHeader:updateHeader={
 }
 
 
+  /** back to the documents screen without saving (the unsaved-changes guard asks before leaving) */
+  goBack(){
+    this._route.navigate(['/Transactions'], {
+      state: {
+        data: {
+          store_id: { id: this.HeadersDetails.hdr.strCd, strNm: this.HeadersDetails.cur_StoreName },
+          _TrsTy: this.HeadersDetails.hdr.trsTy,
+          StateType: 2
+        }
+      }
+    });
+  }
+
   editeHeaderData()
   {
     this._updateHeader={

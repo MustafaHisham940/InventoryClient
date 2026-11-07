@@ -1,129 +1,62 @@
-<p>app-checkup-bal</p>
-<body class="bg-light" dir="rtl">
-   
-  
-  
-  
-        
-    <div class="card shadow-sm position-relative">
+<app-report-shell
+  title="كشف حساب عميل"
+  icon="fa-file-invoice"
+  submitLabel="بحث"
+  [canSubmit]="!isFormInvalid()"
+  [loading]="loading"
+  [pdfUrl]="pdfUrl"
+  [showExcel]="ExcelReportFlag === 1"
+  (search)="search()"
+  (excel)="downloadExcel()">
 
-      <div class="card-ribbon w-100 text-center align-items-center justify-content-between  ">
-        <div class="pageLabel " >
-          
-          <h2 class="mb-0 fw-bolder" style="color: white;">كشف حساب عميل </h2>
-         <div class="iccc " >              
-         </div>                   
-      </div>     
-      
-       
-      </div>
-      <div class="card-body">
-       
-          <div class="card shadow-sm">
-            <div class="card-body" >
-                <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
-                    
-                    <div class="d-flex justify-content-center align-items-center mb-3">
-                        <div class="customer-filters">
-                            <!-- Search Row with Label -->
-                            <div class="row g-3 mb-4 align-items-center">  <!-- Added align-items-center -->
-                              <div class="col-auto">  <!-- Changed to col-auto for label -->
-                                <h4 class="section-label m-0">بحث متقدم</h4>  <!-- Removed mb-3 -->
-                              </div>
-                             
-                             
-                              <div class="col">  <!-- Main content column -->
-                                <div class="d-flex gap-3 w-100">
-                                  <div class="search-box flex-fill">
-                                    <app-customer-picker
-                                      [customerCode]="cstIdText"
-                                      [customerName]="customerName"
-                                      (customerSelected)="onCustomerPicked($event)">
-                                    </app-customer-picker>
-                                    <small class="field-warning" *ngIf="hasCustomerCodeError() && customerCodeTouched">كود العميل حقل إجباري</small>
-                                  </div>
-                              
-                                  <div class="search-box flex-fill">
-                                    <label for="StartDate">تاريخ البداية</label>
-                                    <div class="date-input-wrapper">
-                                        <input
-                                            id="StartDate"
-                                            name="StartDate"
-                                            [matDatepicker]="startDatePicker"
-                                            placeholder="dd/mm/yyyy"
-                                            [(ngModel)]="startDateObj"
-                                            (ngModelChange)="onStartDateObjChange($event)"
-                                            #startDateModel="ngModel"
-                                            [class.invalid-field]="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && (startDateModel.touched || startDateModel.dirty)">
-                                        <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
-                                        <mat-datepicker #startDatePicker></mat-datepicker>
-                                    </div>
-                                    <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.startDate?.trim() && (startDateModel.touched || startDateModel.dirty)">تاريخ البداية حقل إجباري</small>
-                                </div>
-                                
-                                <div class="search-box flex-fill">
-                                    <label for="EndDate">تاريخ النهاية</label>
-                                    <div class="date-input-wrapper">
-                                        <input
-                                            id="EndDate"
-                                            name="EndDate"
-                                            [matDatepicker]="endDatePicker"
-                                            placeholder="dd/mm/yyyy"
-                                            [(ngModel)]="endDateObj"
-                                            (ngModelChange)="onEndDateObjChange($event)"
-                                            #endDateModel="ngModel"
-                                            [class.invalid-field]="((hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim()) && (endDateModel.touched || endDateModel.dirty)) || (hasDateOrderError() && (startDateModel.touched || startDateModel.dirty || endDateModel.touched || endDateModel.dirty))">
-                                        <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
-                                        <mat-datepicker #endDatePicker></mat-datepicker>
-                                    </div>
-                                    <small class="field-warning" *ngIf="hasDateRequiredError() && !_Icustomfilter.specs.endDate?.trim() && (endDateModel.touched || endDateModel.dirty)">تاريخ النهاية حقل إجباري</small>
-                                    <small class="field-warning" *ngIf="hasDateOrderError() && (startDateModel.touched || startDateModel.dirty || endDateModel.touched || endDateModel.dirty)">تاريخ البداية يجب أن يكون أقدم من تاريخ النهاية</small>
-                                </div>
-                                  
+  <div class="rpt-field rpt-span-2">
+    <app-customer-picker
+      [customerCode]="cstIdText"
+      [customerName]="customerName"
+      (customerSelected)="onCustomerPicked($event)">
+    </app-customer-picker>
+    @if (hasCustomerCodeError() && customerCodeTouched) {
+      <small class="rpt-error">كود العميل حقل إجباري</small>
+    }
+  </div>
 
-                                  <button class="btn btn-success px-4" style="white-space: nowrap;" (click)="openPdfInline()">
-                                    <i class="fas fa-search me-2"></i>بحث
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                    
-                            
+  <div class="rpt-field">
+    <label for="StartDate">تاريخ البداية</label>
+    <div class="rpt-date" [class.rpt-invalid]="(hasStartDateError() && (startDateModel.touched || startDateModel.dirty)) || hasDateOrderError()">
+      <input
+        id="StartDate"
+        name="StartDate"
+        [matDatepicker]="startDatePicker"
+        placeholder="dd/mm/yyyy"
+        [(ngModel)]="startDateObj"
+        #startDateModel="ngModel">
+      <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+    </div>
+    @if (hasStartDateError() && (startDateModel.touched || startDateModel.dirty)) {
+      <small class="rpt-error">تاريخ البداية حقل إجباري</small>
+    }
+  </div>
 
-                          
-                          </div>
-                        
-                    </div>
-                     
-                     
-                  
+  <div class="rpt-field">
+    <label for="EndDate">تاريخ النهاية</label>
+    <div class="rpt-date" [class.rpt-invalid]="(hasEndDateError() && (endDateModel.touched || endDateModel.dirty)) || hasDateOrderError()">
+      <input
+        id="EndDate"
+        name="EndDate"
+        [matDatepicker]="endDatePicker"
+        placeholder="dd/mm/yyyy"
+        [(ngModel)]="endDateObj"
+        #endDateModel="ngModel">
+      <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </div>
+    @if (hasEndDateError() && (endDateModel.touched || endDateModel.dirty)) {
+      <small class="rpt-error">تاريخ النهاية حقل إجباري</small>
+    }
+    @if (hasDateOrderError()) {
+      <small class="rpt-error">تاريخ البداية يجب أن يكون أقدم من تاريخ النهاية</small>
+    }
+  </div>
 
-                </div>                   
-            </div>
-            @if(ExcelReportFlag == 1){
-              <button class="btn btn-info" style="color: white;  background-color: #1e7fc1;"  (click)="downloadExcel()"><i class="fa fa-download" style="color: white; "  aria-hidden="true"></i> تحميل ملف اكسيل </button>                    
-            }           
-             
-   
-          </div>
-        
-
-
-
-      </div>
-                                               
-    
-</div>
-
- 
-<iframe
-*ngIf="pdfUrl"
-[src]="pdfUrl"
-width="100%"
-height="800px">
-</iframe>
-
-
-</body>
-
-<!-- Add this at the bottom of your template -->
+</app-report-shell>

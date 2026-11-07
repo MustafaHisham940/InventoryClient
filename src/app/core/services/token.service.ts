@@ -13,6 +13,8 @@ export interface JwtPayload {
   'MultiStore':string;
   'SingleStoreName':string;
   'AcceptMinus':string;
+  /** configurable user roles (admin / manager / cashier ...): one claim, or an array when the user holds several */
+  'UserRole'?: string | string[];
 
 }
  
@@ -40,6 +42,20 @@ export class TokenService {
   }
 
 
+
+  /** names of the configurable roles (admin / manager / cashier ...) the user holds */
+  getUserRoles(): string[] {
+    const token = sessionStorage.getItem('token');
+    if (!token) return [];
+
+    try {
+      const claim = jwtDecode<JwtPayload>(token)['UserRole'];
+      return claim === undefined ? [] : Array.isArray(claim) ? claim : [claim];
+    } catch (err) {
+      console.error('Error decoding token:', err);
+      return [];
+    }
+  }
 
   getusername(): string | null {
     const token = sessionStorage.getItem('token');

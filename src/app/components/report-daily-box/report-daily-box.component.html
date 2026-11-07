@@ -1,100 +1,56 @@
-<div class="card shadow-sm position-relative" dir="rtl">
+<app-report-shell
+  title="كشف حساب الصندوق"
+  icon="fa-cash-register"
+  submitLabel="معاينة"
+  [canSubmit]="!isFormInvalid()"
+  [loading]="loading"
+  [pdfUrl]="pdfUrl"
+  [showExcel]="excelReportFlag === 1"
+  (search)="search()"
+  (excel)="downloadExcel()">
 
-  <div class="card-ribbon w-100 text-center align-items-center justify-content-between">
-    <div class="pageLabel">
-      <h2 class="mb-0 fw-bolder" style="color: white;">كشف حساب الصندوق</h2>
+  <app-store-scope-field
+    [(storeCode)]="storeCode"
+    label="المخزن المطلوب"
+    [allowAll]="true"
+    allLabel="جميع المخازن">
+  </app-store-scope-field>
+
+  <div class="rpt-field">
+    <label for="startDate">خلال الفترة من</label>
+    <div class="rpt-date" [class.rpt-invalid]="hasStartDateError() || hasDateOrderError()">
+      <input
+        id="startDate"
+        name="startDate"
+        [matDatepicker]="startDatePicker"
+        placeholder="dd/mm/yyyy"
+        [(ngModel)]="startDateObj">
+      <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
     </div>
+    @if (hasStartDateError()) {
+      <small class="rpt-error">يجب ادخال هذا العنصر</small>
+    }
   </div>
 
-  <div class="card-body">
-    <div class="customer-filters">
-      <div class="row g-3 mb-4 align-items-center">
-        <div class="col-auto">
-          <h4 class="section-label m-0">بحث متقدم</h4>
-        </div>
-
-        <div class="col">
-          <div class="d-flex gap-3 w-100 flex-wrap align-items-start">
-
-            <div class="search-box flex-fill select-filter">
-              <label for="storeCode">المخزن المطلوب</label>
-              <div class="select-wrapper">
-                <i class="fas fa-warehouse"></i>
-                <select
-                  id="storeCode"
-                  class="custom-select"
-                  name="storeCode"
-                  [(ngModel)]="storeCode">
-                  <option [ngValue]="null">جميع المخازن</option>
-                  @for (store of storesList; track store.strCd) {
-                    <option [value]="store.strCd">{{store.strNm}}</option>
-                  }
-                </select>
-              </div>
-            </div>
-
-            <div class="search-box flex-fill">
-              <label for="startDate">خلال الفترة من</label>
-              <div class="date-input-wrapper">
-                <input
-                  id="startDate"
-                  name="startDate"
-                  [matDatepicker]="startDatePicker"
-                  placeholder="dd/mm/yyyy"
-                  [(ngModel)]="startDateObj"
-                  #startDateModel="ngModel"
-                  [class.invalid-field]="hasStartDateError() || hasDateOrderError()">
-                <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #startDatePicker></mat-datepicker>
-              </div>
-              <small class="field-warning" *ngIf="hasStartDateError()">يجب ادخال هذا العنصر</small>
-            </div>
-
-            <div class="search-box flex-fill">
-              <label for="endDate">إلى</label>
-              <div class="date-input-wrapper">
-                <input
-                  id="endDate"
-                  name="endDate"
-                  [matDatepicker]="endDatePicker"
-                  placeholder="dd/mm/yyyy"
-                  [(ngModel)]="endDateObj"
-                  #endDateModel="ngModel"
-                  [class.invalid-field]="hasEndDateError() || hasDateOrderError()">
-                <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #endDatePicker></mat-datepicker>
-              </div>
-              <small class="field-warning" *ngIf="hasEndDateError()">يجب ادخال هذا العنصر</small>
-              <small class="field-warning" *ngIf="hasDateOrderError()">تاريخ البداية يجب أن يكون أقدم من تاريخ النهاية</small>
-            </div>
-
-            <button
-              class="btn btn-success px-4"
-              style="white-space: nowrap;"
-              (click)="search()"
-              [disabled]="isFormInvalid()">
-              <i class="fas fa-search me-2"></i>معاينة
-            </button>
-
-          </div>
-        </div>
-      </div>
+  <div class="rpt-field">
+    <label for="endDate">إلى</label>
+    <div class="rpt-date" [class.rpt-invalid]="hasEndDateError() || hasDateOrderError()">
+      <input
+        id="endDate"
+        name="endDate"
+        [matDatepicker]="endDatePicker"
+        placeholder="dd/mm/yyyy"
+        [(ngModel)]="endDateObj">
+      <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
     </div>
+    @if (hasEndDateError()) {
+      <small class="rpt-error">يجب ادخال هذا العنصر</small>
+    }
+    @if (hasDateOrderError()) {
+      <small class="rpt-error">تاريخ البداية يجب أن يكون أقدم من تاريخ النهاية</small>
+    }
   </div>
 
-  <div class="card-body pt-0" *ngIf="excelReportFlag === 1">
-    <button
-      class="btn btn-info"
-      style="color: white; background-color: #1e7fc1;"
-      (click)="downloadExcel()">
-      <i class="fa fa-download" style="color: white;" aria-hidden="true"></i> تحميل ملف اكسيل
-    </button>
-  </div>
-</div>
-
-<iframe
-  *ngIf="pdfUrl"
-  [src]="pdfUrl"
-  width="100%"
-  height="800px">
-</iframe>
+</app-report-shell>

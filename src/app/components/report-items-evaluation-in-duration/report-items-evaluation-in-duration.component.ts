@@ -2,84 +2,50 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ReportService } from '../../core/services/report.service';
-import { TokenService } from '../../core/services/token.service';
-import { ItemsEvaluationInDurationReportRequest } from '../../core/interfaces/items-evaluation-in-duration-report';
-import { StoresService } from '../../core/services/stores.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { ReportService } from '../../core/services/report.service';
+import { StoreScopeService } from '../../core/services/store-scope.service';
+import { ItemsEvaluationInDurationReportRequest } from '../../core/interfaces/items-evaluation-in-duration-report';
 import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
+import { dateToIso } from '../../core/utils/date-iso';
+import { ReportShellComponent } from '../report-shared/report-shell.component';
+import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
 
 @Component({
   selector: 'app-report-items-evaluation-in-duration',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatDatepickerModule],
+  imports: [CommonModule, FormsModule, MatDatepickerModule, ReportShellComponent, StoreScopeFieldComponent],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: DdMmYyyyDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: DD_MM_YYYY_FORMATS },
   ],
-  templateUrl: './report-items-evaluation-in-duration.component.html',
-  styleUrl: './report-items-evaluation-in-duration.component.css'
+  templateUrl: './report-items-evaluation-in-duration.component.html'
 })
 export class ReportItemsEvaluationInDurationComponent {
 
   private reportService = inject(ReportService);
-  private _TokenService = inject(TokenService);
+  private storeScope = inject(StoreScopeService);
   private sanitizer = inject(DomSanitizer);
-  private _StoresService = inject(StoresService);
 
-  storeCode: string = '';
-  storesList: { strCd: string, strNm: string }[] = [];
+  /** a single-store user starts locked on their own store, a multi-store user must pick one */
+  storeCode: string | null = this.storeScope.initialCode(false);
   startItmCode: string = '';
   endItmCode: string = '';
-  startDate: string = '';
-  endDate: string = '';
 
-  /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter for why this is needed
-   * instead of native <input type="date"> (its display format ignores `lang`
-   * and just follows OS/browser locale). Picker works with Date objects;
-   * startDate/endDate stay the same ISO yyyy-mm-dd strings the report API expects. */
+  /* dd/mm/yyyy date pickers - see DdMmYyyyDateAdapter. The pickers work with Date objects,
+   * the request carries yyyy-mm-dd strings. */
   startDateObj: Date | null = null;
   endDateObj: Date | null = null;
 
-  private dateToIso(date: Date): string {
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  }
-
-  onStartDateObjChange(date: Date | null): void {
-    this.startDate = date ? this.dateToIso(date) : '';
-  }
-
-  onEndDateObjChange(date: Date | null): void {
-    this.endDate = date ? this.dateToIso(date) : '';
-  }
-
-  singleStoreCode: string | undefined;
-  singleStoreName: string | undefined;
-  multiStoreFlag: string | undefined;
-
   pdfUrl?: SafeResourceUrl;
   excelReportFlag: number = -1;
+  loading = false;
   private lastReqBody?: ItemsEvaluationInDurationReportRequest;
 
-  ngOnInit(): void {
-    this.multiStoreFlag = this._TokenService.GetUserStoreSettings()?.MultiStore;
-    this.singleStoreCode = this._TokenService.GetUserStoreSettings()?.SingleStoreCode;
-    this.singleStoreName = this._TokenService.GetUserStoreSettings()?.SingleStoreName;
-
-    this._StoresService.GetStoresLookupList().subscribe({
-      next: (res) => {
-        this.storesList = res.data;
-      }
-    });
-  }
-
   hasStoreCodeError(): boolean {
-    return !this.storeCode?.trim();
+    return this.storeScope.storeError(this.storeCode, false);
   }
 
   hasStartItmCodeError(): boolean {
@@ -91,11 +57,15 @@ export class ReportItemsEvaluationInDurationComponent {
   }
 
   hasStartDateError(): boolean {
-    return !this.startDate?.trim();
+    return !this.startDateObj;
   }
 
   hasEndDateError(): boolean {
-    return !this.endDate?.trim();
+    return !this.endDateObj;
+  }
+
+  hasDateOrderError(): boolean {
+    return !!this.startDateObj && !!this.endDateObj && this.startDateObj > this.endDateObj;
   }
 
   isFormInvalid(): boolean {
@@ -103,7 +73,8 @@ export class ReportItemsEvaluationInDurationComponent {
       || this.hasStartItmCodeError()
       || this.hasEndItmCodeError()
       || this.hasStartDateError()
-      || this.hasEndDateError();
+      || this.hasEndDateError()
+      || this.hasDateOrderError();
   }
 
   search(): void {
@@ -112,26 +83,25 @@ export class ReportItemsEvaluationInDurationComponent {
     }
 
     const reqBody: ItemsEvaluationInDurationReportRequest = {
-      storeCode: this.storeCode,
+      storeCode: this.storeScope.effectiveCode(this.storeCode) ?? '',
       startItmCode: this.startItmCode,
       endItmCode: this.endItmCode,
-      startDate: this.startDate,
-      endDate: this.endDate,
-      sysInfo: {
-        accptMinus: 0,
-        multiStore: this.multiStoreFlag === 'True',
-        singleStrCd: this.singleStoreCode ?? '',
-        companyName: '',
-        storeName: this.singleStoreName ?? ''
-      }
+      startDate: dateToIso(this.startDateObj!),
+      endDate: dateToIso(this.endDateObj!),
+      sysInfo: this.storeScope.sysInfo()
     };
 
     this.lastReqBody = reqBody;
+    this.loading = true;
 
-    this.reportService.getItemsEvaluationInDurationReport(reqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      this.excelReportFlag = 1;
+    this.reportService.getItemsEvaluationInDurationReport(reqBody).subscribe({
+      next: blob => {
+        const url = window.URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.excelReportFlag = 1;
+        this.loading = false;
+      },
+      error: () => this.loading = false
     });
   }
 

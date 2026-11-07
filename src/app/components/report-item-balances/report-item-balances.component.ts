@@ -3,48 +3,32 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
-import { TokenService } from '../../core/services/token.service';
+import { StoreScopeService } from '../../core/services/store-scope.service';
 import { ItemsBalancesReportRequest } from '../../core/interfaces/items-balances-report';
-import { StoresService } from '../../core/services/stores.service';
+import { ReportShellComponent } from '../report-shared/report-shell.component';
+import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
 
 @Component({
   selector: 'app-report-item-balances',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './report-item-balances.component.html',
-  styleUrl: './report-item-balances.component.css'
+  imports: [CommonModule, FormsModule, ReportShellComponent, StoreScopeFieldComponent],
+  templateUrl: './report-item-balances.component.html'
 })
 export class ReportItemBalancesComponent {
 
   private reportService = inject(ReportService);
-  private _TokenService = inject(TokenService);
+  private storeScope = inject(StoreScopeService);
   private sanitizer = inject(DomSanitizer);
-  private _StoresService = inject(StoresService);
 
   firstItem: string = '';
   endItem: string = '';
-  storeCode: string = '';
-  storesList: { strCd: string, strNm: string }[] = [];
-
-  singleStoreCode: string | undefined;
-  singleStoreName: string | undefined;
-  multiStoreFlag: string | undefined;
+  /** a single-store user starts locked on their own store, a multi-store user must pick one */
+  storeCode: string | null = this.storeScope.initialCode(false);
 
   pdfUrl?: SafeResourceUrl;
   excelReportFlag: number = -1;
+  loading = false;
   private lastReqBody?: ItemsBalancesReportRequest;
-
-  ngOnInit(): void {
-    this.multiStoreFlag = this._TokenService.GetUserStoreSettings()?.MultiStore;
-    this.singleStoreCode = this._TokenService.GetUserStoreSettings()?.SingleStoreCode;
-    this.singleStoreName = this._TokenService.GetUserStoreSettings()?.SingleStoreName;
-
-    this._StoresService.GetStoresLookupList().subscribe({
-      next: (res) => {
-        this.storesList = res.data;
-      }
-    });
-  }
 
   hasFirstItemError(): boolean {
     return !this.firstItem?.trim();
@@ -55,7 +39,7 @@ export class ReportItemBalancesComponent {
   }
 
   hasStoreCodeError(): boolean {
-    return !this.storeCode?.trim();
+    return this.storeScope.storeError(this.storeCode, false);
   }
 
   isFormInvalid(): boolean {
@@ -70,22 +54,21 @@ export class ReportItemBalancesComponent {
     const reqBody: ItemsBalancesReportRequest = {
       firstItem: this.firstItem,
       endItem: this.endItem,
-      storeCode: this.storeCode,
-      sysInfo: {
-        accptMinus: 0,
-        multiStore: this.multiStoreFlag === 'True',
-        singleStrCd: this.singleStoreCode ?? '',
-        companyName: '',
-        storeName: this.singleStoreName ?? ''
-      }
+      storeCode: this.storeScope.effectiveCode(this.storeCode) ?? '',
+      sysInfo: this.storeScope.sysInfo()
     };
 
     this.lastReqBody = reqBody;
+    this.loading = true;
 
-    this.reportService.getItemsBalancesReport(reqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      this.excelReportFlag = 1;
+    this.reportService.getItemsBalancesReport(reqBody).subscribe({
+      next: blob => {
+        const url = window.URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.excelReportFlag = 1;
+        this.loading = false;
+      },
+      error: () => this.loading = false
     });
   }
 

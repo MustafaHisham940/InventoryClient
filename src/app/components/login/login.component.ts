@@ -6,6 +6,7 @@ import { TokenService } from '../../core/services/token.service';
 import { ToastrService } from 'ngx-toastr';
 import { of, switchMap } from 'rxjs';
 import { SystemSettingsService } from '../../core/services/system-settings.service';
+import { PermissionsService } from '../../core/services/permissions.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent {
    *
    */
   private _ToastrService= inject(ToastrService)
+  private _permissions = inject(PermissionsService)
   constructor( private _acountService:AccountService,
     private _router:Router,private _tokenService:TokenService , private _SettingService:SystemSettingsService
   ) {
@@ -67,6 +69,8 @@ export class LoginComponent {
           this.loginErr = false;
           sessionStorage.setItem('token', loginRes.data.token);
           sessionStorage.setItem('roles', loginRes.data.roles);
+          // pages the user's roles allow (read by the route guard)
+          this._permissions.store(loginRes.data.pages);
           
           // Call settings API
           return this._SettingService.GetSystemServices().pipe(

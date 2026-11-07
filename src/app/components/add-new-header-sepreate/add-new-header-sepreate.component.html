@@ -1,271 +1,108 @@
-<p>add-new-header-sepreate works!</p>
+<div class="hd-page" dir="rtl">
 
-
-<body dir="rtl">
-
-    <div class="conatinerPrompt container-fluid d-flex flex-column ">
-
-        <div class="prompt-container">
-            <div class="prompt-header">
-               <span>  {{this.TrnsData.data[curTrsty_number].Trns_name}} ({{this.HeadersDetails.StoreName}})</span>
-                <div class="actionButtons">
-                    <button class="btn reload-btn fs-4" title="Reload"  >↻</button>
-                </div>
-            </div>                        
-            <div class="prompt-body">
-          
-                <form [formGroup]="AddnewHeaderForm" >
-                <div class="row">
-                   <div class="col-md-6">
-                    <div class="select-filter">
-                        <div class="select-wrapper">
-                          <small class="fs-5"> رقم المستند</small>
-                          <input type="number"  id="trsNo" name="trsNo" class="form-control"  formControlName="trsNo" >
-                        </div>
-                    </div>
-                   </div>
-                   
-                </div>
-    
-                <div class="custom-divider"></div>
-          
-                <div class="row">
-                    @if(curr_TrsTy==11  ||curr_TrsTy==2 ){
-                        <div class="col-md-3">
-                        <label for="clientId">كود العميل </label>
-                        <input type="number" [value]="S_parentParent_selectedCustomer()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled >
-                        </div>
-                        <div class="col-md-6">
-                            <label for="clientId">العميل / المورد</label>
-                            <input type="text" [value]="S_parentParent_selectedCustomerName()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled>
-                            </div>
-                       <div class="col-md-3">
-                        <button type="button"   class="btn btn-primary" (click)="openDialog()">اختر الكود</button>
-                        <li>    
-                         كود العميل/المورد: <em>{{S_parentParent_selectedCustomer()}}</em>
-                       </li>   
-                       </div>
-                    }   
-                    @if(curr_TrsTy==1  ||curr_TrsTy==12 ){
-                        <div class="col-md-3">
-                            <label for="clientId">كود العميل </label>
-                            <input type="text" [value]="S_parentParent_selectedCustomer()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="clientId">العميل / المورد</label>
-                                <input type="text" [value]="S_parentParent_selectedCustomerName()" id="clientId" name="clientId" class="form-control" placeholder="اضف كود العميل"  disabled>
-                                <h1>{{Curr_CustomerName}}</h1>
-                                </div>
-                           <div class="col-md-3">
-                            <button type="button"   class="btn btn-primary" (click)="openDialog()">اختر الكود</button>
-                           <!-- <li>    
-                             كود العميل/المورد: <em>{{S_parentParent_selectedCustomer()}}</em>
-                           </li>   -->
-                           </div>
-                    }   
-                </div>
-    
-    
-                <div class="row">
-                
-                    
-                        @if(curr_TrsTy==1  ||curr_TrsTy==2 ||curr_TrsTy==11||curr_TrsTy==12 ){
-                            <div class="col-md-3">
-                            <label for="dTy">طريقةالسداد </label>
-                            <select name="dTy" id="dTy" class="form-control form-select " formControlName="dTy">                                
-                                <option value="1">نقدي</option>
-                                <option value="2">اجل</option>
-                            </select>                        
-                            </div>
-                        }   
-                        @if(curr_TrsTy==4 ){
-                            <div class="col-md-3">
-                            <label for="StrCd">كود المخزن المحول منه  </label>
-                            <input type="text" value="" id="StrCd" name="StrCd" class="form-control "  placeholder="اضف كود المخزن" formControlName="strCd">
-                            </div>
-                        }  
-                        @if(curr_TrsTy==14 ){
-                            <div class="col-md-3">
-                            <label for="StoreID">كود المخزن المحول اليه  </label>
-                            <input type="text" value="" id="StoreID" name="StoreID" class="form-control"  placeholder="اضف كود المخزن" formControlName="strCd">
-                            </div>
-                        }  
-                        @if(curr_TrsTy==11 ){
-                            <div class="col-md-3  ">
-                                <label for="sPrc">السعر المطلوب </label>
-                                <select name="sPrc" id="sPrc" class="form-control " formControlName="sPrc">
-                                    <option value="1">مستهلك</option>
-                                    <option value="2">جملة</option>
-                                </select>                        
-                                </div>
-                             
-                           
-                        } 
-                    
-                        <div class="col-md-3">
-                            <label for="TrsDt">تاريخ السند </label>
-                            <input type="datetime-local" value="" id="TrsDt" name="TrsDt" class="form-control" formControlName="trsDt" >
-                            </div>
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary mt-4" (click)="onSubmit()"> اضافة</button>
-                               </div>
-    
-                    
-                </div>
-            </form>                                                      
-             </div>
+  <section class="hd-card">
+    <header class="hd-card-header">
+      <div class="hd-title">
+        <span class="hd-title-icon"><i class="fa-solid fa-file-circle-plus"></i></span>
+        <div>
+          <h2>{{ TrnsData.data[curTrsty_number].Trns_name }} — مستند جديد</h2>
+          <span class="hd-store"><i class="fa-solid fa-warehouse"></i>{{ HeadersDetails.StoreName }}</span>
         </div>
-    
-    
-    
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <!--------------------------------------------------------------------------------->
-    <div class="prompt-container mt-5">
-    
-        <div class="prompt-body ">
-           
-               
-             
-            <div class="d-flex justify-content-around align-items-center mb-3 pt-5">
-              
-                <div class="d-flex justify-content-center align-items-center mb-3">
-                    <div class="customer-filters">
-                        <!-- Search Row with Label -->
-                        <div class="row g-3 mb-4 align-items-center">  <!-- Added align-items-center -->
-                        <div class="col-auto">  <!-- Changed to col-auto for label -->
-                            <h3 class="section-label m-0">بحث متقدم</h3>  <!-- Removed mb-3 -->
-                        </div>
-                        
-                        
-                        <div class="col">  <!-- Main content column -->
-                            <div class="d-flex gap-3 w-100">
-                            <div class="search-box flex-fill">
-                                 
-                                <input  class="form-control" type="number" placeholder="البحث برقم السطر ..." >
-                            </div>
-                            <div class="search-box flex-fill">
-                                
-                                <input  class="form-control" type="text" placeholder="كود الصنف..." >
-                            </div>
-                            <div class="search-box flex-fill">
-                                
-                                
-                                <input class="form-control"  type="number" placeholder="البحث بكود العميل/مورد..." >
-                            </div>
-                            <button class="btn btn-success px-4" style="white-space: nowrap;"  >
-                                <i class="fas fa-search me-2"></i>بحث
-                            </button>
-                            </div>
-                        </div>
-                        </div>
-                
-                        <!-- Filters Row with Label -->
-                        <div class="row g-3 align-items-center">  <!-- Added align-items-center -->
-                        <div class="col-auto">  <!-- Changed to col-auto for label -->
-                            <h3 class="section-label m-0">تصفية النتائج</h3>  <!-- Removed mb-3 -->
-                        </div>
-                        <div class="col">  <!-- Main content column -->
-                            <div class="d-flex justify-content-start gap-3 flex-wrap">  <!-- Changed to justify-content-start -->
-                            <div class="select-filter"  >
-                                <div class="search-box flex-fill">
-                                     
-                                    <input type="number" placeholder="البحث  بكود السند..."  class="form-control">
-                                </div>
-                            </div>
-                       
-                            <div class="select-filter" style="width: 220px">
-                                <div class="select-wrapper">
-                                 
-                                <select class="custom-select" id="sortSelect">
-                                    <option value="" selected disabled>الترتيب</option>
-                                    <option value="name_desc">تصاعديًا</option>
-                                    <option value="name_asc">تنازليًا</option>
-                                </select>
-                                </div>
-                            </div>
-                            
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    
-                </div>
-        </div>                      
-       
-    
-    <!--Fakeeeee Add New Item Form -->
-    
-    <div class="StaticAddBar row add-form-row p-2 border rounded mb-3">
-    <div class="col-md-1 mb-2">
-    <input type="number" class="form-control" placeholder="اضف رقم السطر الجديد" disabled>
-    </div>
-    <div class="col-md-2 mb-2">
-    <input type="input" class="form-control" placeholder="المخزن" disabled >
-    </div>
-    <div class="col-md-2 mb-2">
-    <div class="input-group" dir="ltr">
-      <input  type="text" class="form-control" placeholder="اختر الصنف" disabled>
-      <button class="btn btn-outline-secondary" type="button"   disabled>
-        <i class="fas fa-search"></i>
-      </button>
-    </div>
-    </div>
-    <div class="col-md-1 mb-2">
-    <input type="number" class="form-control" placeholder="ادخل الكمية"  disabled>
-    </div>
-    <div class="col-md-2 mb-2">
-    <input type="number" class="form-control" placeholder="ادخل السعر"  disabled>
-    </div>
-    <div class="col-md-2 mb-2">
-    <input type="datetime-local" class="form-control" placeholder="اختر تاريخ الاضافة"   disabled>
-    </div>
-    <div class="col-md-2 mb-2">
-    <button type="submit" class="btn btn-sm btn-outline-primary w-100"    >
-      <i class="fas fa-plus"></i> إضافة
-    </button>
-    </div>
-    </div>
-    
-        <!-- Fakeeee Header Row -->
-    <div class="row table-header bg-light   mb-2 d-none d-md-flex">
-    <div class="col-md-1 fw-bold">رقم السطر</div>
-    <div class="col-md-2 fw-bold">المخزن</div>
-    <div class="col-md-2 fw-bold">الصنف</div>
-    <div class="col-md-1 fw-bold">الكمية</div>
-    <div class="col-md-2 fw-bold">السعر</div>
-    <div class="col-md-2 fw-bold">القيمة</div>
-    <div class="col-md-2 fw-bold">الإجراءات</div>
-    </div>
-    
-    
-    
-    <!-- Data Rows -->
-    
-    
-    <!-- Pagination -->
-    <div class="d-flex justify-content-between align-items-center mt-3">
-    <span class="text-muted small">عرض البيانات من 0 إلى 10 من أصل  مدخل</span>
-    <nav>
-    <ul class="pagination pagination-sm mb-0">
-    <li class="page-item"><a class="page-link" >&lt;</a></li>
-                               
-    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-    </ul>
-    </nav>
-    </div>
-    
+      </div>
+
+      <div class="hd-actions">
+        <button type="button" class="hd-btn hd-btn-light" (click)="goBack()">
+          <i class="fa-solid fa-arrow-right"></i>رجوع للمستندات
+        </button>
+      </div>
+    </header>
+
+    <div class="hd-card-body">
+      <form [formGroup]="AddnewHeaderForm" class="hd-form">
+
+        <div class="hd-grid">
+
+          <div class="hd-field">
+            <label class="hd-label" for="trsNo">رقم المستند</label>
+            <input type="number" id="trsNo" name="trsNo" class="hd-input" formControlName="trsNo">
+          </div>
+
+          @if (curr_TrsTy == 11 || curr_TrsTy == 2 || curr_TrsTy == 1 || curr_TrsTy == 12) {
+            <div class="hd-field">
+              <label class="hd-label" for="clientId">{{ (curr_TrsTy == 11 || curr_TrsTy == 2) ? 'كود العميل' : 'كود المورد' }}</label>
+              <input type="text" id="clientId" name="clientId" class="hd-input" [value]="S_parentParent_selectedCustomer()" placeholder="اختر من القائمة" disabled>
+            </div>
+            <div class="hd-field hd-field-wide">
+              <label class="hd-label" for="clientName">العميل / المورد</label>
+              <div class="hd-inline">
+                <input type="text" id="clientName" name="clientName" class="hd-input" [value]="S_parentParent_selectedCustomerName()" placeholder="اختر من القائمة" disabled>
+                <button type="button" class="hd-btn hd-btn-primary" (click)="openDialog()">
+                  <i class="fa-solid fa-magnifying-glass"></i>اختر الكود
+                </button>
+              </div>
+              @if (curr_TrsTy == 1 || curr_TrsTy == 12) {
+                <span class="hd-muted">{{ Curr_CustomerName }}</span>
+              }
+            </div>
+          }
+
+          @if (curr_TrsTy == 1 || curr_TrsTy == 2 || curr_TrsTy == 11 || curr_TrsTy == 12) {
+            <div class="hd-field">
+              <label class="hd-label" for="dTy">طريقة السداد</label>
+              <select name="dTy" id="dTy" class="hd-select" formControlName="dTy">
+                <option value="1">نقدي</option>
+                <option value="2">اجل</option>
+              </select>
+            </div>
+          }
+
+          @if (curr_TrsTy == 4) {
+            <div class="hd-field">
+              <label class="hd-label" for="StrCd">كود المخزن المحول منه</label>
+              <input type="text" id="StrCd" name="StrCd" class="hd-input" placeholder="اضف كود المخزن" formControlName="strCd">
+            </div>
+          }
+
+          @if (curr_TrsTy == 14) {
+            <div class="hd-field">
+              <label class="hd-label" for="StoreID">كود المخزن المحول اليه</label>
+              <input type="text" id="StoreID" name="StoreID" class="hd-input" placeholder="اضف كود المخزن" formControlName="strCd">
+            </div>
+          }
+
+          @if (curr_TrsTy == 11) {
+            <div class="hd-field">
+              <label class="hd-label" for="sPrc">السعر المطلوب</label>
+              <select name="sPrc" id="sPrc" class="hd-select" formControlName="sPrc">
+                <option value="1">مستهلك</option>
+                <option value="2">جملة</option>
+              </select>
+            </div>
+          }
+
+          <div class="hd-field">
+            <label class="hd-label" for="TrsDt">تاريخ السند</label>
+            <input type="datetime-local" id="TrsDt" name="TrsDt" class="hd-input" formControlName="trsDt">
+          </div>
+
         </div>
-    
-    </div>
-        
-    
-    
-    </div>
 
+        <div class="hd-form-actions">
+          <button type="submit" class="hd-btn hd-btn-primary hd-btn-lg" (click)="onSubmit()">
+            <i class="fa-solid fa-plus"></i>إضافة المستند
+          </button>
+          <button type="button" class="hd-btn hd-btn-ghost hd-btn-lg" (click)="goBack()">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </section>
 
-</body>
+  <section class="hd-card">
+    <div class="hd-empty">
+      <i class="fa-solid fa-circle-info"></i>
+      <h5>أضف المستند أولاً</h5>
+      <p>بعد إضافة المستند ستنتقل إلى شاشة المستندات لإضافة الأصناف إليه.</p>
+    </div>
+  </section>
+
+</div>

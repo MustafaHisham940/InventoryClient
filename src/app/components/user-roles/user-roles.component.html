@@ -1,55 +1,86 @@
-<div class="container-fluid">
-  <div class="card shadow-sm position-relative mt-5 " dir="rtl">
-  
-    <div class="card-ribbon  text-center align-items-center justify-content-between  ">
-      <div class="pageLabel " >
-        
-        <h2 class="mb-0 fw-bolder" style="color: white;">صلاحيات المستخدم : </h2>
-        <h3 class="mb-0 fw-bolder" style="color: white;">{{userName}}</h3>
-       <div class="iccc " >
-        
-       </div>
-     
-      <!--<a  class="text-success small">الأعضاء النشطين</a>-->  
-    </div>
-    <!--<a     data-toggle="tooltip" title="اضاقة مستخدم جديد!"><i class="fas fa-plus fs-5" appNavbarHover></i> </a>-->
-    
-     
-    </div>
-    <div class="card-body ">
-      <!-- ... your existing card content ... -->
+<div class="ur-page" dir="rtl">
 
-       
-      
-      
+  <section class="ur-card">
 
-        <div class="card shadow-sm">
-          <div class="card-body" >
-        
-           
-  
-            @for (item of _roles.data; track $index) {
-            <section class="example-section">
-              <mat-slide-toggle 
-              [(ngModel)]="item.isActive"
-                  class="example-margin"
-                  name="item.normalizedName"
-                
-
-                >
-                
-              {{item.name}}
-              </mat-slide-toggle>
-            </section>
-             }
-            </div>
+    <header class="ur-header">
+      <div class="ur-title">
+        <span class="ur-avatar">{{ userName[0] }}</span>
+        <div>
+          <p class="ur-eyebrow">أدوار المستخدم</p>
+          <h2>{{ userName }}</h2>
         </div>
-        
+      </div>
+      <button type="button" class="ur-btn ur-btn-light" (click)="gotoManageRoles()">
+        <i class="fas fa-user-shield"></i> إدارة الأدوار وصلاحياتها
+      </button>
+    </header>
 
-        <button class="btn btn-primary m-4" (click)="updateUserRole(userName)">تحديث الصلاحيات</button>
-        <button class="btn btn-secondary " (click)="gotoRolesPage()">الرجوع</button>
+    <div class="ur-body">
+
+      <div class="ur-summary">
+        <span>اختر الأدوار التي يحملها هذا المستخدم، ويمكن اختيار أكثر من دور</span>
+        <span class="ur-count" [class.ur-count-none]="selectedCount === 0">
+          {{ selectedCount }} من {{ _roles.count }} محدد
+        </span>
+      </div>
+
+      @if (loading) {
+        <div class="ur-state"><span class="ur-spinner"></span> جارٍ تحميل الأدوار...</div>
+      } @else if (_roles.data.length === 0) {
+        <div class="ur-state">
+          <i class="fas fa-user-shield"></i>
+          لا توجد أدوار بعد، أنشئ الأدوار من شاشة إدارة الأدوار وصلاحياتها
+        </div>
+      } @else {
+        <div class="ur-grid">
+          @for (item of _roles.data; track item.id) {
+            <label class="ur-role" [class.ur-role-on]="item.isActive">
+              <input type="checkbox" class="ur-check" [(ngModel)]="item.isActive" [name]="'role' + item.id">
+              <span class="ur-switch" aria-hidden="true"></span>
+
+              <span class="ur-role-main">
+                <span class="ur-role-name">{{ item.name }}</span>
+                <span class="ur-role-meta">
+                  @if (item.isSuperAdmin) {
+                    كل الصفحات
+                  } @else {
+                    {{ item.pagesCount }} صفحة
+                  }
+                  · {{ item.usersCount }} مستخدم
+                </span>
+              </span>
+
+              <span class="ur-badges">
+                @if (item.isSuperAdmin) {
+                  <span class="ur-badge ur-badge-super">كامل الصلاحيات</span>
+                }
+                @if (item.isDefault) {
+                  <span class="ur-badge ur-badge-default">افتراضي</span>
+                }
+              </span>
+            </label>
+          }
+        </div>
+      }
+
+      @if (!loading && selectedCount === 0 && _roles.data.length > 0) {
+        <p class="ur-warning"><i class="fas fa-triangle-exclamation"></i> لم يتم تحديد أي دور، لن يتمكن المستخدم من فتح أي صفحة</p>
+      }
+
+      <div class="ur-actions">
+        <button type="button" class="ur-btn ur-btn-primary" (click)="updateUserRole(userName)" [disabled]="loading || saving || !hasChanges()">
+          @if (saving) {
+            <span class="ur-spinner ur-spinner-light"></span> جارٍ الحفظ...
+          } @else {
+            <i class="fas fa-floppy-disk"></i> تحديث الأدوار
+          }
+        </button>
+        <button type="button" class="ur-btn ur-btn-ghost" (click)="gotoRolesPage()">
+          <i class="fas fa-arrow-right"></i> الرجوع
+        </button>
+      </div>
 
     </div>
-  </div>
-   
+  </section>
+
 </div>

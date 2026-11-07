@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, signal, inject, model, forwardRef, effect } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Route, Router, RouterLink } from '@angular/router';
 import { TransactionMap,TransactionObj } from '../../core/interfaces/transactionsMAp';
 import { TrnsTableComponent } from "../trns-table/trns-table.component";
@@ -44,7 +45,7 @@ export interface DialogData {
 @Component({
   selector: 'app-dynamic-transactions',
   standalone: true,
-  imports: [TrnsTableComponent, FormsModule, MatIconModule, MatMenuModule, MatButtonModule, RouterLink, forwardRef(() => DialogOverviewExampleDialog), ReactiveFormsModule],
+  imports: [TrnsTableComponent, DatePipe, FormsModule, MatIconModule, MatMenuModule, MatButtonModule, RouterLink, forwardRef(() => DialogOverviewExampleDialog), ReactiveFormsModule],
   templateUrl: './dynamic-transactions.component.html',
   styleUrl: './dynamic-transactions.component.css'
 })

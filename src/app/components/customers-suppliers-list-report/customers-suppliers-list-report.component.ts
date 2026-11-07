@@ -3,39 +3,30 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
-import { TokenService } from '../../core/services/token.service';
+import { StoreScopeService } from '../../core/services/store-scope.service';
 import { CustomersSuppliersListReportRequest } from '../../core/interfaces/customers-suppliers-list-report';
+import { ReportShellComponent } from '../report-shared/report-shell.component';
 
 @Component({
   selector: 'app-customers-suppliers-list-report',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './customers-suppliers-list-report.component.html',
-  styleUrl: './customers-suppliers-list-report.component.css'
+  imports: [CommonModule, FormsModule, ReportShellComponent],
+  templateUrl: './customers-suppliers-list-report.component.html'
 })
 export class CustomersSuppliersListReportComponent {
 
   private reportService = inject(ReportService);
-  private _TokenService = inject(TokenService);
+  private storeScope = inject(StoreScopeService);
   private sanitizer = inject(DomSanitizer);
 
   startCstmr: number | null = null;
   endCstmr: number | null = null;
   customerType: number | null = null;
 
-  singleStoreCode: string | undefined;
-  singleStoreName: string | undefined;
-  multiStoreFlag: string | undefined;
-
   pdfUrl?: SafeResourceUrl;
   excelReportFlag: number = -1;
+  loading = false;
   private lastReqBody?: CustomersSuppliersListReportRequest;
-
-  ngOnInit(): void {
-    this.multiStoreFlag = this._TokenService.GetUserStoreSettings()?.MultiStore;
-    this.singleStoreCode = this._TokenService.GetUserStoreSettings()?.SingleStoreCode;
-    this.singleStoreName = this._TokenService.GetUserStoreSettings()?.SingleStoreName;
-  }
 
   hasStartCstmrError(): boolean {
     return this.startCstmr === null || this.startCstmr === undefined || (this.startCstmr as any) === '';
@@ -62,21 +53,20 @@ export class CustomersSuppliersListReportComponent {
       startCstmr: Number(this.startCstmr),
       endCstmr: Number(this.endCstmr),
       customerType: Number(this.customerType),
-      sysInfo: {
-        accptMinus: 0,
-        multiStore: this.multiStoreFlag === 'True',
-        singleStrCd: this.singleStoreCode ?? '',
-        companyName: '',
-        storeName: this.singleStoreName ?? ''
-      }
+      sysInfo: this.storeScope.sysInfo()
     };
 
     this.lastReqBody = reqBody;
+    this.loading = true;
 
-    this.reportService.getCustomersSuppliersListReport(reqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      this.excelReportFlag = 1;
+    this.reportService.getCustomersSuppliersListReport(reqBody).subscribe({
+      next: blob => {
+        const url = window.URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.excelReportFlag = 1;
+        this.loading = false;
+      },
+      error: () => this.loading = false
     });
   }
 

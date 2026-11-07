@@ -264,6 +264,19 @@ _updateHeader:updateHeader={
     });
 
 }
+/** back to the documents screen without adding (the unsaved-changes guard asks before leaving) */
+goBack(){
+  this._route.navigate(['/Transactions'], {
+    state: {
+      data: {
+        _TrsTy: this.curr_TrsTy,
+        StateType: 2,
+        store_id: { id: this.curr_Store, strNm: this.HeadersDetails.StoreName }
+      }
+    }
+  });
+}
+
 curr_TrstNo:any
 onSubmit() {
   if (this.AddnewHeaderForm.valid) {

@@ -3,39 +3,29 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
-import { TokenService } from '../../core/services/token.service';
+import { StoreScopeService } from '../../core/services/store-scope.service';
 import { ItemsListReportRequest } from '../../core/interfaces/items-list-report';
+import { ReportShellComponent } from '../report-shared/report-shell.component';
 
 @Component({
   selector: 'app-report-item-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './report-item-list.component.html',
-  styleUrl: './report-item-list.component.css'
+  imports: [CommonModule, FormsModule, ReportShellComponent],
+  templateUrl: './report-item-list.component.html'
 })
 export class ReportItemListComponent {
 
   private reportService = inject(ReportService);
-  private _TokenService = inject(TokenService);
+  private storeScope = inject(StoreScopeService);
   private sanitizer = inject(DomSanitizer);
 
   firstItem: string = '';
   endItem: string = '';
-  storeCode: string = '';
-
-  singleStoreCode: string | undefined;
-  singleStoreName: string | undefined;
-  multiStoreFlag: string | undefined;
 
   pdfUrl?: SafeResourceUrl;
   excelReportFlag: number = -1;
+  loading = false;
   private lastReqBody?: ItemsListReportRequest;
-
-  ngOnInit(): void {
-    this.multiStoreFlag = this._TokenService.GetUserStoreSettings()?.MultiStore;
-    this.singleStoreCode = this._TokenService.GetUserStoreSettings()?.SingleStoreCode;
-    this.singleStoreName = this._TokenService.GetUserStoreSettings()?.SingleStoreName;
-  }
 
   hasFirstItemError(): boolean {
     return !this.firstItem?.trim();
@@ -45,10 +35,8 @@ export class ReportItemListComponent {
     return !this.endItem?.trim();
   }
 
- 
-
   isFormInvalid(): boolean {
-    return this.hasFirstItemError() || this.hasEndItemError() ;
+    return this.hasFirstItemError() || this.hasEndItemError();
   }
 
   search(): void {
@@ -59,22 +47,22 @@ export class ReportItemListComponent {
     const reqBody: ItemsListReportRequest = {
       firstItem: this.firstItem,
       endItem: this.endItem,
-      storeCode: this.storeCode,
-      sysInfo: {
-        accptMinus: 0,
-        multiStore: this.multiStoreFlag === 'True',
-        singleStrCd: this.singleStoreCode ?? '',
-        companyName: '',
-        storeName: this.singleStoreName ?? ''
-      }
+      // the item list is not store specific
+      storeCode: '',
+      sysInfo: this.storeScope.sysInfo()
     };
 
     this.lastReqBody = reqBody;
+    this.loading = true;
 
-    this.reportService.getItemsListReport(reqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      this.excelReportFlag = 1;
+    this.reportService.getItemsListReport(reqBody).subscribe({
+      next: blob => {
+        const url = window.URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.excelReportFlag = 1;
+        this.loading = false;
+      },
+      error: () => this.loading = false
     });
   }
 

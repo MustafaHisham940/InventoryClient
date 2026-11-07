@@ -195,8 +195,12 @@
                                     }
                                     <td>
   
-                                      <button type="button" class="btn btn-sm btn-outline-primary " (click)="goToRolesPage(item.userName)">
-                                        <i class="fas fa-user-secret"></i>
+                                      <button type="button" class="btn btn-sm btn-outline-primary me-2" title="تحديد دور المستخدم" (click)="goToRolesPage(item.userName)">
+                                        <i class="fas fa-user-shield me-1"></i>تحديد الدور
+                                      </button>
+
+                                      <button type="button" class="btn btn-sm btn-outline-primary me-2" title="تحديد المخازن التي يعمل عليها المستخدم" (click)="goToStoreAccess(item.userName)">
+                                        <i class="fas fa-warehouse me-1"></i>المخازن
                                       </button>
         
                                         <button class="btn btn-sm btn-outline-primary me-2" (click)="gotoUserData(item.userName)">
@@ -204,9 +208,15 @@
                                           </button>
                                          
                                          
-                                         <button type="button" class="btn btn-sm btn-outline-danger me-2" (click)="gotoDeleteComponent(item.userName)">
-                                            <i class="fas fa-trash"></i>
+                                         @if (item.isActive) {
+                                          <button type="button" class="btn btn-sm btn-outline-danger me-2" title="ايقاف تفعيل المستخدم" (click)="askToggleStatus(item)">
+                                            <i class="fas fa-user-slash me-1"></i>تعطيل
                                           </button>
+                                         } @else {
+                                          <button type="button" class="btn btn-sm btn-outline-success me-2" title="تفعيل المستخدم" (click)="askToggleStatus(item)">
+                                            <i class="fas fa-user-check me-1"></i>تفعيل
+                                          </button>
+                                         }
   
                                           
   
@@ -275,9 +285,12 @@
   <!-- White box centered on screen -->
   <div class="position-fixed top-50 start-50 translate-middle p-4 bg-body rounded-3 shadow-lg" style="z-index: 1050; color: black;">
     <div class="text-center">
-      <h2 class="mb-3">تاكيد ايقاف المستخدم  ؟</h2>
-      <p class="text-muted mb-4">سوف يتم ايقاف تفعيل المستخدم   </p>
-      <button type="button" class="btn btn-dark px-4 m-1" (click)="disableUser()">حذف</button>
+      <h2 class="mb-3">{{ pendingActivate ? 'تأكيد تفعيل المستخدم ؟' : 'تأكيد ايقاف المستخدم ؟' }}</h2>
+      <p class="text-muted mb-4">
+        @if (pendingActivate) { سوف يتمكن المستخدم <strong>{{deletedCustomer}}</strong> من تسجيل الدخول مرة أخرى }
+        @else { لن يتمكن المستخدم <strong>{{deletedCustomer}}</strong> من تسجيل الدخول حتى يتم تفعيله }
+      </p>
+      <button type="button" class="btn px-4 m-1" [class.btn-success]="pendingActivate" [class.btn-dark]="!pendingActivate" (click)="confirmToggleStatus()">{{ pendingActivate ? 'تفعيل' : 'ايقاف' }}</button>
       <button type="button" class="btn btn-secondary px-4 m-1" (click)="dontDelete()">الغاء</button>
   
     </div>

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { TokenService } from '../../core/services/token.service';
 import { Users } from '../../core/interfaces/iaccount';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../core/services/account.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FixedButtonComponent } from "../fixed-button/fixed-button.component";
@@ -38,6 +39,8 @@ onEditButtonClicked() {
   pagesList: number[] = []
   isDeleted!:number
   deletedCustomer!:string
+  /** true = the pending confirmation will activate the user, false = deactivate */
+  pendingActivate = false
 
   // client-side pagination, since /api/Accounts/GetAllUsers returns every user in one shot
   pageSize:number = 5
@@ -68,32 +71,40 @@ onEditButtonClicked() {
     private Actroute:ActivatedRoute,
     private _route:Router,
     private _token:TokenService,
-    private _AccountService:AccountService
+    private _AccountService:AccountService,
+    private _toastr:ToastrService
   ){
     this.isDeleted=-1
     this.deletedCustomer=""
+    this.loadUsers()
+
+  }
+
+  /** (re)loads every user; keeps the current page when it still exists */
+  private loadUsers(): void {
     this._AccountService.getAllUsers().subscribe({
       next:(res)=>{
         this._users = res
-        this.currentPage = 1
         this.calculatePageNumber()
         this.fillPagesList()
+        this.currentPage = Math.min(this.currentPage, Math.max(1, Math.ceil((res.data?.length ?? 0) / this.pageSize)))
       }
-    }
-
-    )
-
+    })
   }
-  ngOnInit(): void {
-    this._NgxSpinnerService.show()
+
+  private loadCounts(): void {
     this._AccountService.getAllUsersCounts().subscribe({
       next:(res)=>{
         this._totalUSersCount=res.myProperty.totalUSersCount
         this._totalActiveUsersCount=res.myProperty.totalActiveUsersCount
         this._totalInactiveUsersCount=res.myProperty.totalInactiveUsersCount
       }
-      
     })
+  }
+
+  ngOnInit(): void {
+    this._NgxSpinnerService.show()
+    this.loadCounts()
     this._NgxSpinnerService.hide()
 
   }
@@ -223,17 +234,14 @@ onEditButtonClicked() {
   
   
   
-  gotoDeleteComponent(id:string){//is called when click the trash button   <i class="fas fa-trash"></i>
-  // set the customer id to be deleted  - 
-  this.isDeleted=0 //this means there is a customer is set to be deleted when == 0
-  this.deletedCustomer = id
-  console.log("deleted customers"+this.deletedCustomer)
+  /** opens the confirmation box to activate (inactive user) or deactivate (active user) */
+  askToggleStatus(user: { userName: string, isActive: boolean }){
+    this.isDeleted = 0 // a user is waiting for confirmation when != -1
+    this.deletedCustomer = user.userName
+    this.pendingActivate = !user.isActive
   }
-  
-  
- 
-  
-  
+
+
   dontDelete(){
   
     console.log("this.isDeleted = " +this.isDeleted)
@@ -264,25 +272,33 @@ onEditButtonClicked() {
   }
 
 
+  goToStoreAccess(userName:string){
+    this._route.navigate(['/UserStoreAccess'], {
+      state: { userName:userName }
+    });
+  }
+
+
   gotoUserData(_username:string){
     this._route.navigate(['/UserDataUpdate'] , {queryParams:{_username}})
 
   }
 
-  disableUser(){
-    console.log("this.isDeleted = " +this.isDeleted)
-    console.log("this.deletedCustomer = " +this.deletedCustomer)
-  this._AccountService.toggleUserStatus(this.deletedCustomer).subscribe({
-    next:(resss)=>{
-      console.log(resss)
-       this.isDeleted=-1
-        this.deletedCustomer=""
-      
-    }
-  })
-this._route.navigate(['/UserDetails'])
-  this.clearFilter()
+  confirmToggleStatus(){
+    const userName = this.deletedCustomer
+    const activating = this.pendingActivate
 
+    this._AccountService.toggleUserStatus(userName).subscribe({
+      next:()=>{
+        this._toastr.success(activating ? `تم تفعيل المستخدم ${userName}` : `تم ايقاف المستخدم ${userName}`)
+        this.loadUsers()
+        this.loadCounts()
+      },
+      error:(err)=> this._toastr.error(err.error?.message ?? 'تعذر تغيير حالة المستخدم')
+    })
+
+    this.isDeleted=-1
+    this.deletedCustomer=""
   }
 
 

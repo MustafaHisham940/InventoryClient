@@ -1,0 +1,105 @@
+.roles-panel {
+  background: #fff;
+  border: 1px solid #e3e6f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.role-form {
+  background: #f8f9fc;
+  border: 1px solid #e3e6f0;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.role-list {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.role-item {
+  cursor: pointer;
+}
+
+.role-item .role-meta {
+  color: #6c757d;
+}
+
+.role-item.active {
+  background: #1e7fc1;
+  border-color: #1e7fc1;
+}
+
+.role-item.active .role-meta {
+  color: #e8f3fb;
+}
+
+.empty-state {
+  background: #f8f9fc;
+  border: 1px dashed #c8d3e0;
+  border-radius: 8px;
+  padding: 32px 20px;
+  text-align: center;
+  color: #5a6a7a;
+}
+
+.search-input {
+  width: 180px;
+}
+
+.pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.page-group {
+  border: 1px solid #e3e6f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+.group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #1e7fc1;
+  border-bottom: 1px solid #e3e6f0;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.page-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.page-group input[type='checkbox'] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.rp-header {
+  padding: 16px 24px;
+  color: #fff;
+  background: linear-gradient(100deg, #1b6aa1 0%, #1e7fc1 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+.rp-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+}

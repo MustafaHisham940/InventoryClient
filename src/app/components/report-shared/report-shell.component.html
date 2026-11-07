@@ -1,0 +1,54 @@
+<div class="rpt-page" dir="rtl">
+
+  <section class="rpt-card">
+    <header class="rpt-header">
+      <div class="rpt-title">
+        <span class="rpt-title-icon"><i class="fas" [ngClass]="icon"></i></span>
+        <h2>{{ title }}</h2>
+      </div>
+    </header>
+
+    <div class="rpt-body" (keydown.enter)="canSubmit && !loading && search.emit()">
+      <div class="rpt-filters-label"><i class="fas fa-sliders-h"></i> بحث متقدم</div>
+
+      <div class="rpt-grid">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="rpt-actions">
+        <button
+          type="button"
+          class="rpt-btn rpt-btn-primary"
+          (click)="search.emit()"
+          [disabled]="!canSubmit || loading">
+          @if (loading) {
+            <span class="rpt-spinner"></span> جارٍ التحميل...
+          } @else {
+            <i class="fas fa-search"></i> {{ submitLabel }}
+          }
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="rpt-card rpt-viewer">
+    <header class="rpt-viewer-header">
+      <span><i class="fas fa-file-pdf"></i> معاينة التقرير</span>
+      @if (showExcel) {
+        <button type="button" class="rpt-btn rpt-btn-excel" (click)="excel.emit()">
+          <i class="fas fa-file-excel"></i> تحميل ملف اكسيل
+        </button>
+      }
+    </header>
+
+    @if (pdfUrl) {
+      <iframe class="rpt-frame" [src]="pdfUrl"></iframe>
+    } @else {
+      <div class="rpt-empty">
+        <i class="fas fa-file-alt"></i>
+        <p>حدّد معايير البحث ثم اضغط «{{ submitLabel }}» لعرض التقرير هنا</p>
+      </div>
+    }
+  </section>
+
+</div>

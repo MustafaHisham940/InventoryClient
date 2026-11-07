@@ -1,0 +1,136 @@
+.usa-card {
+  max-width: 760px;
+  margin: 32px auto;
+  background: #fff;
+  border: 1px solid #e1eaf3;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(34, 41, 47, 0.07);
+  overflow: hidden;
+}
+
+.usa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 18px 24px;
+  color: #fff;
+  background: linear-gradient(100deg, #1b6aa1 0%, #1e7fc1 100%);
+}
+
+.usa-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.usa-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.usa-body {
+  padding: 24px;
+}
+
+.usa-hint {
+  margin: 0 0 18px;
+  color: #5b7288;
+}
+
+.usa-loading {
+  padding: 24px;
+  text-align: center;
+  color: #5b7288;
+}
+
+.usa-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.usa-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  cursor: pointer;
+  background: #f8fbfe;
+  border: 2px solid #e1eaf3;
+  border-radius: 14px;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.usa-option:hover {
+  border-color: #91c1e4;
+}
+
+.usa-option.selected {
+  background: #eaf4fc;
+  border-color: #1e7fc1;
+  box-shadow: 0 0 0 3px rgba(30, 127, 193, 0.15);
+}
+
+.usa-option input[type='radio'] {
+  position: absolute;
+  inset-inline-end: 14px;
+  top: 14px;
+  width: 18px;
+  height: 18px;
+  accent-color: #1e7fc1;
+  cursor: pointer;
+}
+
+.usa-option-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  font-size: 1.2rem;
+  color: #1e7fc1;
+  background: #dcecf8;
+  border-radius: 12px;
+}
+
+.usa-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-inline-end: 26px;
+}
+
+.usa-option-text small {
+  color: #5b7288;
+}
+
+.usa-store {
+  max-width: 420px;
+  margin-top: 20px;
+}
+
+.usa-store label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: #1f2a37;
+}
+
+.usa-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 26px;
+}

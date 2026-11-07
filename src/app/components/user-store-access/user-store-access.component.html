@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="usa-card" dir="rtl">
+
+    <header class="usa-header">
+      <h2><i class="fa-solid fa-warehouse"></i>مخازن المستخدم</h2>
+      <span class="usa-user"><i class="fa-solid fa-user"></i>{{ userName }}</span>
+    </header>
+
+    <div class="usa-body">
+      <p class="usa-hint">اختر المخازن التي يعمل عليها هذا المستخدم. ينعكس الاختيار على المستخدم عند تسجيل دخوله في المرة القادمة.</p>
+
+      @if (loading) {
+        <div class="usa-loading">جاري التحميل...</div>
+      } @else {
+        <div class="usa-options">
+
+          <label class="usa-option" [class.selected]="mode === 'multi'">
+            <input type="radio" name="mode" value="multi" [(ngModel)]="mode">
+            <span class="usa-option-icon"><i class="fa-solid fa-warehouse"></i></span>
+            <span class="usa-option-text">
+              <strong>متعدد المخازن</strong>
+              <small>يعمل على كل المخازن، ويختار المخزن من القائمة داخل البرنامج.</small>
+            </span>
+          </label>
+
+          <label class="usa-option" [class.selected]="mode === 'single'">
+            <input type="radio" name="mode" value="single" [(ngModel)]="mode">
+            <span class="usa-option-icon"><i class="fa-solid fa-store"></i></span>
+            <span class="usa-option-text">
+              <strong>مخزن واحد</strong>
+              <small>يعمل على مخزن محدد فقط، وكل بياناته وتقاريره تخص هذا المخزن.</small>
+            </span>
+          </label>
+
+        </div>
+
+        @if (mode === 'single') {
+          <div class="usa-store">
+            <label for="storeCode">المخزن</label>
+            <select id="storeCode" class="form-select" name="storeCode" [(ngModel)]="storeCode">
+              <option [ngValue]="null" disabled>اختر المخزن...</option>
+              @for (store of stores; track store.strCd) {
+                <option [ngValue]="store.strCd">{{ store.strNm }}</option>
+              }
+            </select>
+          </div>
+        }
+
+        <div class="usa-actions">
+          <button class="btn btn-primary px-4" [disabled]="!canSave" (click)="save()">
+            <i class="fa-solid fa-floppy-disk me-2"></i>{{ saving ? 'جاري الحفظ...' : 'حفظ' }}
+          </button>
+          <button class="btn btn-secondary px-4" (click)="back()">الرجوع</button>
+        </div>
+      }
+    </div>
+  </div>
+</div>
