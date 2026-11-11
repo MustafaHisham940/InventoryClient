@@ -3,11 +3,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environments } from '../environment/environments';
 import { TokenService } from './token.service';
+import { dateToIso } from '../utils/date-iso';
 
 export interface HomeStats {
+  /** cash sales of the day (IVHDrs TrsTy 11, DTy = cash) */
   todaySales: number;
+  /** credit sales of the day (IVHDrs TrsTy 11, DTy = pay later) */
+  todayCreditSales: number;
   todayPurchases: number;
-  productsInStock: number;
+  /** customers (Typ = customer or both); not store-specific */
+  customersCount: number;
 }
 
 export interface MonthlyTotal {
@@ -16,6 +21,32 @@ export interface MonthlyTotal {
   month: number;
   sales: number;
   purchases: number;
+}
+
+/** one day of the sales trend (cash vs credit) */
+export interface DailySales {
+  /** 'yyyy-mm-ddT00:00:00' */
+  date: string;
+  cashSales: number;
+  creditSales: number;
+}
+
+/** one of the best customers of the doughnut */
+export interface TopCustomer {
+  cstId: number;
+  cstNm: string | null;
+  sales: number;
+  /** share of the total sales, 1 decimal */
+  percent: number;
+}
+
+/** best customers by sales and their share of the total sales */
+export interface TopCustomers {
+  totalSales: number;
+  customers: TopCustomer[];
+  /** everybody else (sales without a customer included) */
+  othersSales: number;
+  othersPercent: number;
 }
 
 export interface StockItemQty {
@@ -79,6 +110,24 @@ export class DashboardService {
     return this._HttpClient.get<{ data: MonthlyTotal[] }>(`${environments.baseURL}/api/Dashboard/GetMonthlySalesPurchases`, { params });
   }
 
+  /** cash vs credit sales per day for the last `days` days ending today (the user's own calendar day) */
+  getDailySales(storeCode: string | null, days = 7): Observable<{ data: DailySales[] }> {
+    let params = new HttpParams().set('days', days).set('date', dateToIso(new Date()));
+    if (storeCode) {
+      params = params.set('storeCode', storeCode);
+    }
+    return this._HttpClient.get<{ data: DailySales[] }>(`${environments.baseURL}/api/Dashboard/GetDailySales`, { params });
+  }
+
+  /** the `top` customers with the biggest sales and their share of the total sales, for one store or every store (null) */
+  getTopCustomers(storeCode: string | null, top = 5): Observable<{ data: TopCustomers }> {
+    let params = new HttpParams().set('top', top);
+    if (storeCode) {
+      params = params.set('storeCode', storeCode);
+    }
+    return this._HttpClient.get<{ data: TopCustomers }>(`${environments.baseURL}/api/Dashboard/GetTopCustomers`, { params });
+  }
+
   /** stock in / stock out from IvItmBal for one store, or every store when storeCode is null */
   getStockInOut(storeCode: string | null, top = 6): Observable<{ data: StockInOut }> {
     let params = new HttpParams().set('top', top);
@@ -89,7 +138,8 @@ export class DashboardService {
   }
 
   getHomeStats(storeCode: string | null): Observable<{ data: HomeStats }> {
-    let params = new HttpParams();
+    // "today" is the user's own calendar day - the server may run in another time zone (Azure = UTC)
+    let params = new HttpParams().set('date', dateToIso(new Date()));
     if (storeCode) {
       params = params.set('storeCode', storeCode);
     }

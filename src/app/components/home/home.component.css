@@ -487,3 +487,29 @@ canvas {
 .padddingtoop{
   margin-top: 60px;
 }
+
+/* store filter above the stat cards */
+.stats-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+.stats-filter-label {
+  font-weight: 700;
+  color: #4a5568;
+}
+
+.stats-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  font-weight: 700;
+  color: #0f6b4a;
+  background: #e1f5ec;
+  border: 1px solid #b6e2cf;
+  border-radius: 999px;
+}

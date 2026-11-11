@@ -187,9 +187,24 @@
     </div>
   </div>
 
+  <!-- Store filter of the stat cards: dropdown for all-stores users, locked badge for single-store users -->
+  <div class="stats-filter" dir="rtl">
+    <span class="stats-filter-label"><i class="fas fa-store"></i> المخزن</span>
+    @if (cardsStoreChoosable) {
+      <select class="form-select form-select-sm stock-store-select" [value]="cardsStoreCode ?? ''" (change)="onCardsStoreChange($any($event.target).value)">
+        <option value="">جميع المخازن</option>
+        @for (store of stockStores; track store.strCd) {
+          <option [value]="store.strCd">{{ store.strNm }}</option>
+        }
+      </select>
+    } @else {
+      <span class="stats-filter-badge"><i class="fas fa-lock"></i> {{ cardsStoreName || cardsStoreCode }}</span>
+    }
+  </div>
+
   <!-- Stat Cards Row -->
   <div class="row mb-4">
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-4 col-md-6 mb-4">
       <div class="stat-card primary">
         <div class="stat-card-content">
           <div class="stat-icon">
@@ -203,46 +218,29 @@
       </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-4 col-md-6 mb-4">
       <div class="stat-card success">
         <div class="stat-card-content">
           <div class="stat-icon">
             <i class="fas fa-chart-bar"></i>
           </div>
           <div class="stat-info">
-            <div class="stat-value">{{ todayPurchases === null ? '—' : (todayPurchases | number:'1.0-2') }}</div>
-            <div class="stat-label">اجمالي مشتريات اليوم</div>
+            <div class="stat-value">{{ todayCreditSales === null ? '—' : (todayCreditSales | number:'1.0-2') }}</div>
+            <div class="stat-label">اجمالي مبيعات اليوم الآجلة</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="stat-card info">
-        <div class="stat-card-content">
-          <div class="stat-icon">
-            <i class="fas fa-coins"></i>
-          </div>
-          <div class="stat-info">
-            <div class="stat-value">$68.9k</div>
-            <div class="stat-label">Net Income</div>
-            <div class="stat-change positive">
-              <i class="fas fa-arrow-up"></i> 15.3%
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-4 col-md-6 mb-4">
       <div class="stat-card warning">
         <div class="stat-card-content">
           <div class="stat-icon">
-            <i class="fas fa-boxes"></i>
+            <i class="fas fa-users"></i>
           </div>
           <div class="stat-info">
-            <div class="stat-value">{{ productsInStock === null ? '—' : (productsInStock | number:'1.0-0') }}</div>
-            <div class="stat-label">عدد المنتجات بالمخزن</div>
+            <div class="stat-value">{{ customersCount === null ? '—' : (customersCount | number:'1.0-0') }}</div>
+            <div class="stat-label">عدد العملاء</div>
           </div>
         </div>
       </div>
@@ -295,12 +293,19 @@
         <div class="chart-card-header">
           <h5 class="chart-title">
             <i class="fas fa-chart-line me-2"></i>
-            Revenue Trend
+            المبيعات النقدية والآجلة - آخر 7 أيام
           </h5>
           <div class="chart-controls">
-            <button class="btn btn-sm btn-outline-primary" (click)="updateLineChart('7d')">7D</button>
-            <button class="btn btn-sm btn-outline-primary" (click)="updateLineChart('30d')">30D</button>
-            <button class="btn btn-sm btn-outline-primary" (click)="updateLineChart('90d')">90D</button>
+            @if (trendStoreChoosable) {
+              <select class="form-select form-select-sm stock-store-select" [value]="trendStoreCode ?? ''" (change)="onTrendStoreChange($any($event.target).value)">
+                <option value="">جميع المخازن</option>
+                @for (store of stockStores; track store.strCd) {
+                  <option [value]="store.strCd">{{ store.strNm }}</option>
+                }
+              </select>
+            } @else {
+              <span class="stats-filter-badge"><i class="fas fa-lock"></i> {{ trendStoreName || trendStoreCode }}</span>
+            }
           </div>
         </div>
         <div class="chart-card-body">
@@ -315,8 +320,20 @@
         <div class="chart-card-header">
           <h5 class="chart-title">
             <i class="fas fa-chart-pie me-2"></i>
-            Market Share
+            أفضل 5 عملاء - نسبة من إجمالي المبيعات
           </h5>
+          <div class="chart-controls">
+            @if (topStoreChoosable) {
+              <select class="form-select form-select-sm stock-store-select" [value]="topStoreCode ?? ''" (change)="onTopStoreChange($any($event.target).value)">
+                <option value="">جميع المخازن</option>
+                @for (store of stockStores; track store.strCd) {
+                  <option [value]="store.strCd">{{ store.strNm }}</option>
+                }
+              </select>
+            } @else {
+              <span class="stats-filter-badge"><i class="fas fa-lock"></i> {{ topStoreName || topStoreCode }}</span>
+            }
+          </div>
         </div>
         <div class="chart-card-body">
           <canvas #doughnutChartCanvas id="doughnutChart"></canvas>
