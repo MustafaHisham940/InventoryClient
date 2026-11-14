@@ -49,6 +49,16 @@ export interface TopCustomers {
   othersPercent: number;
 }
 
+/** one row of the cash-vouchers table: the totals of one store */
+export interface StoreCashTotals {
+  /** store code; "Null" = vouchers saved without a store (client / supplier payments) */
+  strCd: string;
+  strNm: string | null;
+  clientPayments: number;
+  supplierPayments: number;
+  personalWithdrawals: number;
+}
+
 export interface StockItemQty {
   itmCd: string;
   itmNm: string | null;
@@ -128,9 +138,18 @@ export class DashboardService {
     return this._HttpClient.get<{ data: TopCustomers }>(`${environments.baseURL}/api/Dashboard/GetTopCustomers`, { params });
   }
 
-  /** stock in / stock out from IvItmBal for one store, or every store when storeCode is null */
+  /** client payments / supplier payments / personal withdrawals per store; one store only when storeCode is given, every store when null */
+  getStoreCashTotals(storeCode: string | null): Observable<{ data: StoreCashTotals[] }> {
+    let params = new HttpParams();
+    if (storeCode) {
+      params = params.set('storeCode', storeCode);
+    }
+    return this._HttpClient.get<{ data: StoreCashTotals[] }>(`${environments.baseURL}/api/Dashboard/GetStoreCashTotals`, { params });
+  }
+
+  /** stock in / stock out OF TODAY (the user's own calendar day) for one store, or every store when storeCode is null */
   getStockInOut(storeCode: string | null, top = 6): Observable<{ data: StockInOut }> {
-    let params = new HttpParams().set('top', top);
+    let params = new HttpParams().set('top', top).set('date', dateToIso(new Date()));
     if (storeCode) {
       params = params.set('storeCode', storeCode);
     }

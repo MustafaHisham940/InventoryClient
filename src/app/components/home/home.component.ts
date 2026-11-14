@@ -4,7 +4,7 @@ import { Chart, ChartConfiguration, ChartTypeRegistry } from 'chart.js';
 import { registerables } from 'chart.js';
 import { SlidingNotificationComponent } from "../sliding-notification/sliding-notification.component";
 import { ReportService } from '../../core/services/report.service';
-import { DashboardService, DailySales, MonthlyTotal, StockInOut, TopCustomers } from '../../core/services/dashboard.service';
+import { DashboardService, DailySales, MonthlyTotal, StockInOut, StoreCashTotals, TopCustomers } from '../../core/services/dashboard.service';
 import { isoToDate } from '../../core/utils/date-iso';
 import { StoresService } from '../../core/services/stores.service';
 import { StoreScopeService } from '../../core/services/store-scope.service';
@@ -56,6 +56,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   trendStoreName: string | null = null;
   private dailySales: DailySales[] | null = null;
 
+  // Cash vouchers table (client payments / supplier payments / personal withdrawals per store).
+  // The token decides: an all-stores user sees one row per store plus a total, a single-store user only their own store.
+  storeCashRows: StoreCashTotals[] | null = null;
+
   // Top customers doughnut (share of the total sales). Same store rule as the cards: an all-stores user picks a store
   // (default: all), a single-store user is fixed to their own store.
   topStoreChoosable = false;
@@ -77,7 +81,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private stockData: StockInOut | null = null;
   
   @ViewChild('barChartCanvas') barChartCanvas!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('pieChartCanvas') pieChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('lineChartCanvas') lineChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('doughnutChartCanvas') doughnutChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('stockInChartCanvas') stockInChartCanvas!: ElementRef<HTMLCanvasElement>;
@@ -134,6 +137,37 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.topStoreCode = scope.storeCode;
     this.topStoreName = this._StoreScope.getScope().singleStoreName;
     this.loadTopCustomers();
+
+    this.loadStoreCash();
+  }
+
+  /** the cash-vouchers table; the token is re-read so a single-store user always gets their own store only */
+  private loadStoreCash(): void {
+    const scope = this._DashboardService.resolveScope();
+    if (!scope.ok) {
+      return;
+    }
+
+    this._DashboardService.getStoreCashTotals(scope.storeCode).subscribe({
+      next: (res) => this.storeCashRows = res.data,
+      error: (err) => console.error('Could not load the cash vouchers table:', err)
+    });
+  }
+
+  /** row label: the store name, a fixed Arabic label for the vouchers that are saved without a store */
+  storeCashLabel(row: StoreCashTotals): string {
+    return row.strCd.toLowerCase() === 'null' ? 'عام (بدون مخزن)' : (row.strNm?.trim() || row.strCd);
+  }
+
+  /** the total row (all-stores users only) */
+  get storeCashTotal(): StoreCashTotals {
+    const rows = this.storeCashRows ?? [];
+    return {
+      strCd: '', strNm: null,
+      clientPayments: rows.reduce((s, r) => s + r.clientPayments, 0),
+      supplierPayments: rows.reduce((s, r) => s + r.supplierPayments, 0),
+      personalWithdrawals: rows.reduce((s, r) => s + r.personalWithdrawals, 0)
+    };
   }
 
   /** top 5 customers by sales; the token is checked again so a single-store user always gets their own store */
@@ -295,7 +329,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initializeCharts(): void {
     this.createBarChart();
-    this.createPieChart();
     this.createLineChart();
     this.createDoughnutChart();
     this.createStockCharts();
@@ -381,55 +414,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.charts['barChart'] = new Chart(ctx, config);
     this.applyMonthlyToChart();
-  }
-
-  private createPieChart(): void {
-    const ctx = this.pieChartCanvas.nativeElement.getContext('2d');
-    if (!ctx) return;
-
-    const config: ChartConfiguration<'pie'> = {
-      type: 'pie',
-      data: {
-        labels: ['Electronics', 'Clothing', 'Books', 'Home & Garden', 'Sports'],
-        datasets: [{
-          data: [300, 250, 180, 220, 150],
-          backgroundColor: [
-            'rgba(78, 115, 223, 0.8)',
-            'rgba(28, 200, 138, 0.8)',
-            'rgba(246, 194, 62, 0.8)',
-            'rgba(231, 74, 59, 0.8)',
-            'rgba(54, 185, 204, 0.8)'
-          ],
-          borderColor: [
-            'rgba(78, 115, 223, 1)',
-            'rgba(28, 200, 138, 1)',
-            'rgba(246, 194, 62, 1)',
-            'rgba(231, 74, 59, 1)',
-            'rgba(54, 185, 204, 1)'
-          ],
-          borderWidth: 2,
-          hoverOffset: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              usePointStyle: true,
-              padding: 20,
-              font: {
-                size: 12
-              }
-            }
-          }
-        }
-      }
-    };
-
-   this.charts['pieCharttt'] = new Chart(ctx, config as ChartConfiguration);
   }
 
   private createLineChart(): void {

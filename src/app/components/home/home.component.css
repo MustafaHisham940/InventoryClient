@@ -513,3 +513,16 @@ canvas {
   border: 1px solid #b6e2cf;
   border-radius: 999px;
 }
+
+
+/* cash vouchers table */
+.cash-table th,
+.cash-table td {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.cash-total-row td {
+  font-weight: 800;
+  border-top: 2px solid #5a5c69;
+}
