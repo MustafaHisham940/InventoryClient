@@ -183,12 +183,12 @@
              (click)="collapseState.third = true"
              (click)="collapseState.fourth = true">
                 <a >
-                  الضبــــــط والصيـــانــــــة<i class="fa-solid fa-screwdriver-wrench"></i>
+                  ضبط المستخدمين<i class="fa-solid fa-screwdriver-wrench"></i>
                 </a>
               </li>
               <div [appCollapse]="collapseState.fifth"class="jjjj">
                 <ul class="kkkk">
-                  <li class="llll"><a class="nav-links" routerLink="/CostControl">ضبـــــط التكلفة</a></li>
+               <!--   <li class="llll"><a class="nav-links" routerLink="/CostControl">ضبـــــط التكلفة</a></li>-->
                   <li class="llll"><a class="nav-links" routerLink="/UserDetails">تعريف المستخدمين</a></li>
                   <li class="llll"><a class="nav-links" routerLink="/RolePermissions">الأدوار والصلاحيات</a></li>
                 </ul>
@@ -427,6 +427,7 @@
       <div class="report-side-menu report-side-menu-floating"
            [style.top.px]="reportMenuPosition.top"
            [style.left.px]="reportMenuPosition.left"
+           [style.max-height.px]="reportMenuPosition.maxHeight"
            (click)="$event.stopPropagation()">
         <div class="report-side-menu-title">{{ activeReportGroup.title }}</div>
         <ul class="report-side-menu-list">

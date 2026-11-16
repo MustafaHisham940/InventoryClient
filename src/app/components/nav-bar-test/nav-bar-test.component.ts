@@ -49,7 +49,7 @@ export class NavBarTestComponent {
   navState: 'collapsed' | 'expanded' = 'expanded';
 
   activeReportMenu: string | null = null;
-  reportMenuPosition = { top: 0, left: 0 };
+  reportMenuPosition = { top: 0, left: 0, maxHeight: 0 };
 
   get activeReportGroup(): ReportSideMenuGroup | undefined {
     return this.reportMenuGroups.find((group) => group.key === this.activeReportMenu);
@@ -70,7 +70,8 @@ export class NavBarTestComponent {
         { label: '7-قائمة الاحتياجات من الاصناف', route: '/7reportStoreItemsNeed' },
         { label: '8-تقرير تفاصيل مبيعات الصنف', route: '/8reportDetailedItemSales' },
         { label: '9-تقرير تفاصيل مشتريات الصنف', route: '/8-2reportDetailedItemPurchases' },
-        { label: '10-تقرير تقييم الأصناف خلال فترة', route: '/9reportItemsEvaluationInDuration' },    
+        { label: '10-تقرير تقييم الأصناف خلال فترة', route: '/9reportItemsEvaluationInDuration' },   
+        { label: 'تقرير ضبط التكلفة', route: '/CostControlReport' }, 
         //{ label: 'تقرير الحركة المخزنية' },               
        // { label: 'تقرير مرتجعات البيع' },
        // { label: 'تقرير الوارد من التصنيع' },
@@ -97,22 +98,28 @@ export class NavBarTestComponent {
         { label: '12-تقرير العملاء والموردين', route: '/12reportCustomersSuppliersList' },
         { label: '13-تقرير تفاصيل مبيعات العميل', route: '/13reportClientSalesDetailed' },
         { label: '14-تقرير تفاصيل مشتريات العميل', route: '/14reportClientPurchasesDetailed' },
+      ],
+    },
+    {
+      key: 'financial',
+      title: 'تقارير مالية',
+      items: [
         { label: '15-كشف حساب الصندوق', route: '/15reportDailyBox' },
         { label: '16-إقفال يومية الصندوق', route: '/16reportExistDailyBox' },
       ],
     },
     {
       key: 'general',
-      title: 'عامة تقارير',
+      title: 'تقارير عامة',
       items: [
-        { label: 'تقرير ضبط التكلفة', route: '/CostControlReport' },
+       
         /*{ label: 'التقرير العام للمبيعات' },
         { label: 'التقرير العام للمشتروات' },
         { label: 'تقرير الأرباح' },
         { label: 'تقرير المصروفات' },
         { label: 'تقرير التدفقات النقدية' },
         { label: 'تقرير ملخص الحركة' },*/
-        { label: 'تقرير المستخدمين', route: '/UserDetails' },
+        { label: 'ضبط التكلفة', route: '/CostControl' },
        /* { label: 'تقرير سجل العمليات' },
         { label: 'تقرير إحصائي عام' },*/
       ],
@@ -142,8 +149,43 @@ export class NavBarTestComponent {
     this.reportMenuPosition = {
       top: rect.top,
       left: rect.left,
+      // never taller than the screen: a long list scrolls inside the flyout instead of running off the page
+      maxHeight: window.innerHeight - 2 * NavBarTestComponent.FLYOUT_MARGIN,
     };
     this.activeReportMenu = menuKey;
+
+    // the flyout's real size is only known once it is rendered: then slide it back inside the viewport
+    setTimeout(() => this.fitReportMenu(rect.top, rect.left));
+  }
+
+  /** gap kept between the flyout and the edges of the viewport (px) */
+  private static readonly FLYOUT_MARGIN = 12;
+
+  /**
+   * Keeps the open flyout fully visible: it starts level with the clicked item, but is moved up when its bottom
+   * would fall below the viewport, and moved right when its left edge would fall off the screen (small viewports,
+   * i.e. when the browser is zoomed in).
+   */
+  private fitReportMenu(anchorTop: number, anchorLeft: number): void {
+    const menu = document.querySelector('.report-side-menu-floating') as HTMLElement | null;
+    if (!menu) {
+      return;
+    }
+    const margin = NavBarTestComponent.FLYOUT_MARGIN;
+    const height = menu.offsetHeight;
+    const width = menu.offsetWidth;
+
+    const top = Math.max(margin, Math.min(anchorTop, window.innerHeight - height - margin));
+    // the flyout opens to the LEFT of `left` (translateX(-100% - 12px)), so it needs width + 12 px of room
+    const left = Math.max(anchorLeft, width + 12 + margin);
+
+    this.reportMenuPosition = { ...this.reportMenuPosition, top, left };
+  }
+
+  /** zooming or resizing changes the viewport, so a flyout that was placed for the old size is closed */
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.activeReportMenu = null;
   }
 
   @HostListener('document:click', ['$event'])
