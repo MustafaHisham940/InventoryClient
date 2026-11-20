@@ -1,3 +1,3 @@
 export const environments = {
-    baseURL: 'https://storeg07-api.calmmeadow-84ef09a2.eastus.azurecontainerapps.io'
+    baseURL: 'https://storeg07-api.wittysky-fc506148.eastus.azurecontainerapps.io'
 }
