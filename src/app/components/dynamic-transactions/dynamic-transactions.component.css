@@ -109,6 +109,11 @@
   transform: translateY(-1px);
 }
 
+.tx-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .tx-btn:focus-visible {
   outline: 3px solid rgba(30, 127, 193, 0.4);
   outline-offset: 2px;
@@ -375,4 +380,18 @@
   .tx-actions .tx-btn { flex: 1; }
   .tx-field-wide { grid-column: auto; }
   .tx-inline { flex-direction: column; }
+}
+
+/* shown in the document bar when the list is empty */
+.tx-no-docs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  font-weight: 700;
+  color: #8a5a00;
+  background: #fff6de;
+  border: 1px solid #f6dc9c;
+  border-radius: 10px;
 }

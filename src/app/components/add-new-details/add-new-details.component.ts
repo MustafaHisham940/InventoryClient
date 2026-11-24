@@ -11,6 +11,7 @@ import { NgModel } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { isPositiveAmount } from '../../core/validators/positive-number.validator';
 import { CanComponentDeactivate } from '../../core/guards/unsaved-changes-guard.guard';
 
 
@@ -221,7 +222,20 @@ export class AddNewDetailsComponent implements OnInit,CanComponentDeactivate {
   }
 
 
+  /** true after an update was tried with a bad quantity / price: the messages show (and update as the user fixes them) */
+  attempted = false
+
+  get qtyInvalid(): boolean { return !isPositiveAmount(this._UpdateDetailsForm.qty); }
+  get pricInvalid(): boolean { return !isPositiveAmount(this._UpdateDetailsForm.pric); }
+
   updateDtlsData(){
+  // quantity and unit price can be neither empty nor 0
+  if (this.qtyInvalid || this.pricInvalid) {
+    this.attempted = true;
+    this._ToastrService.warning('الكمية وسعر الوحدة مطلوبان ويجب أن يكون كل منهما أكبر من صفر', 'بيانات ناقصة', { positionClass: 'toast-top-left' });
+    return;
+  }
+
   console.log("this.updateDtlsData=>>>>>>>"+this._UpdateDetailsForm.itmCd) 
   console.log("this.updateDtlsData=>>>>>>>"+this._UpdateDetailsForm.qty) 
   console.log("this.updateDtlsData=>>>>>>>"+this._UpdateDetailsForm.pric) 
@@ -237,16 +251,20 @@ export class AddNewDetailsComponent implements OnInit,CanComponentDeactivate {
     next:(res)=>{console.log(res)
       this.isSaved=true
 
+      // The line rows from the API have no store name (storeName = null), and the Transactions screen sent the user to /home
+      // when the name was missing. Take the store / type from what the Transactions screen itself passed in.
       const store_id={
-        id:this.detailsMetaData.Item.strCd,
-        strNm:this.detailsMetaData.Item.storeName
+        id:this.detailsMetaData.curr_Store_id ?? this.detailsMetaData.Item.strCd,
+        strNm:this.detailsMetaData.curr_Store_Name || this.detailsMetaData.Item.storeName
       }
 
       const data={
-        store_id:store_id ,          
-        _TrsTy:this.detailsMetaData.Item.trsTy,
-        StateType:2
-        }
+        store_id:store_id ,
+        _TrsTy:this.detailsMetaData.curr_TrsTy ?? this.detailsMetaData.Item.trsTy,
+        StateType:2,
+        // the list reloads with exactly this document selected (and its value, customer, date and lines reloaded)
+        selectedTrsNo: Number(this.detailsMetaData.Item.trsNo)
+      }
       console.log("data = bavk loofofofofofo " ,data)
       this._route.navigate(['/Transactions'] , {state:{data:data}})
   

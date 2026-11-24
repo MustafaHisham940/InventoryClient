@@ -17,10 +17,10 @@
           <button type="button" class="tx-btn tx-btn-light" title="اضافة هيدر" (click)="AddNewHeaderSeperate()">
             <i class="fa-solid fa-plus"></i>إضافة
           </button>
-          <button type="button" class="tx-btn tx-btn-light" title="تعديل هيدر" (click)="editeHeader()">
+          <button type="button" class="tx-btn tx-btn-light" title="تعديل هيدر" [disabled]="!canEditHeader" (click)="editeHeader()">
             <i class="fa-solid fa-pen"></i>تعديل
           </button>
-          <button type="button" class="tx-btn tx-btn-danger" title="حذف هيدر" (click)="clickDelete()">
+          <button type="button" class="tx-btn tx-btn-danger" title="حذف هيدر" [disabled]="!canEditHeader" (click)="clickDelete()">
             <i class="fa-solid fa-trash"></i>حذف
           </button>
         </div>
@@ -30,13 +30,20 @@
 
         <!-- document picker -->
         <div class="tx-docbar">
-          <label for="typeSelect">رقم المستند</label>
-          <select class="tx-select" id="typeSelect" [(ngModel)]="curr_TrstNo" (change)="setisActiveCurr_TrstNo()">
-            @for (item of StaicTrstNoArr; track $index) {
-              <option [ngValue]="item">{{ item }}</option>
-            }
-          </select>
-          <span class="tx-muted">{{ StaicTrstNoArr.length }} مستند</span>
+          @if (StaicTrstNoArr.length > 0) {
+            <label for="typeSelect">رقم المستند</label>
+            <select class="tx-select" id="typeSelect" [(ngModel)]="curr_TrstNo" (change)="setisActiveCurr_TrstNo()">
+              @for (item of StaicTrstNoArr; track $index) {
+                <option [ngValue]="item">{{ item }}</option>
+              }
+            </select>
+            <span class="tx-muted">{{ StaicTrstNoArr.length }} مستند</span>
+          } @else if (headersLoaded) {
+            <div class="tx-no-docs" role="status">
+              <i class="fa-solid fa-circle-info"></i>
+              لا يوجد فواتير لعرضها
+            </div>
+          }
         </div>
 
         <!-- header data -->

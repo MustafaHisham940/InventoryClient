@@ -42,12 +42,20 @@
 
       <div class="tl-field tl-field-sm">
         <label for="tlQty">الكمية</label>
-        <input id="tlQty" type="number" class="tl-input" placeholder="الكمية" formControlName="qty">
+        <input id="tlQty" type="number" step="any" min="0" class="tl-input" placeholder="الكمية" formControlName="qty" required
+               [class.tl-invalid]="qtyInvalid">
+        @if (qtyInvalid) {
+          <small class="tl-error">الكمية مطلوبة وأكبر من صفر</small>
+        }
       </div>
 
       <div class="tl-field tl-field-sm">
         <label for="tlPric">السعر</label>
-        <input id="tlPric" type="number" class="tl-input" placeholder="السعر" formControlName="pric" [value]="AddNewDetails.get('pric')?.value">
+        <input id="tlPric" type="number" step="any" min="0" class="tl-input" placeholder="السعر" formControlName="pric" required
+               [class.tl-invalid]="pricInvalid" [value]="AddNewDetails.get('pric')?.value">
+        @if (pricInvalid) {
+          <small class="tl-error">السعر مطلوب وأكبر من صفر</small>
+        }
       </div>
 
       <div class="tl-field tl-field-btn">
@@ -63,18 +71,22 @@
     <div class="tl-toolbar">
       <div class="tl-search">
         <i class="fas fa-id-card"></i>
-        <input type="number" placeholder="البحث برقم السطر ..." [(ngModel)]="_Icustomerfilter._LnNo">
+        <input type="number" placeholder="البحث برقم السطر ..." [(ngModel)]="_Icustomerfilter._LnNo" (keyup.enter)="searchCustomers()">
       </div>
       <div class="tl-search">
         <i class="fas fa-barcode"></i>
-        <input type="text" placeholder="كود الصنف..." [(ngModel)]="_Icustomerfilter._ItmCd">
+        <input type="text" placeholder="كود الصنف..." [(ngModel)]="_Icustomerfilter._ItmCd" (keyup.enter)="searchCustomers()">
+      </div>
+      <div class="tl-search">
+        <i class="fas fa-weight-hanging"></i>
+        <input type="number" step="any" placeholder="الكمية..." [(ngModel)]="_Icustomerfilter._Qty" (keyup.enter)="searchCustomers()">
       </div>
       <div class="tl-search tl-search-select">
         <i class="fas fa-sort"></i>
         <select id="sortSelect" [(ngModel)]="_Icustomerfilter._Sort">
-          <option value="" selected disabled>الترتيب</option>
-          <option value="name_desc">تصاعديًا</option>
-          <option value="name_asc">تنازليًا</option>
+          <option value="">الترتيب (رقم السطر)</option>
+          <option value="qty_asc">الكمية: تصاعديًا</option>
+          <option value="qty_desc">الكمية: تنازليًا</option>
         </select>
       </div>
       <button type="button" class="tl-btn tl-btn-primary" (click)="searchCustomers()">
@@ -121,7 +133,11 @@
             <tr class="tl-empty-row">
               <td colspan="6">
                 <i class="fa-regular fa-folder-open"></i>
-                لا توجد أسطر في هذا المستند بعد — أضف صنفاً من النموذج بالأعلى.
+                @if (resultIsFiltered) {
+                  لا توجد أسطر مطابقة للبحث — غيّر الشروط أو اضغط «مسح الفلتر».
+                } @else {
+                  لا توجد أسطر في هذا المستند بعد — أضف صنفاً من النموذج بالأعلى.
+                }
               </td>
             </tr>
           }

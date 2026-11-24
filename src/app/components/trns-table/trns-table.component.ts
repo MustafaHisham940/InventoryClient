@@ -3,6 +3,7 @@ import { CustomerServiceService } from '../../core/services/customer-service.ser
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Icustomer,Icustomerfilter } from '../../core/interfaces/icustomer';
 import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule } from '@angular/forms'; // Import FormsModule
+import { positiveAmountValidator } from '../../core/validators/positive-number.validator';
 import { NavbarHoverDirective } from '../../core/directives/navbar-hover.directive';
 import { ToastrService } from 'ngx-toastr';
 import { FixedButtonComponent } from "../fixed-button/fixed-button.component";
@@ -166,7 +167,8 @@ export class TrnsTableComponent  implements OnInit, OnDestroy {
             this.syncFilterFromInputs();
             const trsNo = Number(this._Icustomerfilter._TrsNo);
             const cstId = Number(this._Icustomerfilter._CstId);
-            const dedupeKey = `${String(this._Icustomerfilter._StrCd)}|${String(this._Icustomerfilter._TrsTy)}|${trsNo}|${cstId}|${this._Icustomerfilter._pageIndex}|${opts.skipFillPages ? '1' : '0'}`;
+            const f = this._Icustomerfilter;
+            const dedupeKey = `${String(f._StrCd)}|${String(f._TrsTy)}|${trsNo}|${cstId}|${f._pageIndex}|${opts.skipFillPages ? '1' : '0'}|${f._LnNo ?? ''}|${f._ItmCd ?? ''}|${f._Qty ?? ''}|${f._Sort ?? ''}`;
             return { opts, dedupeKey, trsNo };
           }),
           distinctUntilChanged(
@@ -182,11 +184,15 @@ export class TrnsTableComponent  implements OnInit, OnDestroy {
             ) {
               return EMPTY;
             }
+            // does this request carry a search? (decides which text the empty table shows)
+            const sf = this._Icustomerfilter;
+            const filtered = sf._LnNo != null || !!sf._ItmCd?.trim() || sf._Qty != null;
             return this._HeaderServiceService
-              .getAllDetailsFiltered(this._Icustomerfilter)
+              .searchDetails(this._Icustomerfilter)
               .pipe(
                 switchMap((res) => {
                   this._customers = res;
+                  this.resultIsFiltered = filtered;
                   this.calculatePageNumber();
                   if (!opts.skipFillPages) {
                     this.fillPagesList();
@@ -217,6 +223,8 @@ export class TrnsTableComponent  implements OnInit, OnDestroy {
     sysInfodto:any
   
   
+    /** true when the lines on screen are the result of a search (line / item code / quantity) */
+    resultIsFiltered = false
     _totalCustomerCount:number=0
     _totalBidderCount:number =0
     _totalBuyerCount:number=0
@@ -448,8 +456,9 @@ export class TrnsTableComponent  implements OnInit, OnDestroy {
     trsDt: [''],
     cstId: [0],
     itmCd: [''],
-    qty: [0],
-    pric: [0],                  
+    // both are mandatory and must be greater than zero (a line without quantity or price is meaningless)
+    qty: [null, [positiveAmountValidator]],
+    pric: [null, [positiveAmountValidator]],                  
     own: [''],    
     ctm:[this.getCurrentDateTime()],
     ltm:[this.getCurrentDateTime()],
@@ -461,10 +470,29 @@ export class TrnsTableComponent  implements OnInit, OnDestroy {
     return new Date().toISOString().slice(0, 16); // Format for datetime-local input
   }
 
+/** red message under the quantity / price box (after it was touched or an add was tried) */
+get qtyInvalid(): boolean {
+  const c = this.AddNewDetails.get('qty');
+  return !!c && c.invalid && (c.touched || c.dirty);
+}
+
+get pricInvalid(): boolean {
+  const c = this.AddNewDetails.get('pric');
+  return !!c && c.invalid && (c.touched || c.dirty);
+}
+
 addNewDetailsSysinfo:any
 
   
   AddnewGetails(){
+
+    // quantity and price are mandatory and can not be 0: nothing is sent until both are real numbers
+    if (this.AddNewDetails.get('qty')?.invalid || this.AddNewDetails.get('pric')?.invalid) {
+      this.AddNewDetails.get('qty')?.markAsTouched();
+      this.AddNewDetails.get('pric')?.markAsTouched();
+      this._ToastrService.warning('الكمية والسعر مطلوبان ويجب أن يكون كل منهما أكبر من صفر', 'بيانات ناقصة', { positionClass: 'toast-top-left' });
+      return;
+    }
 
     const trsNoValue = this.isActiveCurr_TrstNo();
     this.AddNewDetails.patchValue({
@@ -738,7 +766,7 @@ addNewDetailsSysinfo:any
       this._Icustomerfilter._CstId=Number(this.isActiveCurr_CstID())
       if(this.isDeletedSuccess==1 ){
         setTimeout(() => {
-          this._HeaderServiceService.getAllDetailsFiltered(this._Icustomerfilter).subscribe({
+          this._HeaderServiceService.searchDetails(this._Icustomerfilter).subscribe({
               next: (res) => {
                   this._customers = res;
                   console.log("Updated data after delete:", res);

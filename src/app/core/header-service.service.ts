@@ -18,6 +18,15 @@ export class HeaderServiceService {
   }
   
   
+  /**
+   * Searches the lines of ONE document. Body: _StrCd + _TrsTy + _TrsNo (the document), the criteria _LnNo (line number),
+   * _ItmCd (item code) and _Qty (quantity), _Sort = 'qty_asc' | 'qty_desc' (by quantity; empty = by line number), paging.
+   */
+  searchDetails(filter: any): Observable<any> {
+    return this.http.post<any>(`${environments.baseURL}/api/DetailsContoller/SearchDetails`, filter);
+  }
+
+
   AddNewDetails(inputSpecs: any): Observable<any> {
     return this.http.post<any>(`${environments.baseURL}/api/DetailsContoller/AddNewDetails`, inputSpecs);
   }
@@ -67,6 +76,6 @@ export class HeaderServiceService {
   
 
   deleteHeadersParallels(data: any) {
-    return this.http.post<any>('http://localhost:7233/api/DeleteHeaders/DeleteHeadersParallel', data);
+    return this.http.post<any>(`${environments.baseURL}/api/DeleteHeaders/DeleteHeadersParallel`, data);
   }
 }

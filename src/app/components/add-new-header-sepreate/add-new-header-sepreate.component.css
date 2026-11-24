@@ -332,3 +332,17 @@
   .hd-field-wide { grid-column: auto; }
   .hd-inline { flex-direction: column; }
 }
+
+/* mandatory date: red border + message */
+.hd-input.hd-invalid {
+  border-color: #e74a3b;
+  background: #fff6f5;
+}
+
+.hd-error {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #d9382a;
+}

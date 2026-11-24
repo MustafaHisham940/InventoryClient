@@ -62,11 +62,17 @@ export class AddNewHeaderComponent  implements OnInit,CanComponentDeactivate{
     
     const navigationState = history.state;
 
-    console.log("dataaaaaaaaaaaaaa" , navigationState.data)
-    if (navigationState && navigationState.data) {
-      this.HeadersDetails = navigationState.data;
-      console.log("this.detailsMetaData========>>>>>>>>",this.HeadersDetails)
+    console.log("dataaaaaaaaaaaaaa" , navigationState?.data)
+    const hdr = navigationState?.data?.hdr;
+    if (!hdr || !hdr.strCd || hdr.trsTy == null || !hdr.trsNo) {
+      // There is no header to edit (store, type or number is missing: opened by hand, or the state was lost):
+      // an empty edit screen must never be shown.
+      this.isSaved = true   // nothing to lose, so no "leave without saving?" question
+      this._route.navigate(['/home'])
+      return
     }
+    this.HeadersDetails = navigationState.data;
+    console.log("this.detailsMetaData========>>>>>>>>",this.HeadersDetails)
     this.selectedOption=this.HeadersDetails.hdr.dTy
     this.receivedItemId =this.HeadersDetails.hdr.cstId 
     
@@ -107,7 +113,9 @@ _updateHeader:updateHeader={
         data: {
           store_id: { id: this.HeadersDetails.hdr.strCd, strNm: this.HeadersDetails.cur_StoreName },
           _TrsTy: this.HeadersDetails.hdr.trsTy,
-          StateType: 2
+          StateType: 2,
+          // the same document stays selected, reloaded with the latest values
+          selectedTrsNo: this.HeadersDetails.hdr.trsNo
         }
       }
     });
@@ -138,7 +146,9 @@ _updateHeader:updateHeader={
         const data={
           store_id:store_id ,          
           _TrsTy:this.HeadersDetails.hdr.trsTy,
-          StateType:2
+          StateType:2,
+          // the same document stays selected, reloaded with the latest values
+          selectedTrsNo: this.HeadersDetails.hdr.trsNo
           }
         console.log("data = bavk loofofofofofo " ,data)
         this._route.navigate(['/Transactions'] , {state:{data:data}})

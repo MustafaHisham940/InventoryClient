@@ -6,7 +6,8 @@ import { ToastrService } from 'ngx-toastr';
  
 import { CustomerTableSeprateComponent } from "../CustomTables/customer-table-seprate/customer-table-seprate.component";
 import { customer } from '../../core/interfaces/icustomer';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { dateToLocalDateTimeInput } from '../../core/utils/date-iso';
 import { updateHeader } from '../../core/interfaces/ivDtls';
 import { Router } from '@angular/router';
 import { TransactionMap } from '../../core/interfaces/transactionsMAp';
@@ -221,7 +222,8 @@ _updateHeader:updateHeader={
     strCd: [0],
     trsTy: [0],
     trsNo: null,
-    trsDt: null,
+    // the document date: today (now) by default, and it can not be left empty
+    trsDt: [dateToLocalDateTimeInput(new Date()), Validators.required],
     cstId: null,//[0]
     val:null,
     disc: null,
@@ -277,8 +279,21 @@ goBack(){
   });
 }
 
+/** the date box is empty / invalid: the template shows the red message */
+get dateInvalid(): boolean {
+  const c = this.AddnewHeaderForm.get('trsDt');
+  return !!c && c.invalid && (c.touched || c.dirty);
+}
+
 curr_TrstNo:any
 onSubmit() {
+  // the date is mandatory: say so instead of silently doing nothing
+  if (!this.AddnewHeaderForm.valid) {
+    this.AddnewHeaderForm.markAllAsTouched();
+    this._toastrService.warning('تاريخ السند مطلوب، اختر التاريخ ثم أعد المحاولة', 'بيانات ناقصة', { positionClass: 'toast-top-left' });
+    return;
+  }
+
   if (this.AddnewHeaderForm.valid) {
     
     if(this.AddnewHeaderForm.get('trsTy')?.value == 3 ||
@@ -299,6 +314,10 @@ onSubmit() {
       /*this.curr_TrsTy=navigationState.data._TrsTy
       this.curr_Store=navigationState.data.store_id.id
       this.curr_StoreName=navigationState.data.store_id.strNm*/
+
+      // saved: leaving this screen now must NOT ask "leave without saving?" (that question is only for going back / other links)
+      this.isSaved = true
+
       this._route.navigate(['/Transactions'], {
         state: {
           data: {
@@ -307,11 +326,15 @@ onSubmit() {
             store_id:{
               id:this.curr_Store,
               strNm:this.HeadersDetails.StoreName
-            }
+            },
+            // the list reloads and selects the document that was just added
+            selectedTrsNo: Number(this.curr_TrstNo)
           }
         }
       });
-      this._toastrService.success("اضافة هيدر جديد" , "تمت اضافة الهيدر بنجاح")
+      this._toastrService.success("اضافة هيدر جديد" , "تمت اضافة الهيدر بنجاح" ,
+        {positionClass: 'toast-top-left'}
+      )
    //   this.FindHeader()
 
 

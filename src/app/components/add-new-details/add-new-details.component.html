@@ -170,7 +170,10 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label for="Qty">الكمية </label>
-                                    <input type="number" id="Qty" name="Qty" class="form-control" [(ngModel)]="_UpdateDetailsForm.qty">
+                                    <input type="number" step="any" id="Qty" name="Qty" class="form-control" required [class.is-invalid]="attempted && qtyInvalid" [(ngModel)]="_UpdateDetailsForm.qty">
+                                    @if (attempted && qtyInvalid) {
+                                      <div class="invalid-feedback d-block">الكمية مطلوبة ويجب أن تكون أكبر من صفر</div>
+                                    }
                                 </div>
                             
 
@@ -184,7 +187,10 @@
                              
                                 <div class="col-md-3">
                                     <label for="Pric">سعر الوحدة </label>
-                                    <input type="number" id="Pric" name="Pric" class="form-control"[(ngModel)]="_UpdateDetailsForm.pric">
+                                    <input type="number" step="any" id="Pric" name="Pric" class="form-control" required [class.is-invalid]="attempted && pricInvalid" [(ngModel)]="_UpdateDetailsForm.pric">
+                                    @if (attempted && pricInvalid) {
+                                      <div class="invalid-feedback d-block">سعر الوحدة مطلوب ويجب أن يكون أكبر من صفر</div>
+                                    }
                                 </div>
                             
 

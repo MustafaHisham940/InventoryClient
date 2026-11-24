@@ -403,3 +403,17 @@
 
   .tl-col-actions { width: 100%; }
 }
+
+/* mandatory quantity / price: red border + message */
+.tl-input.tl-invalid {
+  border-color: #e74a3b;
+  background: #fff6f5;
+}
+
+.tl-error {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #d9382a;
+}

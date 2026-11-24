@@ -15,3 +15,10 @@ export function isoToDate(iso: string | null | undefined): Date | null {
   }
   return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
 }
+
+/** Date -> the value a <input type="datetime-local"> wants: 'yyyy-MM-ddTHH:mm' in the user's LOCAL time (toISOString() would be UTC). */
+export function dateToLocalDateTimeInput(date: Date): string {
+  const hh = String(date.getHours()).padStart(2, '0');
+  const min = String(date.getMinutes()).padStart(2, '0');
+  return `${dateToIso(date)}T${hh}:${min}`;
+}

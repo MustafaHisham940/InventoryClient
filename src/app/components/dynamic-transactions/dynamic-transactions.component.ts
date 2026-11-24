@@ -93,6 +93,12 @@ DynamicPrompts={
    */
   private appliedHeaderTrsNo: number | null = null;
 
+  /** document number to select once the list has loaded (sent by the add / edit screens); null = the latest document */
+  private preferredTrsNo: number | null = null;
+
+  /** true once the list of documents has come back (so "no invoices" is not shown while it is still loading) */
+  headersLoaded = false;
+
   setisActiveCurr_TrstNo() {
     if (this.appliedHeaderTrsNo === this.curr_TrstNo) {
       this.isActiveCurr_TrstNo.set(this.curr_TrstNo);
@@ -235,21 +241,24 @@ DynamicPrompts={
 
   ngOnInit() {
 
-    const navigationState=history.state
-    console.log("navigationState.data---------->>" , navigationState.data)
-    if(navigationState 
-      &&navigationState.data.store_id.id
-      &&navigationState.data._TrsTy
-      &&navigationState.data.store_id.strNm
-      &&navigationState.data.StateType ==2)
+    const stateData = history.state?.data
+    console.log("navigationState.data---------->>" , stateData)
+    // The store NAME is only shown on the screen, so a state without it (e.g. coming back from a lines screen that did not
+    // know it) must not throw the user out to /home: only the store code and the type are really needed.
+    if(stateData
+      &&stateData.store_id?.id
+      &&stateData._TrsTy
+      &&stateData.StateType ==2)
       {
-        this.curr_TrsTy=navigationState.data._TrsTy
-        this.curr_Store=navigationState.data.store_id.id
-        this.curr_StoreName=navigationState.data.store_id.strNm
-      
+        this.curr_TrsTy=stateData._TrsTy
+        this.curr_Store=stateData.store_id.id
+        this.curr_StoreName=stateData.store_id.strNm || stateData.store_id.id
+        // the document to select after the list is loaded (the one just added / edited); none = the latest
+        this.preferredTrsNo = stateData.selectedTrsNo ?? null
        }
        else{
           this._route.navigate(['/home'])
+          return
        }  
 
        this.IHeadersfilter.f_StrCd_name=this.curr_Store
@@ -287,24 +296,66 @@ DynamicPrompts={
 }
 
 private loadInitialHeaders() {
+  this.headersLoaded = false;
   this._HDetailsService.getAllHeadersFiltered(this.IHeadersfilter).subscribe({
     next: (res: IHeaders) => {
       this.Headers = res;
+      this.headersLoaded = true;
 
       if (!res?.data?.length) {
-        this.StaicTrstNoArr = [];
-        this.curr_TrstNo = 0;
-        this.appliedHeaderTrsNo = null;
+        this.clearHeaderUi();
         return;
       }
 
       this.StaicTrstNoArr = res.data.map((header: Header) => header.trsNo);
-      this.curr_TrstNo = this.StaicTrstNoArr[0] as number;
+      // the list is newest first: the wanted document (just added / edited), otherwise the latest one
+      const wanted = this.preferredTrsNo != null
+        ? res.data.find((header: Header) => header.trsNo === this.preferredTrsNo)
+        : undefined;
+      const selected: Header = wanted ?? res.data[0];
+      this.preferredTrsNo = null;
+
+      this.curr_TrstNo = selected.trsNo as number;
       this.IHeadersfilter.f__TrsNo = this.curr_TrstNo;
       /** First response already includes the selected header row — avoid a second identical GetAllHeadersFiltered on load */
-      this.applyHeaderRowToUi(res.data[0], res);
-    }
+      this.applyHeaderRowToUi(selected, res);
+    },
+    error: () => { this.headersLoaded = true; }
   });
+}
+
+/**
+ * Calls the whole list of documents again (the safest way to be in step with the database) and selects the latest one,
+ * or `preferredTrsNo` when it is given. The filter is rebuilt from scratch: a leftover f__TrsNo would bring back ONE document.
+ */
+private reloadAllHeaders(preferredTrsNo: number | null = null): void {
+  this.preferredTrsNo = preferredTrsNo;
+  this.IHeadersfilter = {
+    f_StrCd_name: this.curr_Store,
+    f__TrsTy: this.curr_TrsTy,
+    f__TrsNo: undefined as number | undefined,
+    f__TrsDt: undefined as Date | undefined,
+    _Sort: '' as string | undefined,
+    _pageSize: 1000,
+    _pageIndex: 1
+  };
+  this.loadInitialHeaders();
+}
+
+/**
+ * This type has no document at all: forget everything that belonged to the document shown before. The invoice value lives in a
+ * service shared by all screens, so without this the value of the PREVIOUSLY opened type (e.g. 6000 of the purchases) stayed on
+ * screen, as did its customer and date.
+ */
+private clearHeaderUi(): void {
+  this.StaicTrstNoArr = [];
+  this.curr_TrstNo = 0;
+  this.appliedHeaderTrsNo = null;
+  this.SecHeaders = { ...this.Headers, data: [] };
+  this.isActiveCurr_CstID.set(0);
+  this.isActiveCurr_TrsDt.set(new Date());
+  this._DetailsHdrsSharedSignalsService.setHeaderValue(0);
+  this.hdrValue.set({ totalVal: 0 });
 }
 
 /** Single place to sync header row into the prompt + signals (used on full list or filtered response). */
@@ -331,7 +382,7 @@ private applyHeaderRowToUi(selectedHeader: Header, listEnvelope: IHeaders): void
 private setupSelectedHeaderStream() {
   this.selectedHeaderTrsNo$
     .pipe(
-      distinctUntilChanged(),
+      // (no distinctUntilChanged here: setisActiveCurr_TrstNo already ignores the number that is on screen)
       switchMap((trsNo: number) => {
         this.IHeadersfilter.f__TrsNo = trsNo;
         return this._HDetailsService.getAllHeadersFiltered(this.IHeadersfilter);
@@ -452,7 +503,7 @@ AddNewHeader(){
   this.AddnewHeaderForm.patchValue({
     strCd: this.curr_Store,
     trsTy: this.curr_TrsTy,
-    trsNo: this.StaicTrstNoArr[0]+1,
+    trsNo: Math.max(0, ...this.StaicTrstNoArr) + 1,
     
     //cstId: this.S_parentParent_selectedCustomer(),
     oWn:  this._TokenService.getGivenName(),
@@ -575,18 +626,41 @@ private fb = inject(FormBuilder);
     cur_Trstys: this.TrnsData.data[this.curr_TrsTy].Trns_name
   }
 
-  editeHeader(){
+  /** a header can be edited / deleted only when one is really selected: its store, type and number must all be known */
+  get canEditHeader(): boolean {
+    const hdr = this.SecHeaders?.data?.[0];
+    return !!hdr && !!hdr.strCd && hdr.trsTy != null && !!hdr.trsNo
+      && this.curr_TrstNo > 0 && this.StaicTrstNoArr.length > 0;
+  }
 
+  private warnNoHeader(title: string): void {
+    this._toastrService.warning('لا يوجد مستند من هذا النوع', title, { positionClass: 'toast-top-left' });
+  }
+
+  editeHeader(){
+    if (!this.canEditHeader) {
+      this.warnNoHeader('تعديل هيدر');
+      return;
+    }
+
+    // always built from the header that is selected right now, never from an older one
+    this.editeHeaderMEtadata = {
+      hdr: this.SecHeaders.data[0],
+      cur_StoreName: this.curr_StoreName,
+      cur_Trstys: this.TrnsData.data[this.curr_TrsTy].Trns_name
+    };
     console.log("this.SecHeadersthis.SecHeaders" , this.editeHeaderMEtadata)
-    this._route.navigate(['/addNewHeader'] , 
-      { state:{data:this.editeHeaderMEtadata} }
-    )
+    this._route.navigate(['/addNewHeader'] , { state:{data:this.editeHeaderMEtadata} })
   }
 
 
 
   isHeaderDeleted:number=-1
   clickDelete(){
+    if (!this.canEditHeader) {
+      this.warnNoHeader('حذف هيدر');
+      return;
+    }
     this.isHeaderDeleted=1
   }
   dontDelete(){
@@ -618,6 +692,10 @@ private fb = inject(FormBuilder);
     .subscribe({
       next: (res) => {
         console.log("SUCCESS:", res);     
+
+        // the database has confirmed the delete (an error answer never reaches this point): call ALL the headers again, so the
+        // screen shows exactly what is in the database - the deleted document is gone, the value / customer / lines follow the new selection
+        this.reloadAllHeaders();
         
         if(res.isWarning==true){
           this._toastrService.warning("حذف الرصيد",res.errors ,{

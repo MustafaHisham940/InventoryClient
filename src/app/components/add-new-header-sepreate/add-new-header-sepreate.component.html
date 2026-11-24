@@ -82,7 +82,11 @@
 
           <div class="hd-field">
             <label class="hd-label" for="TrsDt">تاريخ السند</label>
-            <input type="datetime-local" id="TrsDt" name="TrsDt" class="hd-input" formControlName="trsDt">
+            <input type="datetime-local" id="TrsDt" name="TrsDt" class="hd-input" formControlName="trsDt" required
+                   [class.hd-invalid]="dateInvalid">
+            @if (dateInvalid) {
+              <small class="hd-error">تاريخ السند مطلوب</small>
+            }
           </div>
 
         </div>
