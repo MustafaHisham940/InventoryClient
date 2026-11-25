@@ -1,4 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
+import { Observer } from 'rxjs';
 
 /**
  * Reads the download file name the server sent in Content-Disposition.
@@ -36,4 +37,18 @@ export function saveExcelResponse(res: HttpResponse<Blob>, fallbackName: string)
   a.download = fileNameFromResponse(res, fallbackName);
   a.click();
   window.URL.revokeObjectURL(url);
+}
+
+/**
+ * Subscriber for the Excel download buttons:
+ *   this.reportService.ExcelReport_x(body).subscribe(excelDownload('X.xlsx'));
+ * On success it saves the file. On failure the error interceptor has already
+ * shown the server's message, so here the error is only logged; without this
+ * handler it would be an uncaught error.
+ */
+export function excelDownload(fallbackName: string): Partial<Observer<HttpResponse<Blob>>> {
+  return {
+    next: res => saveExcelResponse(res, fallbackName),
+    error: err => console.error('Excel download failed', err)
+  };
 }

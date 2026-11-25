@@ -6,7 +6,7 @@ import { ReportService } from '../../core/services/report.service';
 import { StoreScopeService } from '../../core/services/store-scope.service';
 import { ItemsListReportRequest } from '../../core/interfaces/items-list-report';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-item-list',
@@ -72,6 +72,6 @@ export class ReportItemListComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getItemsListReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'ItemsListReport.xlsx'));
+    this.reportService.ExcelReport_getItemsListReport(this.lastReqBody).subscribe(excelDownload('ItemsListReport.xlsx'));
   }
 }

@@ -7,7 +7,7 @@ import { StoreScopeService } from '../../core/services/store-scope.service';
 import { StoreItemsNeedReportRequest } from '../../core/interfaces/store-items-need-report';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-store-items-need',
@@ -80,6 +80,6 @@ export class ReportStoreItemsNeedComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getStoreItemsNeedReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'StoreItemsNeedReport.xlsx'));
+    this.reportService.ExcelReport_getStoreItemsNeedReport(this.lastReqBody).subscribe(excelDownload('StoreItemsNeedReport.xlsx'));
   }
 }

@@ -7,7 +7,7 @@ import { StoreScopeService } from '../../core/services/store-scope.service';
 import { ItemsBalancesReportRequest } from '../../core/interfaces/items-balances-report';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-item-balances',
@@ -78,6 +78,6 @@ export class ReportItemBalancesComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getItemsBalancesReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'ItemsBalancesReport.xlsx'));
+    this.reportService.ExcelReport_getItemsBalancesReport(this.lastReqBody).subscribe(excelDownload('ItemsBalancesReport.xlsx'));
   }
 }

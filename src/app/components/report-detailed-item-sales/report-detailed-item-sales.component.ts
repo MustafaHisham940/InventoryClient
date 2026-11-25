@@ -12,7 +12,7 @@ import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapter
 import { dateToIso } from '../../core/utils/date-iso';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-detailed-item-sales',
@@ -114,6 +114,6 @@ export class ReportDetailedItemSalesComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getDetailedItemSalesReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'DetailedItemSalesReport.xlsx'));
+    this.reportService.ExcelReport_getDetailedItemSalesReport(this.lastReqBody).subscribe(excelDownload('DetailedItemSalesReport.xlsx'));
   }
 }

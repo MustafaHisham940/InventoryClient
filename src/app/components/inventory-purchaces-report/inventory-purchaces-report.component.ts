@@ -11,7 +11,7 @@ import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapter
 import { dateToIso } from '../../core/utils/date-iso';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-inventory-purchaces-report',
@@ -111,6 +111,6 @@ export class InventoryPurchacesReportComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getInventoryPurchasesReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'InventoryPurchasesReport.xlsx'));
+    this.reportService.ExcelReport_getInventoryPurchasesReport(this.lastReqBody).subscribe(excelDownload('InventoryPurchasesReport.xlsx'));
   }
 }

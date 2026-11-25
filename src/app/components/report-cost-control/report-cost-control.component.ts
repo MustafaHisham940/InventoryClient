@@ -6,7 +6,7 @@ import { ReportService } from '../../core/services/report.service';
 import { StoreScopeService } from '../../core/services/store-scope.service';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-cost-control',
@@ -71,7 +71,7 @@ export class ReportCostControlComponent implements OnDestroy {
   }
 
   downloadExcel(): void {
-    this.reportService.ExcelReport_CostadjustmentSpeceficItemReport(this.buildRequest()).subscribe(res => saveExcelResponse(res, 'ItemsReport.xlsx'));
+    this.reportService.ExcelReport_CostadjustmentSpeceficItemReport(this.buildRequest()).subscribe(excelDownload('ItemsReport.xlsx'));
   }
 
   ngOnDestroy(): void {

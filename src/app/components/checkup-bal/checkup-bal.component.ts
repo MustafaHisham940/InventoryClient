@@ -10,7 +10,7 @@ import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapter
 import { dateToIso } from '../../core/utils/date-iso';
 import { CustomerPickerComponent } from '../customer-picker/customer-picker.component';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-checkup-bal',
@@ -126,7 +126,7 @@ export class CheckupBalComponent implements OnDestroy {
       return;
     }
 
-    this._HDetailsService.ExcelReport_GetHeadersData_Report(this.buildRequest()).subscribe(res => saveExcelResponse(res, 'ItemsReport.xlsx'));
+    this._HDetailsService.ExcelReport_GetHeadersData_Report(this.buildRequest()).subscribe(excelDownload('ItemsReport.xlsx'));
   }
 
   ngOnDestroy(): void {

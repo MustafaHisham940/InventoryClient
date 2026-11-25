@@ -7,7 +7,7 @@ import { StoreScopeService } from '../../core/services/store-scope.service';
 import { InventoryEvaluationReportRequest } from '../../core/interfaces/inventory-evaluation-report';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
-import { saveExcelResponse } from '../../core/utils/excel-download';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-inventory-evaluation-new-rep',
@@ -78,6 +78,6 @@ export class ReportInventoryEvaluationNewRepComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getInventoryEvaluationReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'InventoryEvaluationReport.xlsx'));
+    this.reportService.ExcelReport_getInventoryEvaluationReport(this.lastReqBody).subscribe(excelDownload('InventoryEvaluationReport.xlsx'));
   }
 }
