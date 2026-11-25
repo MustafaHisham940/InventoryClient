@@ -11,6 +11,7 @@ import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapter
 import { dateToIso } from '../../core/utils/date-iso';
 import { CustomerPickerComponent } from '../customer-picker/customer-picker.component';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
+import { saveExcelResponse } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-client-sales-detailed-report',
@@ -105,13 +106,6 @@ export class ClientSalesDetailedReportComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getClientSalesDetailedReport(this.lastReqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'ClientSalesDetailedReport.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+    this.reportService.ExcelReport_getClientSalesDetailedReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'ClientSalesDetailedReport.xlsx'));
   }
 }

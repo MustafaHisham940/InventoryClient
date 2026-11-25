@@ -10,6 +10,7 @@ import { CustomerItemsSalesReportRequest } from '../../core/interfaces/customer-
 import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapters/dd-mm-yyyy-date-adapter';
 import { dateToIso } from '../../core/utils/date-iso';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
+import { saveExcelResponse } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-customer-items-sales',
@@ -101,13 +102,6 @@ export class ReportCustomerItemsSalesComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getCustomerItemsSalesReport(this.lastReqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'CustomersItemsSalesReport.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+    this.reportService.ExcelReport_getCustomerItemsSalesReport(this.lastReqBody).subscribe(res => saveExcelResponse(res, 'CustomersItemsSalesReport.xlsx'));
   }
 }

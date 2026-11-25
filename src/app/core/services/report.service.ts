@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environments } from '../environment/environments';
@@ -135,11 +135,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getItemCheckUpReport(body: any): Observable<Blob> {
+  ExcelReport_getItemCheckUpReport(body: any): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ItemCheckUp-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ItemCheckUp-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 /*************************************** */
@@ -153,11 +153,11 @@ export class ReportService {
       { responseType: 'blob' }
     );
   }
-  ExcelReport_CostadjustmentSpeceficItemReport(body: any): Observable<Blob> {
+  ExcelReport_CostadjustmentSpeceficItemReport(body: any): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ExcelRep-ItemStoreCostAdjustment`,
+      `${environments.baseURL}/api/CustomExcelReport/ExcelRep-ItemStoreCostAdjustment`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -195,11 +195,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getItemsListReport(body: ItemsListReportRequest): Observable<Blob> {
+  ExcelReport_getItemsListReport(body: ItemsListReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ItemsList-2-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ItemsList-2-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -211,11 +211,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getItemsBalancesReport(body: ItemsBalancesReportRequest): Observable<Blob> {
+  ExcelReport_getItemsBalancesReport(body: ItemsBalancesReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ItemsBalances-3-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ItemsBalances-3-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -227,11 +227,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getInventoryEvaluationReport(body: InventoryEvaluationReportRequest): Observable<Blob> {
+  ExcelReport_getInventoryEvaluationReport(body: InventoryEvaluationReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/InventoryEvaluation-4-report`,
+      `${environments.baseURL}/api/CustomExcelReport/InventoryEvaluation-4-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -243,11 +243,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getInventorySalesReport(body: InventorySalesReportRequest): Observable<Blob> {
+  ExcelReport_getInventorySalesReport(body: InventorySalesReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/InventorySales-5-report`,
+      `${environments.baseURL}/api/CustomExcelReport/InventorySales-5-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -259,11 +259,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getInventoryPurchasesReport(body: InventorySalesReportRequest): Observable<Blob> {
+  ExcelReport_getInventoryPurchasesReport(body: InventorySalesReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/InventoryPurchases-6-report`,
+      `${environments.baseURL}/api/CustomExcelReport/InventoryPurchases-6-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -275,11 +275,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getExistDailyBoxReport(body: ExistDailyBoxReportRequest): Observable<Blob> {
+  ExcelReport_getExistDailyBoxReport(body: ExistDailyBoxReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ExistDailyBox-16-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ExistDailyBox-16-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -291,11 +291,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getDailyBoxReport(body: DailyBoxReportRequest): Observable<Blob> {
+  ExcelReport_getDailyBoxReport(body: DailyBoxReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/DailyBox-15-report`,
+      `${environments.baseURL}/api/CustomExcelReport/DailyBox-15-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -307,11 +307,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getDetailedItemSalesReport(body: DetailedItemSalesReportRequest): Observable<Blob> {
+  ExcelReport_getDetailedItemSalesReport(body: DetailedItemSalesReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/DetailedItemSales-8-report`,
+      `${environments.baseURL}/api/CustomExcelReport/DetailedItemSales-8-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -323,11 +323,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getDetailedItemPurchasesReport(body: DetailedItemSalesReportRequest): Observable<Blob> {
+  ExcelReport_getDetailedItemPurchasesReport(body: DetailedItemSalesReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/DetailedItemPurchaces-8-2-report`,
+      `${environments.baseURL}/api/CustomExcelReport/DetailedItemPurchaces-8-2-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -339,11 +339,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getItemsEvaluationInDurationReport(body: ItemsEvaluationInDurationReportRequest): Observable<Blob> {
+  ExcelReport_getItemsEvaluationInDurationReport(body: ItemsEvaluationInDurationReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ItemsEvaluationInDuration-9-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ItemsEvaluationInDuration-9-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -355,11 +355,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getClientSalesDetailedReport(body: ClientSalesDetailedReportRequest): Observable<Blob> {
+  ExcelReport_getClientSalesDetailedReport(body: ClientSalesDetailedReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ClientSalesDetailed-13-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ClientSalesDetailed-13-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -371,11 +371,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getCustomersSuppliersListReport(body: CustomersSuppliersListReportRequest): Observable<Blob> {
+  ExcelReport_getCustomersSuppliersListReport(body: CustomersSuppliersListReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/CustomersSuppliersList-12-report`,
+      `${environments.baseURL}/api/CustomExcelReport/CustomersSuppliersList-12-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -387,11 +387,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getClientPurchasesDetailedReport(body: ClientSalesDetailedReportRequest): Observable<Blob> {
+  ExcelReport_getClientPurchasesDetailedReport(body: ClientSalesDetailedReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/ClientPurchasesDetailed-14-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ClientPurchasesDetailed-14-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -403,11 +403,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getStoreItemsNeedReport(body: StoreItemsNeedReportRequest): Observable<Blob> {
+  ExcelReport_getStoreItemsNeedReport(body: StoreItemsNeedReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/StoreItemsNeed-7-report`,
+      `${environments.baseURL}/api/CustomExcelReport/StoreItemsNeed-7-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
@@ -419,11 +419,11 @@ export class ReportService {
     );
   }
 
-  ExcelReport_getCustomerItemsSalesReport(body: CustomerItemsSalesReportRequest): Observable<Blob> {
+  ExcelReport_getCustomerItemsSalesReport(body: CustomerItemsSalesReportRequest): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-      `${environments.baseURL}/api/ExcelReport/CustomersItemsSales-11-report`,
+      `${environments.baseURL}/api/CustomExcelReport/CustomersItemsSales-11-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 
