@@ -12,6 +12,7 @@ import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapter
 import { dateToIso } from '../../core/utils/date-iso';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-detailed-item-purchases',
@@ -113,13 +114,6 @@ export class ReportDetailedItemPurchasesComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getDetailedItemPurchasesReport(this.lastReqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'DetailedItemPurchacesReport.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+    this.reportService.ExcelReport_getDetailedItemPurchasesReport(this.lastReqBody).subscribe(excelDownload('DetailedItemPurchacesReport.xlsx'));
   }
 }

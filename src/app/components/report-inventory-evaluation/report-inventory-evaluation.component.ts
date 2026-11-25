@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReportService } from '../../core/services/report.service';
 import { TokenService } from '../../core/services/token.service';
 import { InventoryEvaluationReportRequest } from '../../core/interfaces/inventory-evaluation-report';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-inventory-evaluation',
@@ -85,13 +86,6 @@ export class ReportInventoryEvaluationComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getInventoryEvaluationReport(this.lastReqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'InventoryEvaluationReport.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+    this.reportService.ExcelReport_getInventoryEvaluationReport(this.lastReqBody).subscribe(excelDownload('InventoryEvaluationReport.xlsx'));
   }
 }

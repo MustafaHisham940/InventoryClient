@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environments } from './environment/environments';
@@ -74,11 +74,11 @@ export class HDetailsService {
     );
   }
 
-  ExcelReport_GetHeadersData_Report(body: any): Observable<Blob> {
+  ExcelReport_GetHeadersData_Report(body: any): Observable<HttpResponse<Blob>> {
     return this._HttpClient.post(
-     `${environments.baseURL}/api/ExcelReport/ExcelRep-ClientCheckUp-report`,
+      `${environments.baseURL}/api/CustomExcelReport/ExcelRep-ClientCheckUp-report`,
       body,
-      { responseType: 'blob' }
+      { responseType: 'blob', observe: 'response' }
     );
   }
 

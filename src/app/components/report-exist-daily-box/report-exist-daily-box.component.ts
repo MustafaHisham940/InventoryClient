@@ -11,6 +11,7 @@ import { DdMmYyyyDateAdapter, DD_MM_YYYY_FORMATS } from '../../core/date-adapter
 import { dateToIso } from '../../core/utils/date-iso';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
 import { StoreScopeFieldComponent } from '../report-shared/store-scope-field.component';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-report-exist-daily-box',
@@ -96,13 +97,6 @@ export class ReportExistDailyBoxComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getExistDailyBoxReport(this.lastReqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'ExistDailyBoxReport.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+    this.reportService.ExcelReport_getExistDailyBoxReport(this.lastReqBody).subscribe(excelDownload('ExistDailyBoxReport.xlsx'));
   }
 }

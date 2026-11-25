@@ -6,6 +6,7 @@ import { ReportService } from '../../core/services/report.service';
 import { StoreScopeService } from '../../core/services/store-scope.service';
 import { CustomersSuppliersListReportRequest } from '../../core/interfaces/customers-suppliers-list-report';
 import { ReportShellComponent } from '../report-shared/report-shell.component';
+import { excelDownload } from '../../core/utils/excel-download';
 
 @Component({
   selector: 'app-customers-suppliers-list-report',
@@ -75,13 +76,6 @@ export class CustomersSuppliersListReportComponent {
       return;
     }
 
-    this.reportService.ExcelReport_getCustomersSuppliersListReport(this.lastReqBody).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'CustomersSuppliersListReport.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+    this.reportService.ExcelReport_getCustomersSuppliersListReport(this.lastReqBody).subscribe(excelDownload('CustomersSuppliersListReport.xlsx'));
   }
 }
